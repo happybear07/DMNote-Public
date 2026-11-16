@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ocr.v1",
+  "description": "POST /v1/ai/ocr 200 응답 형태 (API.md 3.3). 모델이 채우는 부분은 $defs.modelOutput(emit_ocr 도구 input_schema)이고, runId · usage는 Worker가 붙인다.",
+  "type": "object",
+  "required": ["runId", "lines", "overallConfidence", "usage"],
+  "additionalProperties": false,
+  "properties": {
+    "runId": { "type": "string", "pattern": "^[0-9A-Za-z]{22}$" },
+    "lines": { "$ref": "#/$defs/lines" },
+    "overallConfidence": { "$ref": "#/$defs/confidence" },
+    "usage": {
+      "type": "object",
+      "required": ["input", "output"],
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": "integer", "minimum": 0 },
+        "output": { "type": "integer", "minimum": 0 },
+        "cacheRead": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "$defs": {
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "모델 자기 평가값. 확률이 아니다. UI는 0.8 / 0.6 경계로 높음 · 보통 · 낮음 3단계만 표시"
+    },
+    "line": {
+      "type": "object",
+      "required": ["text", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "type": "string", "maxLength": 500, "description": "한 줄 전사. 읽을 수 없는 글자는 글자마다 □" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "bbox": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": { "type": "number", "minimum": 0 },
+          "description": "[x0, y0, x1, y1] — 전송한 이미지의 픽셀 좌표(좌상단 원점). 근사값이며 생략 가능"
+        }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "maxItems": 200,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "modelOutput": {
+      "description": "emit_ocr 도구의 input_schema 원본. strict 전송 시 minimum/maximum/maxLength/minItems/maxItems/pattern은 제거하고 클라이언트 · Worker가 이 파일로 재검증한다",
+      "type": "object",
+      "required": ["lines", "overallConfidence"],
+      "additionalProperties": false,
+      "properties": {
+        "lines": { "$ref": "#/$defs/lines" },
+        "overallConfidence": { "$ref": "#/$defs/confidence" }
+      }
+    }
+  }
+}

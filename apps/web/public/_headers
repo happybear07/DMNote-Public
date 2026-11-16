@@ -1,0 +1,29 @@
+# Cloudflare Pages 응답 헤더 (배포 QA C · SECURITY 5.1 · DEMO-SECURITY-CHECK 3.2, 11/11 — 녹음 · 영상 media-src blob:, 내보내기 그림 connect-src blob:,
+# 밖 이미지 img-src https: 뺌(백업에 숨은 추적 이미지 차단), HSTS 하루 · COOP · CORP · XFO). Supabase 주소는 빌드 때 VITE_SUPABASE_URL에서 connect-src에 더한다(deploy-headers.ts). 서버 API 도메인이 정해지면 connect-src에 api.<도메인>을 더한다.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; frame-src blob: https://www.youtube-nocookie.com https://player.vimeo.com https://www.figma.com https://www.google.com https://maps.google.com https://codepen.io https://www.loom.com https://open.spotify.com https://docs.google.com; font-src 'self' data:; connect-src 'self' blob: https://api.anthropic.com https://huggingface.co https://*.hf.co; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(self), geolocation=(), payment=(), usb=(), serial=(), bluetooth=(), display-capture=()
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Cross-Origin-Resource-Policy: same-site
+  Strict-Transport-Security: max-age=86400
+
+# 파일 이름에 해시가 붙은 자산은 내용이 바뀌면 이름도 바뀐다 — 오래 캐시
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 글씨체 (Pretendard 1.3.9) — 바뀔 일이 거의 없다. 바꿀 때는 폴더 이름을 바꾼다
+/fonts/*
+  Cache-Control: public, max-age=31536000
+
+# 진입점 · 서비스 워커 · 매니페스트는 매번 새로 확인해야 새 버전을 알아챈다
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache

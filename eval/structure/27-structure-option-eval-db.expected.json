@@ -1,0 +1,53 @@
+{
+  "id": "27-structure-option-eval-db",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-10",
+      "S-08"
+    ],
+    "pattern": "table"
+  },
+  "aliases": {
+    "Notion": [
+      "추천은 Notion",
+      "Notion 추천"
+    ]
+  },
+  "mustNodes": [
+    "Notion"
+  ],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": [
+        "대안",
+        "비용",
+        "검색",
+        "권한 관리"
+      ],
+      "rowLabels": [
+        "Notion",
+        "Confluence",
+        "GitHub Wiki"
+      ],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "선택지 평가(S-10): 비교 표(원문 Markdown 표 그대로) + 추천 결론. 표의 칸을 지어내지 않는다."
+}

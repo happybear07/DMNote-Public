@@ -1,0 +1,36 @@
+{
+  "id": "40-structure-venn-languages",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-69",
+      "S-08"
+    ],
+    "pattern": "venn"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "들여쓰기 문법",
+    "브라우저 실행",
+    "동적 타이핑",
+    "가비지 컬렉션"
+  ],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "교차 · 벤(S-69): Python만 · JavaScript만 · 둘 다(교집합) 세 영역(set 묶음). 영역 사이 화살표를 지어내지 않는다. 표로 그려도 허용. (10/13: '공통점 · 차이점'은 구조 목록에서 S-08 신호어 — 비교-대조로 읽어도 맞게)"
+}

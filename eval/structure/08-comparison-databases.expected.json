@@ -1,0 +1,29 @@
+{
+  "id": "08-comparison-databases",
+  "category": "comparison",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-08", "S-10"], "pattern": "table" },
+  "aliases": {
+    "운영 난이도": ["운영", "설치 · 운영"],
+    "적합한 용도": ["용도", "추천 용도"],
+    "JSON 지원": ["JSON"]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": ["동시성", "확장성", "운영 난이도", "JSON 지원", "적합한 용도"],
+      "rowLabels": ["PostgreSQL", "MySQL", "SQLite"]
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": ["MongoDB", "MariaDB", "라이선스", "가격"]
+  },
+  "notes": "산문 · 목록형 비교 → 표 1개. 행 = 데이터베이스 3개, 열 = 원문 기준 5개(+ 첫 열). 원문에 없는 기준(라이선스, 가격 등)이나 DB를 추가하면 실패. 수치가 없으므로 차트 금지. 노드는 채점하지 않는다(추천 결론 노드는 허용)."
+}

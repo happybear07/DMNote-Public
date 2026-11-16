@@ -1,0 +1,23 @@
+/* 인쇄 · 다른 파일로 저장 (ExportDialog) — 왼쪽 미리보기(A4를 줄여서) + 오른쪽 형식 · 설정 */
+.export-dialog { display: flex; width: min(1120px, calc(100vw - 32px)); height: min(820px, calc(100vh - 32px)); background: var(--card); border-radius: 12px; overflow: hidden; box-shadow: var(--sh-3); }
+.export-preview { flex: 1; min-width: 0; overflow: auto; background: var(--side); padding: 20px; }
+.export-paper { zoom: 0.62; }
+.export-paper:not(.paged) { background: #fff; border-radius: 10px; }
+.export-paper .dn-doc { background: none; }
+.export-paper.no-page-num .dn-sheet-num { visibility: hidden; }
+.export-paper.no-colors .dn-doc-item[data-color] { background: none !important; }
+.export-paper .dn-doc-page { margin-top: 0; }
+.dn-doc-header { margin: 0 0 6px; font-size: 26px; font-weight: var(--fw-3); }
+.export-text { margin: 0; white-space: pre-wrap; word-break: break-word; font: 12px/1.6 ui-monospace, Consolas, monospace; color: var(--text); background: var(--card); border-radius: 10px; padding: 16px; }
+.export-summary { background: var(--card); border-radius: 10px; padding: 20px; font-size: var(--fs-3); } .export-summary ul { padding-left: 18px; line-height: 1.9; }
+.export-side { width: 300px; flex: none; display: flex; flex-direction: column; gap: 14px; padding: 18px; border-left: 1px solid var(--line); overflow-y: auto; }
+.export-side header { display: flex; align-items: center; justify-content: space-between; } .export-side h2 { margin: 0; font-size: 15px; }
+.export-side .x { border: 0; background: none; font-size: 20px; color: var(--subtle); cursor: pointer; }
+.export-formats { display: flex; flex-direction: column; gap: 6px; }
+.export-formats button { display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; text-align: left; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+.export-formats button b { font-size: var(--fs-3); } .export-formats button small { font-size: var(--fs-1); color: var(--subtle); line-height: 1.4; }
+.export-formats button.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.export-opts { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-3); } .export-opts legend { font-size: var(--fs-2); color: var(--subtle); margin-bottom: 6px; }
+.export-meta { margin: 0; font-size: var(--fs-2); color: var(--muted); }
+.export-go { margin-top: auto; height: 40px; }
+@media (max-width: 760px) { .export-dialog { flex-direction: column; height: calc(100vh - 16px); } .export-side { width: auto; border-left: 0; border-top: 1px solid var(--line); } .export-paper { zoom: 0.42; } }

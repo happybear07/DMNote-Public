@@ -1,0 +1,29 @@
+{
+  "name": "@dn/text-pm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./headless": "./src/headless.ts",
+    "./text.css": "./src/text.css"
+  },
+  "dependencies": {
+    "@dn/engine-core": "workspace:*",
+    "katex": "^0.19.0",
+    "prosemirror-commands": "^1.6.2",
+    "prosemirror-inputrules": "^1.4.0",
+    "prosemirror-keymap": "^1.2.2",
+    "prosemirror-model": "^1.24.1",
+    "prosemirror-schema-list": "^1.5.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-transform": "^1.10.2",
+    "prosemirror-view": "^1.37.1"
+  },
+  "devDependencies": {
+    "@dn/storage-idb": "workspace:*",
+    "fake-indexeddb": "^6.0.0"
+  }
+}

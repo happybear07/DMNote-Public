@@ -1,0 +1,67 @@
+/* 내 페이지 (MePage.tsx, 11/11): 빠른 메모 칸 · 이어서 쓰기 카드(쪽 그림 · 칩 · 진행 줄) · '오늘' 카드 주 띠. 카드 바탕 · 바닥은 book.css */
+:root { --thumb-box: #e8e5de; --thumb-bar: #d6d2c9; }
+:root[data-theme='dark'] { --thumb-box: #3d3b37; --thumb-bar: #4d4a44; }
+.me-page .bento { grid-auto-flow: row dense; }
+
+/* 빠른 메모: 검색 칸처럼 보이지 않게 연필 · 둥글기 12 · 넉넉한 높이 */
+.quick-memo { max-width: 1180px; margin: 0 auto 20px; }
+.qm-box {
+  display: flex; align-items: flex-start; gap: 10px; min-height: 48px; padding: 13px 16px; border-radius: 12px; background: var(--card); color: var(--muted);
+  box-shadow: inset 0 0 0 1px var(--line); cursor: text;
+}
+.qm-box:focus-within { box-shadow: inset 0 0 0 2px var(--accent); }
+.qm-box .icon { margin-top: 2px; flex: none; }
+.qm-box textarea { flex: 1; min-width: 0; border: 0; outline: none; resize: none; padding: 0; background: none; font: inherit; font-size: var(--fs-3); line-height: 22px; color: var(--text); }
+.qm-box textarea::placeholder { color: var(--muted); }
+.qm-done { margin: 6px 0 0 4px; font-size: var(--fs-2); color: var(--muted); }
+.qm-actions { display: flex; align-items: center; gap: 10px; margin: 8px 0 0 4px; font-size: var(--fs-2); color: var(--muted); }
+/* AI 색은 ✦ 아이콘에만 (DESIGN-SIMPLIFY U-1) — 단추는 조용한 면 */
+.qm-ai { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; border: 0; border-radius: 8px; background: var(--soft); font: inherit; font-size: var(--fs-2); font-weight: var(--fw-2); color: var(--text); cursor: pointer; }
+.qm-ai .icon { color: var(--ai, #7c4fd6); }
+.qm-ai:hover { background: var(--hover); }
+
+/* 이어서 쓰기: 왼쪽 쪽 그림(판 --soft 위 흰 쪽) · 오른쪽 경로 · 제목 · 고친 때 · 첫 줄 · 칩 · 진행 줄 */
+.cont-body { display: flex; gap: 16px; flex: 1; min-height: 0; }
+.cont-thumb {
+  flex: none; width: 168px; height: 176px; padding: 12px 14px 0; border: 0; border-radius: 8px; background: var(--soft); overflow: hidden; cursor: pointer;
+  display: flex; align-items: flex-start; justify-content: center; color: var(--muted);
+}
+.cont-thumb .thumb { display: block; width: 100%; height: auto; transition: transform .16s ease-out; }
+.cont-thumb:hover .thumb { transform: translateY(-2px); }
+.cont-thumb > .icon { margin-top: 64px; }
+.thumb-paper { fill: var(--card); }
+.thumb-box { fill: var(--thumb-box); }
+.thumb-bar { fill: var(--thumb-bar); }
+.thumb-bar.soft { fill: var(--hover); }
+.thumb-arrow { stroke: var(--faint); }
+:root[data-theme='dark'] .cont-thumb { background: var(--bg); }
+:root[data-theme='dark'] .thumb-paper { fill: var(--hover); }
+.cont-info { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.cont-path { display: flex; align-items: center; gap: 4px; margin: 0; font-size: var(--fs-1); color: var(--muted); }
+.cont-title {
+  align-self: flex-start; max-width: 100%; padding: 0; border: 0; background: none; font: inherit; font-size: 16px; font-weight: var(--fw-3); line-height: 22px; letter-spacing: -0.01em;
+  color: var(--text); text-align: left; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.cont-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+.cont-meta { margin: 0; font-size: var(--fs-1); color: var(--muted); }
+.cont-preview { margin: 4px 0 0; font-size: var(--fs-3); line-height: 20px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.cont-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.cont-chip { max-width: 100%; padding: 3px 8px; border: 0; border-radius: 6px; background: var(--soft); font: inherit; font-size: var(--fs-1); font-weight: var(--fw-2); color: var(--muted); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cont-chip:hover { background: var(--hover); color: var(--text); }
+.cont-progress { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 10px; font-size: var(--fs-1); color: var(--muted); font-variant-numeric: tabular-nums; }
+.cont-bar { width: 120px; height: 4px; border-radius: 2px; background: var(--hover); overflow: hidden; }
+.cont-bar i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
+
+/* '오늘' 카드 주 띠: 칸을 키우고 항목은 아래로 (선 없이 간격으로) */
+.cal-card.week .cal-body { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.cal-card.week .cal-day { height: 48px; font-size: var(--fs-3); }
+.cal-card.week .cal-num { width: 28px; height: 28px; }
+.cal-card.week .cal-list { padding: 0; border: 0; }
+.cal-card.week .cal-list ul { max-height: 200px; }
+
+@media (max-width: 768px) {
+  .cont-thumb { width: 112px; height: 132px; padding: 8px 9px 0; }
+  .cont-preview { display: none; }
+  .cont-bar { width: 80px; }
+}
+@media (prefers-reduced-motion: reduce) { .cont-thumb .thumb { transition: none; } }

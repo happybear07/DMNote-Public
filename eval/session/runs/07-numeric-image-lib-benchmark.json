@@ -1,0 +1,448 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "Node.js 이미지 리사이즈 라이브러리 4종",
+      "nodes": [
+        {
+          "key": "n0",
+          "title": "이미지 리사이즈 라이브러리",
+          "kind": "concept",
+          "body": "4000×3000 JPEG 1,000장을 800px 너비로 리사이즈, 같은 서버(8코어)에서 장당 평균 처리 시간을 측정",
+          "source": {
+            "quote": "Node.js 이미지 리사이즈 라이브러리 4종을 직접 비교해 봤습니다"
+          }
+        },
+        {
+          "key": "n1",
+          "title": "sharp",
+          "kind": "option",
+          "body": "- 가장 빠릅니다\n- 메모리 사용량도 가장 적었으나 정밀하게 측정하지 않아 참고만",
+          "source": {
+            "quote": "가장 빠릅니다. 내부적으로 libvips를 쓰기 때문에 jimp보다 약 10배 빠릅니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "canvas(node-canvas)",
+          "kind": "option",
+          "source": {
+            "quote": "canvas(node-canvas): 97ms"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "squoosh",
+          "kind": "option",
+          "body": "실행 환경에 따라 편차가 커서, 여러 번 돌렸을 때 120~190ms 사이로 흔들렸습니다",
+          "source": {
+            "quote": "실행 환경에 따라 편차가 커서, 여러 번 돌렸을 때 120~190ms 사이로 흔들렸습니다"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "jimp",
+          "kind": "option",
+          "body": "- 순수 JavaScript라 설치가 간단\n- 대량 처리에는 부적합",
+          "source": {
+            "quote": "순수 JavaScript라 설치가 간단하지만 대량 처리에는 부적합합니다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "libvips",
+          "kind": "concept",
+          "body": "sharp가 내부적으로 사용",
+          "source": {
+            "quote": "내부적으로 libvips를 쓰기 때문에"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "서버에서 대량으로 썸네일을 만든다면",
+          "kind": "concept",
+          "body": "추천: sharp",
+          "source": {
+            "quote": "서버에서 대량으로 썸네일을 만든다면 sharp"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "네이티브 의존성을 피해야 하는 환경",
+          "kind": "concept",
+          "body": "예: 일부 서버리스\n추천: jimp를 고려",
+          "source": {
+            "quote": "네이티브 의존성을 피해야 하는 환경(예: 일부 서버리스)이라면 jimp를 고려하세요"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n1",
+          "to": "n0",
+          "relation": "example-of"
+        },
+        {
+          "from": "n2",
+          "to": "n0",
+          "relation": "example-of"
+        },
+        {
+          "from": "n3",
+          "to": "n0",
+          "relation": "example-of"
+        },
+        {
+          "from": "n4",
+          "to": "n0",
+          "relation": "example-of"
+        },
+        {
+          "from": "n1",
+          "to": "n5",
+          "relation": "depends-on"
+        },
+        {
+          "from": "n1",
+          "to": "n4",
+          "relation": "contrasts",
+          "label": "jimp보다 약 10배 빠릅니다"
+        },
+        {
+          "from": "n6",
+          "to": "n1",
+          "relation": "leads-to"
+        },
+        {
+          "from": "n7",
+          "to": "n4",
+          "relation": "leads-to"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "bar",
+          "title": "장당 평균 처리 시간",
+          "unit": "ms",
+          "series": [
+            {
+              "name": "장당 평균 처리 시간",
+              "points": [
+                {
+                  "x": "sharp",
+                  "y": 38
+                },
+                {
+                  "x": "canvas(node-canvas)",
+                  "y": 97
+                },
+                {
+                  "x": "squoosh",
+                  "y": 156
+                },
+                {
+                  "x": "jimp",
+                  "y": 412
+                }
+              ]
+            }
+          ],
+          "attachTo": "n0",
+          "source": {
+            "quote": "sharp: 38ms"
+          }
+        }
+      ],
+      "tables": []
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "Node.js 이미지 리사이즈 라이브러리 4종을 직접 비교해 봤습니다",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "테스트 조건",
+          "kind": "concept",
+          "body": "4000×3000 JPEG 1,000장을 800px 너비로 리사이즈, 같은 서버(8코어)에서 장당 평균 처리 시간을 측정",
+          "source": {
+            "quote": "4000×3000 JPEG 1,000장을 800px 너비로 리사이즈"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "sharp",
+          "kind": "option",
+          "body": "- 가장 빠름\n- 메모리 사용량도 가장 적음 (정밀하게 측정하지 않음)",
+          "source": {
+            "quote": "내부적으로 libvips를 쓰기 때문에 jimp보다 약 10배 빠릅니다"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "libvips",
+          "kind": "concept",
+          "source": {
+            "quote": "내부적으로 libvips를 쓰기 때문에"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "jimp",
+          "kind": "option",
+          "body": "- 순수 JavaScript라 설치가 간단\n- 대량 처리에는 부적합",
+          "source": {
+            "quote": "순수 JavaScript라 설치가 간단하지만 대량 처리에는 부적합합니다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "squoosh",
+          "kind": "option",
+          "body": "- 실행 환경에 따라 편차가 큼\n- 여러 번 돌렸을 때 120~190ms 사이로 흔들림",
+          "source": {
+            "quote": "실행 환경에 따라 편차가 커서"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "canvas(node-canvas)",
+          "kind": "option",
+          "source": {
+            "quote": "canvas(node-canvas): 97ms"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "서버에서 대량으로 썸네일을 만든다면",
+          "kind": "conclusion",
+          "source": {
+            "quote": "서버에서 대량으로 썸네일을 만든다면 sharp"
+          }
+        },
+        {
+          "key": "n8",
+          "title": "네이티브 의존성을 피해야 하는 환경",
+          "kind": "conclusion",
+          "source": {
+            "quote": "네이티브 의존성을 피해야 하는 환경(예: 일부 서버리스)이라면 jimp를 고려하세요"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n3",
+          "relation": "depends-on"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "relation": "contrasts",
+          "label": "jimp보다 약 10배 빠릅니다"
+        },
+        {
+          "from": "n7",
+          "to": "n2",
+          "relation": "leads-to",
+          "label": "추천"
+        },
+        {
+          "from": "n8",
+          "to": "n4",
+          "relation": "leads-to",
+          "label": "추천"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "bar",
+          "title": "장당 평균 처리 시간",
+          "unit": "ms",
+          "series": [
+            {
+              "name": "장당 평균 처리 시간",
+              "points": [
+                {
+                  "x": "sharp",
+                  "y": 38
+                },
+                {
+                  "x": "canvas(node-canvas)",
+                  "y": 97
+                },
+                {
+                  "x": "squoosh",
+                  "y": 156
+                },
+                {
+                  "x": "jimp",
+                  "y": 412
+                }
+              ]
+            }
+          ],
+          "attachTo": "n1",
+          "source": {
+            "quote": "sharp: 38ms"
+          }
+        }
+      ],
+      "tables": []
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "Node.js 이미지 리사이즈 라이브러리 4종 비교",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "Node.js 이미지 리사이즈 라이브러리",
+          "kind": "concept",
+          "body": "- 4종을 직접 비교\n- 4000×3000 JPEG 1,000장을 800px 너비로 리사이즈\n- 같은 서버(8코어)에서 장당 평균 처리 시간을 측정",
+          "source": {
+            "quote": "Node.js 이미지 리사이즈 라이브러리 4종을 직접 비교해 봤습니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "sharp",
+          "kind": "option",
+          "body": "- 가장 빠릅니다\n- 메모리 사용량도 가장 적었습니다 (정밀하게 측정하지 않음)",
+          "source": {
+            "quote": "내부적으로 libvips를 쓰기 때문에 jimp보다 약 10배 빠릅니다"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "canvas(node-canvas)",
+          "kind": "option",
+          "source": {
+            "quote": "canvas(node-canvas): 97ms"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "squoosh",
+          "kind": "option",
+          "body": "- 실행 환경에 따라 편차가 큼\n- 여러 번 돌렸을 때 120~190ms 사이로 흔들림",
+          "source": {
+            "quote": "실행 환경에 따라 편차가 커서, 여러 번 돌렸을 때 120~190ms 사이로 흔들렸습니다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "jimp",
+          "kind": "option",
+          "body": "- 순수 JavaScript라 설치가 간단\n- 대량 처리에는 부적합",
+          "source": {
+            "quote": "순수 JavaScript라 설치가 간단하지만 대량 처리에는 부적합합니다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "libvips",
+          "kind": "concept",
+          "source": {
+            "quote": "내부적으로 libvips를 쓰기 때문에"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "추천",
+          "kind": "conclusion",
+          "body": "- 서버에서 대량으로 썸네일을 만든다면 sharp\n- 네이티브 의존성을 피해야 하는 환경(예: 일부 서버리스)이라면 jimp를 고려",
+          "source": {
+            "quote": "서버에서 대량으로 썸네일을 만든다면 sharp, 네이티브 의존성을 피해야 하는 환경(예: 일부 서버리스)이라면 jimp를 고려하세요"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "example-of"
+        },
+        {
+          "from": "n3",
+          "to": "n1",
+          "relation": "example-of"
+        },
+        {
+          "from": "n4",
+          "to": "n1",
+          "relation": "example-of"
+        },
+        {
+          "from": "n5",
+          "to": "n1",
+          "relation": "example-of"
+        },
+        {
+          "from": "n2",
+          "to": "n6",
+          "relation": "depends-on"
+        },
+        {
+          "from": "n2",
+          "to": "n5",
+          "relation": "contrasts",
+          "label": "약 10배 빠릅니다"
+        },
+        {
+          "from": "n2",
+          "to": "n7",
+          "relation": "supports"
+        },
+        {
+          "from": "n5",
+          "to": "n7",
+          "relation": "supports"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "bar",
+          "title": "장당 평균 처리 시간",
+          "unit": "ms",
+          "series": [
+            {
+              "name": "장당 평균 처리 시간",
+              "points": [
+                {
+                  "x": "sharp",
+                  "y": 38
+                },
+                {
+                  "x": "canvas(node-canvas)",
+                  "y": 97
+                },
+                {
+                  "x": "squoosh",
+                  "y": 156
+                },
+                {
+                  "x": "jimp",
+                  "y": 412
+                }
+              ]
+            }
+          ],
+          "attachTo": "n1",
+          "source": {
+            "quote": "sharp: 38ms"
+          }
+        }
+      ],
+      "tables": []
+    }
+  }
+]

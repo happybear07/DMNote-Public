@@ -1,0 +1,42 @@
+{
+  "id": "29-structure-scale-consistency",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-14"
+    ],
+    "pattern": "scale"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "강한 일관성",
+    "인과적 일관성",
+    "최종 일관성"
+  ],
+  "mustEdges": [
+    {
+      "from": "강한 일관성",
+      "to": "최종 일관성",
+      "relation": [
+        "contrasts"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "스펙트럼 · 척도(S-14): 양 극(강한 · 최종)끼리 contrasts(가이드 S-14 AI 출력), 사이(인과적)는 노드만 — 순서 관계(next · causes)로 오독하지 않는다. axis에 양 극 이름."
+}

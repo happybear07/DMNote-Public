@@ -1,0 +1,47 @@
+{
+  "id": "02-relation-deploy-pipeline",
+  "category": "relation",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-03", "S-49"], "pattern": "steps" },
+  "aliases": {
+    "린트 및 타입 검사": ["린트", "타입 검사"],
+    "E2E 테스트": ["E2E"]
+  },
+  "mustNodes": [
+    "코드 푸시",
+    "린트 및 타입 검사",
+    "단위 테스트",
+    "빌드",
+    "스테이징 배포",
+    "E2E 테스트",
+    "수동 승인",
+    "프로덕션 배포",
+    "헬스 체크",
+    "자동 롤백"
+  ],
+  "mustEdges": [
+    { "from": "코드 푸시", "to": "린트 및 타입 검사", "relation": ["next", "leads-to"] },
+    { "from": "린트 및 타입 검사", "to": "단위 테스트", "relation": ["next"] },
+    { "from": "단위 테스트", "to": "빌드", "relation": ["next"] },
+    { "from": "빌드", "to": "스테이징 배포", "relation": ["next"] },
+    { "from": "스테이징 배포", "to": "E2E 테스트", "relation": ["next"] },
+    { "from": "E2E 테스트", "to": "수동 승인", "relation": ["next"] },
+    { "from": "수동 승인", "to": "프로덕션 배포", "relation": ["next"] },
+    { "from": "프로덕션 배포", "to": "헬스 체크", "relation": ["next", "leads-to"] },
+    {
+      "from": "헬스 체크", "to": "자동 롤백", "relation": ["leads-to", "causes", "next"],
+      "alternatives": [ { "from": "자동 롤백", "to": "헬스 체크", "relation": ["depends-on"] } ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": ["jobs", "runs-on", "ubuntu-latest", "actions/checkout@v4"],
+    "substrings": []
+  },
+  "notes": "순서형 프로세스(next). 코드 블록의 줄을 노드로 만들면 안 된다. 단계 번호(1~8)는 수치가 아니므로 차트 금지."
+}

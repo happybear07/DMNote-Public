@@ -1,0 +1,852 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "structure.v2",
+  "description": "structure.v1의 상위 집합 (STRUCTURE-GUIDE 5절). 원문에 없는 값(제목 · 라벨 · 수치 · 날짜 · 담당 · 화자)은 만들지 않는다 — 원문 구절만.",
+  "type": "object",
+  "required": [
+    "version",
+    "nodes",
+    "edges",
+    "charts",
+    "tables"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "enum": [
+        "structure.v2"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "diagram",
+        "sheet"
+      ],
+      "description": "도식형(관계가 뼈대) · 노트형(주제별 정리 — sheet에 카드로). 없으면 diagram"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "keywords": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 20
+      },
+      "description": "노트 키워드(AI 자동 태그, 2026-10-26) — 나중에 이 노트를 찾을 때 칠 낱말. 원문에 그대로 있는 낱말 · 짧은 명사구만, # 없이"
+    },
+    "nodes": {
+      "type": "array",
+      "maxItems": 60,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "title",
+          "kind"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]{1,32}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "description": "원문의 말로 된 짧은 이름 — 명사구로 끝맺는다(어미를 자른 반쪽 구절 금지)"
+          },
+          "kind": {
+            "enum": [
+              "concept",
+              "step",
+              "option",
+              "claim",
+              "evidence",
+              "question",
+              "conclusion",
+              "definition",
+              "theorem",
+              "assumption",
+              "contradiction",
+              "rebuttal",
+              "condition",
+              "decision",
+              "action",
+              "goal",
+              "event",
+              "state",
+              "actor",
+              "premise",
+              "problem",
+              "rule",
+              "example",
+              "risk"
+            ]
+          },
+          "body": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Markdown 부분집합: 목록 · 굵게 · 기울임 · 인라인 코드"
+          },
+          "group": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "v1 호환 — v2에서는 무시하고 containers를 쓴다"
+          },
+          "source": {
+            "$ref": "#/$defs/span"
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "description": "원문 용어로 된 역할 (보조정리 · 가설 · 반론 …)"
+          },
+          "status": {
+            "enum": [
+              "belief",
+              "refuted",
+              "before",
+              "wrong",
+              "deferred"
+            ]
+          },
+          "emphasis": {
+            "enum": [
+              "strong",
+              "warning"
+            ]
+          },
+          "hedge": {
+            "type": "boolean",
+            "description": "원문이 불확실하게 말함"
+          },
+          "speaker": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "발화 주체 — 원문 그대로"
+          },
+          "math": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "원문 KaTeX 그대로 (변형 금지)"
+          },
+          "time": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "원문 그대로의 시점"
+          },
+          "start": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "end": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "due": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "원문 그대로의 기한 (계산 금지)"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "담당 — 원문 그대로"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "axis": {
+            "$ref": "#/$defs/axis"
+          },
+          "members": {
+            "type": "array",
+            "maxItems": 12,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "maxItems": 120,
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "relation"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "노드 또는 묶음(containers) key"
+          },
+          "to": {
+            "type": "string",
+            "description": "노드 또는 묶음(containers) key"
+          },
+          "relation": {
+            "enum": [
+              "causes",
+              "leads-to",
+              "part-of",
+              "example-of",
+              "contrasts",
+              "supports",
+              "depends-on",
+              "next",
+              "refutes",
+              "implies",
+              "equivalent",
+              "kind-of",
+              "inhibits",
+              "answers",
+              "transitions",
+              "serves",
+              "becomes",
+              "flows-to",
+              "subset-of",
+              "maps-to",
+              "symbolizes",
+              "relates",
+              "sends",
+              "elaborates",
+              "solves",
+              "analogous-to",
+              "correlates",
+              "moderates"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 24,
+            "description": "원문 구절"
+          },
+          "sign": {
+            "enum": [
+              "+",
+              "-"
+            ],
+            "description": "극성 — 원문이 말할 때만"
+          },
+          "negated": {
+            "type": "boolean",
+            "description": "성립하지 않음 (⇏)"
+          },
+          "prob": {
+            "type": "string",
+            "maxLength": 24,
+            "description": "원문 확률"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 999
+          },
+          "reply": {
+            "type": "boolean",
+            "description": "응답 메시지"
+          }
+        }
+      }
+    },
+    "charts": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "kind",
+          "series"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "$ref": "#/$defs/key"
+          },
+          "kind": {
+            "enum": [
+              "bar",
+              "line",
+              "pie"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 16
+          },
+          "series": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "points"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "maxLength": 40
+                },
+                "points": {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 100,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "type": [
+                          "string",
+                          "number"
+                        ]
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "attachTo": {
+            "type": "string",
+            "description": "관련 노드 key — 차트 블록을 이 노드 옆에 배치"
+          },
+          "source": {
+            "$ref": "#/$defs/span"
+          }
+        }
+      }
+    },
+    "tables": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "columns",
+          "rows"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "$ref": "#/$defs/key"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 12,
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            }
+          },
+          "rows": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 50,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          },
+          "attachTo": {
+            "type": "string"
+          },
+          "source": {
+            "$ref": "#/$defs/span"
+          }
+        }
+      }
+    },
+    "containers": {
+      "type": "array",
+      "maxItems": 30,
+      "description": "묶음 — 원문 소제목 · 안건 · 증명 · 경우처럼 원문이 나눈 구간만. 구성원은 둘 이상, 다른 묶음과 겹치지 않게",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "kind",
+          "members"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "$ref": "#/$defs/key"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "원문 소제목 · 안건 이름 그대로 (없으면 비움)"
+          },
+          "kind": {
+            "enum": [
+              "whole",
+              "set",
+              "case",
+              "proof",
+              "premises",
+              "layer",
+              "lane",
+              "place",
+              "path",
+              "column",
+              "section",
+              "slot",
+              "agenda",
+              "paragraph",
+              "phase",
+              "couple",
+              "frame",
+              "segment"
+            ]
+          },
+          "members": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 60,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          },
+          "parent": {
+            "$ref": "#/$defs/key"
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 24
+          }
+        }
+      }
+    },
+    "sheet": {
+      "type": "object",
+      "required": [
+        "sections"
+      ],
+      "additionalProperties": false,
+      "description": "노트형 정리 (docs/research/NOTE-SHEET-PLAN.md 4.2) — 시트 머리 + 번호 카드 + 카드 안 조각. 원문에 없는 사실 · 수치 · 요약 제목을 짓지 않는다",
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "meta": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 20
+              },
+              "value": {
+                "type": "string",
+                "maxLength": 60
+              }
+            }
+          }
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 24,
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "closing": {
+          "type": "string",
+          "maxLength": 600
+        }
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "maxItems": 12,
+      "description": "구조 판별 (STRUCTURE-GUIDE 2절 구조 ID) — 주 구조 하나(primary) + 부 구조",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "pattern"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "$ref": "#/$defs/key"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^S-\\d{2}$"
+          },
+          "pattern": {
+            "type": "string",
+            "maxLength": 24,
+            "description": "배치 원형 키 (STRUCTURE-GUIDE 2.1)"
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "nodes": {
+            "type": "array",
+            "maxItems": 60,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          },
+          "containers": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          },
+          "charts": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          },
+          "tables": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/$defs/key"
+            }
+          },
+          "frame": {
+            "$ref": "#/$defs/key"
+          },
+          "in": {
+            "$ref": "#/$defs/key"
+          },
+          "with": {
+            "$ref": "#/$defs/key"
+          },
+          "mix": {
+            "enum": [
+              "nested",
+              "beside",
+              "overlap",
+              "shift"
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 99
+          },
+          "span": {
+            "type": "string",
+            "maxLength": 60
+          },
+          "direction": {
+            "enum": [
+              "LR",
+              "RL",
+              "TB",
+              "BT"
+            ]
+          },
+          "slots": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "string",
+              "maxLength": 20
+            }
+          },
+          "caption": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "axis": {
+            "$ref": "#/$defs/axis"
+          },
+          "orderFrom": {
+            "enum": [
+              "top",
+              "bottom"
+            ]
+          },
+          "parent": {
+            "$ref": "#/$defs/key"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]{1,32}$"
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "title",
+        "pieces"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "원문 소제목, 없으면 원문 낱말로 짧게"
+        },
+        "span": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "tone": {
+          "enum": [
+            "plain",
+            "blue",
+            "yellow",
+            "green",
+            "pink",
+            "gray"
+          ]
+        },
+        "pieces": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "$ref": "#/$defs/piece"
+          }
+        }
+      }
+    },
+    "piece": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "조각 — type에 맞는 필드만 쓴다",
+      "properties": {
+        "type": {
+          "enum": [
+            "text",
+            "checklist",
+            "table",
+            "compare",
+            "flow",
+            "chips",
+            "rating",
+            "callout",
+            "quote",
+            "conclusion",
+            "diagram",
+            "divider"
+          ]
+        },
+        "md": {
+          "type": "string",
+          "maxLength": 1200,
+          "description": "text · callout · quote · conclusion — Markdown 부분집합(목록 · 굵게 · 기울임 · ==형광펜== · 할 일 - [ ])"
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "description": "checklist · chips 항목"
+        },
+        "done": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "boolean"
+          },
+          "description": "checklist — items와 같은 차례의 끝남 여부"
+        },
+        "steps": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "maxLength": 40
+          },
+          "description": "flow — 짧은 단계 (6개 이하 권장)"
+        },
+        "left": {
+          "$ref": "#/$defs/side"
+        },
+        "right": {
+          "$ref": "#/$defs/side"
+        },
+        "mid": {
+          "type": "string",
+          "maxLength": 8,
+          "description": "compare 가운데 글 (예: VS)"
+        },
+        "rows": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "type": "string",
+                "maxLength": 40
+              },
+              "value": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              },
+              "max": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 40
+              }
+            }
+          },
+          "description": "rating — 원문에 등급 · 점수가 있을 때만"
+        },
+        "table": {
+          "$ref": "#/$defs/key",
+          "description": "table — tables 항목 key"
+        },
+        "pattern": {
+          "$ref": "#/$defs/key",
+          "description": "diagram — patterns 항목 key (카드 안 작은 도식)"
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "divider 가운데 글"
+        },
+        "icon": {
+          "enum": [
+            "bulb",
+            "info",
+            "alert",
+            "check",
+            "question",
+            "star",
+            "pin"
+          ]
+        }
+      }
+    },
+    "side": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "maxLength": 120
+          }
+        }
+      }
+    },
+    "span": {
+      "type": "object",
+      "required": [
+        "quote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "quote": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "원문에서 그대로 복사한 근거 구절"
+        }
+      }
+    },
+    "axis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "y": {
+          "type": "string",
+          "maxLength": 40
+        }
+      }
+    }
+  }
+}

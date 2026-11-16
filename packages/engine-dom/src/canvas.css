@@ -1,0 +1,324 @@
+/* 캔버스 렌더러 기본 스타일 — Figma 앱 화면 02 · 메인 캔버스 기준 */
+.dn-canvas {
+  position: relative;
+  overflow: hidden;
+  background: var(--card, #fff);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  cursor: default;
+}
+.dn-canvas.dn-tool-hand, .dn-canvas.dn-space { cursor: grab; }
+.dn-canvas.dn-panning { cursor: grabbing; }
+.dn-canvas.dn-tool-block { cursor: crosshair; }
+.dn-canvas.dn-tool-arrow { cursor: crosshair; }
+
+.dn-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.dn-over { pointer-events: none; }
+
+.dn-world { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+
+.dn-block {
+  position: absolute;
+  box-sizing: border-box;
+  /* 바탕은 비워 캔버스 무늬(점 · 괘선 · 모눈)가 비치게 — 고른 바탕색만 칠한다 (알파 10/31) */
+  background: transparent;
+  border: 1px solid var(--line-strong, #d6d2ca); /* 상자 = 이 앱의 단위 — 경계는 남기고 색만 (DESIGN-HUMAN U-H1 A) */
+  border-radius: 8px;
+  padding: 11px 13px 12px;
+  font-family: var(--dn-font, 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif);
+  color: var(--text, #37352f);
+  contain: layout style;
+}
+/* 고치는 상자는 맨 위에 — 글이 늘어 아래 상자와 겹쳐도 치는 줄이 보이게 (CQ-001, 이웃은 움직이지 않는다 ADR-0014) */
+/* 고치는 동안만 옅은 바탕 — 글이 늘어 아래 상자와 겹쳐도 치는 글이 섞여 보이지 않게 */
+.dn-block.dn-editing { cursor: text; z-index: 2147483000 !important; background: color-mix(in srgb, var(--card, #fff) 88%, transparent); }
+.dn-block.dn-colored { border-color: transparent; }
+
+/* 텍스트 상자 두 종류 (스키마 v3)
+ * 제목 상자: 한 줄 · 크고 굵게 · 테두리 없는 가벼운 카드 (화면의 구역 이름 역할)
+ * 내용 상자: 리치 텍스트 카드 (기본 .dn-block 모양) */
+/* .dn-text(text.css, 나중에 로드)보다 우선하도록 블록 범위로 — 편집 중 에디터 DOM(.dn-text-editing)에도 같은 크기 */
+.dn-block .dn-part-title, .dn-block .dn-part-title .dn-text-editing {
+  font-size: calc(17px * var(--dn-fs, 1)); line-height: calc(24px * var(--dn-fs, 1)); font-weight: var(--fw-3, 650); color: var(--text, #37352f); letter-spacing: -0.01em;
+}
+.dn-block .dn-part-title p { margin: 0; min-height: calc(24px * var(--dn-fs, 1)); }
+.dn-part-title + .dn-part-body { margin-top: 6px; }
+.dn-block.dn-box-title { padding: 9px 13px; background: transparent; border-color: transparent; box-shadow: none; }
+.dn-block.dn-box-title:hover, .dn-block.dn-box-title.dn-editing { background: rgba(255, 255, 255, 0.85); border-color: var(--line, #e9e9e7); }
+.dn-block.dn-box-title.dn-colored { border-color: transparent; }
+/* 빈 상자 자리표시자 (편집 중에는 에디터의 자리표시자가 대신한다) */
+.dn-part-title.dn-blank > p:empty::before { content: '제목'; color: var(--faint, #c7c6c3); }
+.dn-part-body.dn-blank > p:empty::before { content: '내용'; color: var(--faint, #c7c6c3); }
+.dn-block.dn-editing .dn-part-title, .dn-block.dn-editing .dn-part-body { cursor: text; }
+
+/* 블록 핸들 ⋮⋮ (FR-024) — 화면 좌표, 줌과 무관하게 같은 크기 */
+.dn-grip {
+  position: absolute; left: 0; top: 0; width: 18px; height: 24px; border-radius: 4px;
+  cursor: grab; color: var(--faint, #9b9a97); z-index: 2; display: grid; place-items: center;
+}
+.dn-grip svg { pointer-events: none; }
+.dn-grip:hover { background-color: #efefed; color: var(--muted, #6b6b68); }
+.dn-grip[hidden] { display: none; }
+/* 터치 · 펜: 손잡이 누르는 범위를 손가락 크기로 (TABLET-CHECK T2) */
+.dn-canvas.dn-touch .dn-grip { min-width: 36px; min-height: 36px; display: grid; place-items: center; }
+.dn-block.dn-ai { border-color: #d0d7f7; }
+.dn-block.dn-ai.dn-ai-edited { border-style: dashed; } /* AI가 만들고 사람이 고침 */
+
+.dn-block .dn-text { user-select: none; -webkit-user-select: none; }
+.dn-block.dn-editing .dn-text { user-select: text; -webkit-user-select: text; }
+.dn-unknown { font-size: 12px; color: var(--muted, #6b6b68); font-style: italic; }
+
+.dn-label-input {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font: 11px var(--dn-font, 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif);
+  padding: 2px 8px;
+  border: 1px solid var(--accent, #3d5fe0);
+  border-radius: 10px;
+  outline: none;
+  background: var(--card, #fff);
+  color: var(--text, #37352f);
+  min-width: 48px;
+  text-align: center;
+}
+
+/* 그래프 · 표 (스키마 v4, FR-018) */
+/* 그래프 (chart-render.ts): 색 · 굵기는 SVG 속성에 있고(내보내기 같은 모양), 여기서는 테마 색만 덮는다 */
+.dn-chart { display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+.dn-chart-title { font-weight: var(--fw-3, 650); font-size: 13.5px; color: var(--text, #37352f); letter-spacing: -0.01em; }
+.dn-chart-title small { font-weight: var(--fw-1, 450); font-size: 12px; color: var(--subtle, #91908b); }
+.dn-chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.dn-chart .dn-grid { stroke: var(--dn-chart-grid, #ececea); }
+.dn-chart .dn-base { stroke: var(--dn-chart-base, #d4d3cf); }
+.dn-chart .dn-tick, .dn-chart .dn-chart-empty { fill: var(--dn-chart-tick, #91908b); }
+.dn-chart .dn-val, .dn-chart .dn-legend-text, .dn-chart .dn-center { fill: var(--dn-chart-label, #5c5b57); }
+.dn-chart .dn-dot { fill: var(--card, #fff); }
+.dn-chart .dn-slice { stroke: var(--card, #fff); transition: opacity .15s; }
+/* 막대 · 조각에 올리면 그것만 또렷하게 */
+.dn-chart .dn-bar { transition: opacity .15s; }
+.dn-chart svg:hover .dn-bar, .dn-chart svg:hover .dn-slice { opacity: 0.55; }
+.dn-chart svg .dn-bar:hover, .dn-chart svg .dn-slice:hover { opacity: 1; }
+
+.dn-table { display: flex; flex-direction: column; gap: 6px; font-size: calc(13px * var(--dn-fs, 1)); position: relative; }
+.dn-table-title { font-weight: var(--fw-2, 550); font-size: 13px; color: var(--text, #37352f); }
+.dn-table table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.dn-table th, .dn-table td { border: 1px solid var(--line, #e3e2df); padding: 5px 8px; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+/* 쪽 보기에서 표가 쪽을 넘는 자리의 빈 행 (doc-pages.ts) — 위아래 가로선만, 세로 칸 선 없이 */
+.dn-table td.dn-page-gap { padding: 0; border-left: 0; border-right: 0; background: none; line-height: 0; font-size: 0; }
+.dn-table th { position: relative; padding-right: 22px; background: var(--soft, #f7f7f5); font-weight: var(--fw-3, 650); color: var(--text, #4a4945); }
+.dn-table td.dn-td-head { background: var(--soft, #f7f7f5); font-weight: var(--fw-3, 650); } /* 첫 열을 머리로 (표 머리 열) */
+/* 열 머리 정렬 단추 (table-sort-ui.ts): 마우스를 올리면, 정렬한 열은 늘 (보기 전용 · 임베드에서는 표시만) */
+.dn-table-sort { position: absolute; top: 50%; right: 3px; transform: translateY(-50%); width: 18px; height: 18px; display: none; place-items: center; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--faint, #9b9a97); cursor: pointer; }
+.dn-table th:hover .dn-table-sort, .dn-table-sort.on { display: grid; } .dn-table-sort.on { color: var(--accent, #3d5fe0); } .dn-table-sort:hover { background: var(--hover, #f1f1ef); color: var(--text, #37352f); } :is(.dn-readonly, .dn-doc-ro, .dn-embed) .dn-table-sort { pointer-events: none; } :is(.dn-readonly, .dn-doc-ro, .dn-embed) .dn-table th:hover .dn-table-sort:not(.on) { display: none; }
+.dn-table td > * { margin: 0; }
+.dn-table td { height: 1.9em; } /* 빈 행도 누르기 쉽게 (CQ-015) */
+.dn-table th:has(.dn-th-input) { outline: 2px solid var(--accent, #3d5fe0); outline-offset: -2px; background: var(--card, #fff); padding: 0; }
+.dn-th-input { width: 100%; box-sizing: border-box; border: 0; outline: none; background: transparent; font: inherit; font-weight: var(--fw-3, 650); color: inherit; padding: 4px 8px; }
+.dn-table td.dn-cell-editing { outline: 2px solid var(--accent, #3d5fe0); outline-offset: -2px; background: var(--card, #fff); }
+/* 칸 편집기는 보는 칸과 같은 글자 · 줄 높이 · 문단 여백 — 편집기의 .dn-text(12.5px · 19px · 문단 여백 · 최소 높이)가 칸을 키우거나 글자를 바꾸지 않게 */
+.dn-table td > .dn-text-editing { outline: none; font-size: inherit; line-height: inherit; color: inherit; font-weight: inherit; }
+.dn-table td > .dn-text-editing > p { margin: 0; min-height: 0; }
+/* 고치는 동안의 표 도구는 표 위에 떠 있다 — 자리를 차지하면 표가 밑으로 밀려 보는 때와 달라진다 */
+.dn-table-tools { display: flex; gap: 4px; }
+.dn-table > .dn-table-tools { position: absolute; right: 0; bottom: calc(100% + 4px); z-index: 30; padding: 4px; white-space: nowrap;
+  background: var(--card, #fff); border: 1px solid var(--line, #e3e2de); border-radius: 7px; box-shadow: 0 4px 14px rgba(15, 15, 15, 0.1); }
+/* 캔버스: 상자 테두리 · 고르기 선(위 그림 층) 밖으로 — 표 위쪽은 상자 안 여백(11px)뿐이라 그만큼 더 올린다 */
+.dn-block .dn-table > .dn-table-tools { bottom: calc(100% + 20px); }
+/* 표를 고치는 상자는 맨 위로 — 떠 있는 도구가 다른 상자에 가리지 않게 */
+.dn-block:has(.dn-cell-editing, .dn-th-input) { z-index: 2147483000 !important; }
+.dn-table-tools button {
+  border: 1px solid var(--line, #dcdcd8); background: var(--card, #fff); border-radius: 5px; padding: 1px 8px; font: inherit; font-size: 11px; color: var(--text, #4a4945); cursor: pointer;
+}
+.dn-table-tools button:hover { background: var(--hover, #f1f1ef); }
+.dn-table-tools button:disabled { opacity: .45; cursor: default; background: var(--card, #fff); }
+.dn-table td.dn-cell-sel { background: rgba(76, 110, 245, .12); }
+
+/* 이미지 (스키마 v4) */
+.dn-image img { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--hover, #f1f1ef); user-select: none; }
+.dn-image.dn-missing img { min-height: 60px; }
+.dn-image.dn-missing::after { content: attr(data-msg); display: block; font-size: 12px; color: var(--muted, #6b6b68); padding-top: 4px; }
+
+/* 읽기 모드 (FR-085): 블록 핸들 · 연결점 숨김 */
+.dn-canvas.dn-readonly .dn-grip { display: none !important; }
+
+/* 잉크 레이어 (FR-035) · 필기 도구 커서 */
+.dn-ink { pointer-events: none; }
+.dn-canvas.dn-tool-pen, .dn-canvas.dn-tool-highlighter { cursor: crosshair; }
+.dn-canvas.dn-tool-eraser { cursor: cell; }
+.dn-canvas.dn-tool-lasso { cursor: default; }
+.dn-canvas.dn-tool-pen .dn-block, .dn-canvas.dn-tool-highlighter .dn-block, .dn-canvas.dn-tool-eraser .dn-block, .dn-canvas.dn-tool-lasso .dn-block { pointer-events: none; }
+
+/* 블록에 묶인 잉크 (FR-037): 문서 뷰는 SVG, 캔버스는 잉크 레이어가 그린다 */
+.dn-ink-svg svg { display: block; width: 100%; height: auto; }
+
+/* 첨부 파일 (FR-052) */
+.dn-file { display: flex; align-items: center; gap: 10px; min-height: 40px; }
+.dn-file-ext { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px;
+  background: var(--soft, #f7f7f5); border: 1px solid var(--line, #e9e9e7); font-size: 11px; font-weight: var(--fw-2, 550); color: var(--muted, #6b6b68); letter-spacing: 0.02em; }
+.dn-file-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.dn-file-name { font-weight: var(--fw-2, 550); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dn-file-size { font-size: 12px; color: var(--muted, #6b6b68); }
+.dn-file-dl { flex: none; font-size: 12px; color: var(--accent, #3d5fe0); text-decoration: none; padding: 4px 8px; border-radius: 5px; border: 1px solid var(--line, #e9e9e7); }
+.dn-file-dl:hover { background: var(--hover, rgba(55, 53, 47, 0.06)); }
+.dn-file.dn-missing::after { content: attr(data-msg); font-size: 12px; color: var(--danger, #e03131); }
+/* 소리 · 영상 첨부 · 녹음 블록 (FR-043): 카드 줄 아래 재생기 */
+.dn-file.dn-media { flex-direction: column; align-items: stretch; gap: 8px; }
+.dn-file-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.dn-media-player { display: block; width: 100%; }
+.dn-media-audio .dn-media-player { height: 36px; }
+.dn-media-video .dn-media-player { border-radius: 10px; background: #000; max-height: 420px; }
+.dn-media-rate { flex: none; min-width: 40px; font: inherit; font-size: 12px; padding: 4px 6px; border-radius: 6px; border: 1px solid var(--line, #e9e9e7); background: none; color: var(--text, #37352f); cursor: pointer; }
+.dn-media-rate:hover { background: var(--hover, rgba(55, 53, 47, 0.06)); }
+
+/* 동기화 충돌 블록 (FR-097) */
+.dn-block.dn-has-conflict { outline: 2px dashed var(--warn, #c2410c); outline-offset: 2px; }
+.dn-conflict { position: absolute; left: -2px; bottom: calc(100% + 6px); display: flex; align-items: center; gap: 6px; padding: 4px 6px 4px 10px; max-width: 420px; width: max-content;
+  background: var(--warn-soft, #fff4e6); color: var(--warn, #c2410c); border: 1px solid color-mix(in srgb, var(--warn, #c2410c) 35%, transparent); border-radius: 10px; font-size: 12px; box-shadow: var(--sh-2, 0 8px 24px rgba(15, 15, 15, .12)); z-index: 3; }
+.dn-conflict-msg { flex: 1; }
+.dn-conflict button { border: 1px solid #ffc078; background: #fff; color: var(--warn, #c2410c); border-radius: 6px; padding: 2px 8px; font: inherit; cursor: pointer; }
+.dn-conflict .dn-conflict-drop { border-color: transparent; background: transparent; }
+
+/* 목차 블록 (FR-053) */
+.dn-toc { display: flex; flex-direction: column; gap: 6px; font-size: calc(13.5px * var(--dn-fs, 1)); }
+.dn-toc-title { font-size: 12px; font-weight: var(--fw-2, 550); color: var(--subtle, #73726e); letter-spacing: .02em; }
+.dn-toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.dn-toc li { min-width: 0; }
+.dn-toc-l2 { padding-left: 14px; }
+.dn-toc-l3 { padding-left: 28px; }
+.dn-toc-link { display: block; color: var(--text, #37352f); text-decoration: none; padding: 2px 6px; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dn-toc-l1 > .dn-toc-link { font-weight: var(--fw-2, 550); }
+.dn-toc-link:hover { background: var(--hover, rgba(55, 53, 47, 0.06)); color: var(--accent, #4c6ef5); }
+.dn-toc-empty { margin: 0; font-size: 12px; color: var(--subtle, #73726e); }
+
+/* 댓글 표시 (FR-132) */
+.dn-comment-badge { position: absolute; top: -10px; right: -10px; z-index: 3; display: inline-flex; align-items: center; gap: 2px; height: 22px; padding: 0 8px 0 4px;
+  border: 1px solid #f5c041; border-radius: 10px; background: #fff8db; color: #8a6100; font: var(--fw-2, 550) 11px/1 var(--dn-font, sans-serif); cursor: pointer; box-shadow: var(--sh-1, 0 1px 2px rgba(15, 15, 15, .06)); }
+.dn-comment-badge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.dn-comment-badge:hover { background: #ffef9f; }
+
+/* 블록 임베드 (FR-082) */
+.dn-embed { display: flex; flex-direction: column; gap: 6px; border-left: 3px solid var(--accent, #3d5fe0); padding-left: 10px; }
+.dn-embed-head { align-self: flex-start; border: 0; background: none; padding: 0; font: inherit; font-size: 12px; font-weight: var(--fw-2, 550); color: var(--accent, #3d5fe0); cursor: pointer; }
+.dn-embed-head:hover { text-decoration: underline; }
+.dn-embed-body { display: flex; flex-direction: column; gap: 6px; }
+.dn-embed-missing { border-left-color: var(--faint, #9b9a97); }
+.dn-embed-missing .dn-embed-head { color: var(--subtle, #73726e); }
+.dn-embed-missing .dn-embed-body, .dn-embed-other { font-size: 12px; color: var(--subtle, #73726e); }
+
+/* 접근성 (FR-150): 알림 자리는 보이지 않게, 캔버스에 키보드 포커스가 오면 테두리 */
+.dn-sr-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+.dn-canvas:focus { outline: none; }
+.dn-canvas.dn-kbd-focus:focus-visible { outline: 2px solid var(--accent, #3d5fe0); outline-offset: -2px; }
+.dn-block.dn-connect-src { outline: 2px dashed var(--accent, #3d5fe0); outline-offset: 3px; }
+.dn-block.dn-render-error { border-color: #ffa8a8; }
+.dn-render-msg { font-size: 12px; color: var(--danger, #e03131); }
+
+/* 용지(A4) · 문서 쪽 보기: 마지막 페이지 오른쪽 아래 동그란 '+' (새 페이지) */
+.dn-sheet-add, .dn-page-add { position: absolute; z-index: 3; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid var(--line, #e9e9e7); border-radius: 50%; background: var(--card, #fff); color: var(--accent, #3d5fe0); box-shadow: 0 4px 14px rgba(15, 15, 15, .22); cursor: pointer; transition: transform .1s, box-shadow .1s; }
+.dn-sheet-add:hover, .dn-page-add:hover { transform: scale(1.06); box-shadow: 0 6px 18px rgba(15, 15, 15, .28); }
+.dn-sheet-add[hidden] { display: none; }
+.dn-page-add { pointer-events: auto; }
+@media print { .dn-page-add { display: none !important; } }
+
+/* 블록 글자 모양 (오른쪽 클릭 › 글자): 크기 배율 · 글자 색 · 정렬 — 캔버스 블록 · 문서 뷰 항목 */
+.dn-fs-set { --dn-fs: calc(var(--dn-fs-page, var(--dn-fs-user, 1)) * var(--dn-bfs, 1)); }
+.dn-tc .dn-text, .dn-block.dn-tc .dn-part-title, .dn-block.dn-tc .dn-part-title .dn-text-editing, .dn-tc .dn-doc-text { color: var(--dn-text-color) !important; }
+.dn-al-center .dn-text, .dn-al-center .dn-doc-text { text-align: center; }
+.dn-al-right .dn-text, .dn-al-right .dn-doc-text { text-align: right; }
+.dn-al-justify .dn-text, .dn-al-justify .dn-doc-text { text-align: justify; }
+.dn-tc .dn-text h1, .dn-tc .dn-text h2, .dn-tc .dn-text h3, .dn-tc .dn-text h4, .dn-tc .dn-text blockquote { color: var(--dn-text-color) !important; }
+.dn-doc-item.dn-fs-set .dn-doc-title { font-size: calc(17px * var(--dn-fs, 1)); }
+/* 블록 들여쓰기 (block-style.ts indent) — 캔버스 상자 · 문서 뷰 같은 값 */
+.dn-ind-set .dn-text, .dn-ind-set > .dn-doc-text { padding-left: calc(var(--dn-ind, 0) * 24px); }
+.dn-ind-set .dn-doc-text .dn-text { padding-left: 0; }
+/* 각주 번호 (text-pm footnote.ts): 문서 뷰는 문서 전체로, 캔버스는 상자마다 1부터 · 문서 끝 목록 (doc-footnotes.ts) */
+.dn-doc-page, .dn-block { counter-reset: dn-fn; }
+.dn-doc-footnotes { margin-top: 28px; padding-top: 10px; border-top: 1px solid var(--line, #e9e9e7); font-size: 12px; color: var(--muted, #6b6b68); }
+.dn-doc-fn-title { font-weight: var(--fw-2, 550); margin-bottom: 4px; }
+.dn-doc-footnotes ol { margin: 0; padding-left: 22px; }
+/* 첫 줄 들여쓰기 · 내어쓰기(매달린) · 문단 앞뒤 간격 (워드) — 상자 안 문단마다 */
+.dn-fi-set .dn-text p { text-indent: calc(var(--dn-fi, 0) * 1em); }
+.dn-fi-hang .dn-text p { padding-left: calc(var(--dn-fi, 0) * 1em); text-indent: calc(var(--dn-fi, 0) * -1em); }
+.dn-ps-set.dn-ps-set .dn-text > :not(.dn-text-editing) { margin-top: var(--dn-sb, 0px); margin-bottom: var(--dn-sa, 2px); }
+
+/* ── 노드 종류 · 상태 (노트 v6 3단계, STRUCTURE-GUIDE 4.1 · 4.5 · 4.12) — 색만으로 구분하지 않게 태그 · 테두리 ──
+   .dn-block.dn-block: 제목 상자 · 색 블록의 투명 테두리 규칙보다 세게 */
+.dn-kind-tag { position: absolute; left: 0; bottom: calc(100% + 3px); display: flex; gap: 4px; align-items: center; font: var(--fw-2, 550) 11px/16px var(--dn-font, sans-serif); white-space: nowrap; pointer-events: none; }
+.dn-kind-tag > span { padding: 0 4px; border-radius: 4px; background: var(--hover, #f1f1ef); color: var(--muted, #6b6b68); }
+.dn-kind-tag > .dn-speaker { background: var(--dn-block-pink, #f9eef3); color: #c14c8a; }
+.dn-kind-tag > .dn-meta-chip { background: transparent; border: 1px solid var(--border, #e9e9e7); }
+/* 원문 출처 (FR-111, source-link.ts): 원문을 지운 AI 상자는 태그 뒤에 '출처 없음', 고른 AI 상자가 나온 원문 구절은 형광펜 */
+.dn-block.dn-nosrc > .dn-kind-tag::after { content: '출처 없음'; padding: 0 4px; border-radius: 4px; border: 1px dashed var(--border, #e9e9e7); color: var(--subtle, #9b9a97); }
+::highlight(dn-source) { background-color: rgba(255, 212, 0, 0.45); }
+.dn-block.dn-block[data-kind="definition"] { border: 1px solid var(--accent, #3d5fe0); }
+.dn-block.dn-block[data-kind="theorem"] { border: 1.5px solid var(--text, #37352f); }
+.dn-block.dn-block[data-kind="theorem"] .dn-part-body { font-style: italic; }
+.dn-block.dn-block[data-kind="assumption"], .dn-block[data-kind="example"] { border: 1px dashed var(--dn-arrow, #9b9a97); }
+.dn-block.dn-block[data-kind="contradiction"] { border: 1.5px solid var(--danger, #e03131); }
+.dn-block.dn-block[data-kind="contradiction"] .dn-part-title { font-weight: var(--fw-3, 650); }
+.dn-block.dn-block[data-kind="rebuttal"] { border: 1px solid var(--danger, #e03131); }
+.dn-block.dn-block[data-kind="condition"] { border: 1px solid #d9730d; }
+.dn-block.dn-block[data-kind="decision"] { border: 1px solid #2b593f; }
+.dn-block.dn-block[data-kind="goal"] { border: 1px solid var(--accent, #3d5fe0); }
+.dn-block.dn-block[data-kind="risk"] { border: 1px dashed #d9730d; }
+.dn-block.dn-block[data-kind="state"] { border-radius: 16px; }
+.dn-block.dn-block.dn-hedge { border: 1px dotted var(--dn-arrow, #9b9a97); }
+.dn-block.dn-block[data-state="strong"] { border: 1.5px solid var(--text, #37352f); }
+.dn-block.dn-block[data-state="warning"] { border: 1.5px solid var(--danger, #e03131); }
+.dn-block.dn-block[data-state="dim"] { background: var(--soft, #fbfbfa) !important; }
+.dn-block.dn-block[data-state="dim"] .dn-text { color: var(--muted, #6b6b68); }
+
+/* 문서 뷰: 노드 종류 · 상태 · 중괄호 (캔버스 표시와 같은 뜻) */
+.dn-doc-item > .dn-kind-tag { position: static; margin: 0 0 2px; }
+.dn-doc-item > .dn-doc-ghead { font-weight: var(--fw-2, 550); font-size: 1.05em; margin: 10px 0 6px; color: var(--text, inherit); }
+.dn-doc-item[data-kind] { border-left: 3px solid var(--dn-arrow, #9b9a97); padding-left: 8px; }
+.dn-doc-item[data-kind="definition"], .dn-doc-item[data-kind="goal"] { border-left-color: var(--accent, #3d5fe0); }
+.dn-doc-item[data-kind="theorem"] { border-left-color: var(--text, #37352f); }
+.dn-doc-item[data-kind="contradiction"], .dn-doc-item[data-kind="rebuttal"] { border-left-color: var(--danger, #e03131); }
+.dn-doc-item[data-kind="condition"], .dn-doc-item[data-kind="risk"] { border-left-color: #d9730d; }
+.dn-doc-item[data-kind="decision"] { border-left-color: #2b593f; }
+.dn-doc-item.dn-hedge { border-left: 3px dotted var(--dn-arrow, #9b9a97); padding-left: 8px; }
+.dn-doc-item[data-state="strong"] { border-left: 3px solid var(--text, #37352f); padding-left: 8px; }
+.dn-doc-item[data-state="warning"] { border-left: 3px solid var(--danger, #e03131); padding-left: 8px; }
+.dn-doc-item[data-state="dim"] .dn-text { color: var(--muted, #6b6b68); }
+.dn-doc-item[data-brace="1"] { border-left: 3px double var(--dn-arrow, #9b9a97); border-radius: 12px 0 0 12px; padding-left: 10px; }
+
+/* 문서 뷰 끌어 고르기 (doc-marquee) · 묶음(블록) 왼쪽 선 */
+.dn-doc-marquee { position: fixed; z-index: var(--z-float, 30); pointer-events: none; border: 1px solid var(--accent, #3d5fe0); border-radius: 4px; background: color-mix(in srgb, var(--accent, #3d5fe0) 12%, transparent); }
+.dn-doc-item[data-grp]:not([data-grp='']) { position: relative; }
+.dn-doc-item[data-grp]:not([data-grp=''])::after { content: ''; position: absolute; left: -14px; width: 3px; border-radius: 4px; background: color-mix(in srgb, var(--accent, #3d5fe0) 45%, transparent); pointer-events: none; }
+.dn-doc-item[data-grp='first']::after { top: 2px; bottom: -6px; }
+.dn-doc-item[data-grp='mid']::after { top: -6px; bottom: -6px; }
+.dn-doc-item[data-grp='last']::after { top: -6px; bottom: 2px; }
+
+/* 발표 모드 (GAP #21, present.ts): 장면 밖 상자는 옅게, 손잡이 · 고르기 표시는 숨김, 아래 가운데 장면 번호 */
+.dn-present { background: var(--bg, #fff); cursor: pointer; }
+.dn-present .dn-block { transition: opacity 0.25s ease; }
+.dn-present .dn-block:not(.dn-present-on) { opacity: 0.12; }
+.dn-present .dn-grip { display: none !important; }
+.dn-present-hud { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); padding: 4px 12px; border-radius: 12px; background: rgba(55, 53, 47, 0.75); color: #fff; font-size: 12px; font-variant-numeric: tabular-nums; pointer-events: none; z-index: 5; }
+
+/* ── 노트형 (docs/research/NOTE-SHEET-PLAN.md): 카드 안 상자는 카드 하나로 보이게 — 테두리 · 바탕 · 그림자 없이(카드 바탕은 밑층), 올리면 옅게 ── */
+.dn-block.dn-in-card { background: transparent; border-color: transparent; box-shadow: none; }
+.dn-block.dn-in-card.dn-in-card[data-kind] { border-color: transparent; }
+.dn-block.dn-in-card:hover, .dn-block.dn-in-card.dn-editing { border-color: var(--line, #e9e9e7); background: color-mix(in srgb, var(--card, #fff) 70%, transparent); }
+
+/* 구분선 (NS-01): 칸 가득 선 하나, 가운데 라벨. 선 모양은 data-line */
+.dn-block.dn-box-divider { background: transparent; border-color: transparent; box-shadow: none; padding: 0; }
+.dn-block.dn-box-divider:hover { border: 1px dashed var(--line, #e9e9e7); }
+.dn-divider { position: absolute; inset: 0; display: flex; align-items: center; gap: 8px; padding: 0 2px; --dn-div: var(--muted, #6b6b68); }
+.dn-divider[data-orient="v"] { flex-direction: column; padding: 2px 0; }
+.dn-divider:empty { gap: 0; } /* 가운데 글이 없으면 선 하나로 이어지게 */
+.dn-divider::before, .dn-divider::after { content: ''; flex: 1; border: 0 solid var(--dn-div); opacity: 0.55; }
+.dn-divider[data-orient="h"]::before, .dn-divider[data-orient="h"]::after { border-top-width: 1.5px; }
+.dn-divider[data-orient="v"]::before, .dn-divider[data-orient="v"]::after { border-left-width: 1.5px; align-self: center; }
+.dn-divider[data-line="dashed"]::before, .dn-divider[data-line="dashed"]::after { border-style: dashed; }
+.dn-divider[data-line="dotted"]::before, .dn-divider[data-line="dotted"]::after { border-style: dotted; border-width: 2px 0 0 0; }
+.dn-divider[data-orient="v"][data-line="dotted"]::before, .dn-divider[data-orient="v"][data-line="dotted"]::after { border-width: 0 0 0 2px; }
+.dn-divider[data-line="double"]::before, .dn-divider[data-line="double"]::after { border-style: double; border-top-width: 4px; }
+.dn-divider[data-orient="v"][data-line="double"]::before, .dn-divider[data-orient="v"][data-line="double"]::after { border-top-width: 0; border-left-width: 4px; }
+.dn-divider-label { font-size: 12px; font-weight: var(--fw-2, 550); color: var(--muted, #6b6b68); white-space: nowrap; }
+.dn-doc-divider { position: relative; height: 24px; margin: 6px 0; }
+.dn-doc-divider-v { display: none; }

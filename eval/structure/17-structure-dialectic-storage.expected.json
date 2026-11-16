@@ -1,0 +1,21 @@
+{
+  "id": "17-structure-dialectic-storage",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-19"], "pattern": "columns" },
+  "aliases": {
+    "로컬 우선 저장과 서버 동기화": ["로컬 우선 저장", "로컬 우선 저장 + 서버 동기화"]
+  },
+  "mustNodes": ["중앙 서버 저장", "로컬 저장", "로컬 우선 저장과 서버 동기화"],
+  "mustEdges": [
+    { "from": "중앙 서버 저장", "to": "로컬 저장", "relation": ["contrasts"] },
+    { "from": "중앙 서버 저장", "to": "로컬 우선 저장과 서버 동기화", "relation": ["leads-to", "supports", "becomes", "part-of"] },
+    { "from": "로컬 저장", "to": "로컬 우선 저장과 서버 동기화", "relation": ["leads-to", "supports", "becomes", "part-of"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": false, "numbers": [], "nodeTitles": [], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "정-반-합(S-19): 정 · 반은 contrasts로 나란히, 합은 둘 모두에서 이어진다. 한쪽 입장만 합으로 잇거나 합을 결론 없이 빼면 틀림."
+}

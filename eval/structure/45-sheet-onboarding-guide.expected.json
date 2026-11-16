@@ -1,0 +1,89 @@
+{
+  "id": "45-sheet-onboarding-guide",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "신입 개발자 첫 주 안내",
+    "cards": [
+      {
+        "title": "첫날 할 일",
+        "pieces": [
+          "checklist",
+          "text"
+        ],
+        "keep": [
+          "사내 계정 만들기",
+          "보안 교육 영상 보기",
+          "팀 슬랙 채널 들어가기"
+        ]
+      },
+      {
+        "title": "쓰는 도구",
+        "pieces": [
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "GitHub",
+          "Jira",
+          "Figma",
+          "Notion"
+        ]
+      },
+      {
+        "title": "개발 환경",
+        "pieces": [
+          "flow",
+          "checklist",
+          "text"
+        ],
+        "keep": [
+          "저장소를 내려받는다",
+          "로컬 서버가 뜨는지 확인한다"
+        ]
+      },
+      {
+        "title": "물어볼 곳",
+        "pieces": [
+          "text",
+          "table"
+        ],
+        "keep": [
+          "IT 지원팀",
+          "담당 멘토",
+          "인사팀"
+        ]
+      },
+      {
+        "title": "팁",
+        "pieces": [
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "모르는 건 바로 물어보는 게 이 팀의 문화예요"
+        ]
+      }
+    ]
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "안내서: 할 일은 체크리스트, 도구는 칩, 번호 단계는 한 줄 흐름 또는 할 일. 팁 인용 상자는 콜아웃(info)."
+}

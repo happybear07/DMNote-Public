@@ -1,0 +1,59 @@
+{
+  "id": "36-structure-feedback-loop-traffic",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-47"
+    ],
+    "pattern": "loop"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "도로 확장",
+    "차량 이용 증가",
+    "교통 체증"
+  ],
+  "mustEdges": [
+    {
+      "from": "도로 확장",
+      "to": "차량 이용 증가",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "차량 이용 증가",
+      "to": "교통 체증",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "교통 체증",
+      "to": "도로 확장",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "인과 고리(S-47 되먹임): 세 노드가 고리로 닫힌다(마지막 → 처음). 극성 sign을 원문이 말할 때만."
+}

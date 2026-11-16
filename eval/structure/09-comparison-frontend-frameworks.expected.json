@@ -1,0 +1,26 @@
+{
+  "id": "09-comparison-frontend-frameworks",
+  "category": "comparison",
+  "lang": "en",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-08", "S-10"], "pattern": "table" },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": ["Framework", "Learning curve", "Reactivity model", "Bundle size", "Ecosystem", "Best fit"],
+      "rowLabels": ["React", "Vue", "Svelte"],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": ["Angular", "프레임워크"],
+    "substrings": ["Angular", "SolidJS", "KB", "학습 곡선"]
+  },
+  "notes": "원문이 Markdown 표 → 같은 열 이름 · 같은 행 순서로 재현(exactColumns). 'Bundle size'가 Larger/Medium/Smallest 텍스트이므로 KB 수치를 지식으로 채우면 실패. 영어 원문이므로 열 이름을 한국어로 번역하면 실패."
+}

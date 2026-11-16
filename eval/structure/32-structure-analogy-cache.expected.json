@@ -1,0 +1,82 @@
+{
+  "id": "32-structure-analogy-cache",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-21"
+    ],
+    "pattern": "mapping"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "책상 위 메모",
+    "캐시",
+    "서랍",
+    "메인 메모리"
+  ],
+  "mustEdges": [
+    {
+      "from": "책상 위 메모",
+      "to": "캐시",
+      "relation": [
+        "analogous-to",
+        "maps-to"
+      ],
+      "alternatives": [
+        {
+          "from": "캐시",
+          "to": "책상 위 메모",
+          "relation": [
+            "analogous-to",
+            "maps-to"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "서랍",
+      "to": "메인 메모리",
+      "relation": [
+        "analogous-to",
+        "maps-to"
+      ],
+      "alternatives": [
+        {
+          "from": "메인 메모리",
+          "to": "서랍",
+          "relation": [
+            "analogous-to",
+            "maps-to"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "캐시",
+      "to": "메인 메모리",
+      "relation": [
+        "inhibits",
+        "relates",
+        "leads-to",
+        "depends-on"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "유추(S-21): 비유 쪽(책상 위 메모 · 서랍)과 실제 쪽(캐시 · 메인 메모리)의 짝. 짝이 높이 맞게 두 열(mapping). (10/13: 원문 '캐시는 … 메인 메모리 접근을 줄입니다'의 관계도 기대에 — 맞는 엣지를 틀리게 세던 것)"
+}

@@ -1,0 +1,80 @@
+/* 웹 북마크 · 임베드 (FR-050 · FR-051) — web-render.ts */
+.dn-web { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+
+/* 카드: 글(제목 · 설명 · 주소) + 오른쪽 그림 */
+.dn-web.dn-web-card { flex-direction: row; align-items: stretch; gap: 0; border: 1px solid var(--line, #e9e9e7); border-radius: 8px; overflow: hidden; background: var(--card, #fff); }
+.dn-web-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; }
+.dn-web-title { font-weight: var(--fw-2, 550); color: var(--text, #37352f); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dn-web-title:hover { text-decoration: underline; }
+.dn-web-desc { color: var(--muted, #6b6b68); font-size: 12px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dn-web-url { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted, #6b6b68); min-width: 0; }
+.dn-web-url > span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dn-web-thumb { flex: none; width: 34%; max-width: 180px; min-height: 80px; object-fit: cover; border-left: 1px solid var(--line, #e9e9e7); }
+.dn-web-note { font-size: 11px; color: var(--muted, #6b6b68); }
+.dn-web-note.dn-web-err { color: var(--danger, #e03131); }
+
+/* 임베드: 머리 줄 + 화면 */
+.dn-web-head { display: flex; align-items: center; gap: 8px; min-height: 22px; font-size: 12px; color: var(--muted, #6b6b68); }
+.dn-web-provider { font-weight: var(--fw-2, 550); color: var(--text, #37352f); }
+.dn-web-host { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dn-web-open { color: var(--accent, #4c6ef5); text-decoration: none; white-space: nowrap; }
+.dn-web-open:hover { text-decoration: underline; }
+.dn-web-view { flex: none; border: 1px solid var(--line, #e9e9e7); background: none; border-radius: 5px; padding: 1px 8px; font: inherit; font-size: 11px; color: var(--muted, #6b6b68); cursor: pointer; }
+.dn-web-view:hover { background: var(--hover, rgba(55, 53, 47, 0.06)); color: var(--text, #37352f); }
+.dn-web-frame { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: var(--soft, #f7f7f5); border: 1px solid var(--line, #e9e9e7); }
+.dn-web-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* 캔버스: 덮개가 누르기를 받는다 — 두 번 누르면(dn-web-live) 걷힌다 */
+.dn-web-shield { position: absolute; inset: 0; cursor: default; }
+.dn-web-live .dn-web-shield { display: none; }
+.dn-web-live .dn-web-frame { outline: 2px solid var(--accent, #3d5fe0); outline-offset: -2px; }
+
+/* 주소 넣기 칸 */
+.dn-web.dn-web-empty { padding: 10px 12px; border: 1px dashed var(--line, #e9e9e7); border-radius: 8px; background: var(--soft, #f7f7f5); }
+.dn-web-input { display: flex; gap: 6px; }
+.dn-web-input input { flex: 1; min-width: 0; font: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid var(--line, #e9e9e7); border-radius: 6px; background: var(--card, #fff); color: var(--text, #37352f); }
+.dn-web-input input:focus { outline: 2px solid var(--accent, #3d5fe0); outline-offset: -1px; }
+.dn-web-ok { flex: none; font: inherit; font-size: 12px; padding: 6px 10px; border: 0; border-radius: 6px; background: var(--accent, #3d5fe0); color: #fff; cursor: pointer; }
+/* 빈 임베드는 16:9 자리를 먼저 잡는다 (주소를 넣은 뒤 커지면서 겹치지 않게) */
+.dn-web.dn-web-empty-embed { aspect-ratio: 16 / 9; justify-content: center; }
+
+/* 캔버스: 블록 자체가 카드라 안쪽 테두리는 뺀다 */
+.dn-block .dn-web.dn-web-card { border: 0; border-radius: 0; background: none; gap: 10px; }
+.dn-block .dn-web-text { padding: 0; }
+.dn-block .dn-web-thumb { border-left: 0; border-radius: 6px; max-height: 84px; min-height: 0; }
+
+/* 버튼 블록 (GAP #17, button-render.ts): 이름 단추 + 고치기(⋯) */
+.dn-button { display: flex; align-items: center; gap: 4px; height: 100%; min-height: 32px; padding: 2px; }
+.dn-btn-press { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; padding: 6px 12px; border: 1px solid var(--line, #e3e2de); border-radius: 6px;
+  background: var(--card, #fff); color: var(--text, #37352f); font: inherit; font-size: 13px; font-weight: var(--fw-2, 550); cursor: pointer; box-shadow: var(--sh-1, 0 1px 2px rgba(15, 15, 15, .06)); }
+.dn-btn-press span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dn-btn-press:hover:not(:disabled) { background: var(--hover, #f1f1ef); }
+.dn-btn-press:active:not(:disabled) { transform: translateY(1px); }
+.dn-btn-press:disabled { cursor: default; opacity: 0.75; }
+.dn-btn-edit { border: 0; background: transparent; color: var(--muted, #6b6b68); font: inherit; padding: 4px 6px; border-radius: 4px; cursor: pointer; opacity: 0; }
+.dn-button:hover .dn-btn-edit, .dn-btn-edit:focus-visible { opacity: 1; }
+.dn-btn-edit:hover { background: var(--hover, #f1f1ef); }
+.dn-readonly .dn-btn-edit { display: none; }
+.dn-readonly .dn-btn-press { cursor: default; opacity: 0.75; }
+.dn-block:has(.dn-button) { background: transparent; box-shadow: none; border-color: transparent; padding: 2px; }
+
+/* 탭 블록 (GAP #17, tabs-render.ts): 탭 줄 + 지금 탭 글 */
+.dn-tabs { display: flex; flex-direction: column; gap: 8px; min-height: 60px; }
+.dn-tabs-strip { display: flex; align-items: center; gap: 2px; border-bottom: 1px solid var(--line, #e9e9e7); overflow-x: auto; scrollbar-width: none; }
+.dn-tab { border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: none; font: inherit; font-size: 13px; color: var(--muted, #6b6b68); padding: 4px 10px; cursor: pointer; white-space: nowrap; border-radius: 4px 4px 0 0; }
+.dn-tab:hover { background: var(--hover, #f1f1ef); color: var(--text, #37352f); }
+.dn-tab.on { color: var(--text, #37352f); font-weight: var(--fw-2, 550); border-bottom-color: var(--text, #37352f); }
+.dn-tab-x, .dn-tab-add { border: 0; background: none; font: inherit; font-size: 13px; color: var(--faint, #9b9a97); padding: 4px 6px; border-radius: 4px; cursor: pointer; }
+.dn-tab-x:hover, .dn-tab-add:hover { background: var(--hover, #f1f1ef); color: var(--text, #37352f); }
+.dn-tab-name { font: inherit; font-size: 13px; width: 8em; padding: 4px 6px; border: 1px solid var(--accent, #3d5fe0); border-radius: 4px; outline: none; }
+.dn-tabs-body { min-height: 24px; }
+.dn-tabs-body:empty::before, .dn-tabs-body p:only-child:empty::before { content: '두 번 눌러 이 탭에 쓰기'; color: var(--faint, #9b9a97); }
+.dn-readonly .dn-tabs-body p:only-child:empty::before, .dn-tab-editing p:only-child:empty::before { content: none; }
+
+/* PDF 보기 (GAP #22, rich-render.ts renderPdf) */
+.dn-file-pdf { display: flex; flex-direction: column; gap: 8px; height: 100%; }
+.dn-file-pdf .dn-file-row { display: flex; align-items: center; gap: 10px; }
+.dn-file-pv { border: 1px solid var(--line, #e3e2de); background: var(--card, #fff); color: var(--text, #37352f); font: inherit; font-size: 12px; padding: 4px 8px; border-radius: 5px; cursor: pointer; white-space: nowrap; }
+.dn-file-pv:hover { background: var(--hover, #f1f1ef); }
+.dn-pdf-view { position: relative; flex: none; height: calc(var(--dn-minh, 640px) - 73px); min-height: 160px; border: 1px solid var(--line, #e9e9e7); border-radius: 6px; overflow: hidden; background: var(--hover, #f7f7f5); }
+.dn-pdf-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.dn-pdf-bad { padding: 16px; font-size: 13px; color: var(--muted, #6b6b68); }

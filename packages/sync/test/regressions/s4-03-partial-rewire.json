@@ -1,0 +1,38 @@
+{
+  "n": 2,
+  "found": "2026-10-19 DN_FUZZ_RUNS=10000 seed -1817859799 (4851번째)",
+  "actions": [
+    {
+      "k": "create",
+      "r": 1,
+      "x": 0,
+      "y": 0,
+      "text": "가",
+      "title": false
+    },
+    {
+      "k": "group",
+      "r": 0,
+      "pick": 0,
+      "pick2": 0
+    },
+    {
+      "k": "recv",
+      "r": 0,
+      "pick": 0,
+      "dup": false
+    },
+    {
+      "k": "rewire",
+      "r": 1,
+      "pick": 0,
+      "pick2": 28
+    },
+    {
+      "k": "send",
+      "r": 1,
+      "pick": 21,
+      "dup": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "03-relation-bookstore-services",
+  "category": "relation",
+  "lang": "en",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-51", "S-25", "S-27"], "pattern": "network" },
+  "aliases": {
+    "Kafka": ["OrderPlaced event", "OrderPlaced"],
+    "PostgreSQL": ["PostgreSQL database"],
+    "Redis": ["Redis cache"]
+  },
+  "mustNodes": [
+    "API Gateway",
+    "Auth Service",
+    "Catalog Service",
+    "Redis",
+    "PostgreSQL",
+    "Order Service",
+    "Payment Service",
+    "Inventory Service",
+    "Kafka",
+    "Notification Service"
+  ],
+  "mustEdges": [
+    { "from": "API Gateway", "to": "Auth Service", "relation": ["depends-on"] },
+    { "from": "Catalog Service", "to": "Redis", "relation": ["depends-on"] },
+    { "from": "Catalog Service", "to": "PostgreSQL", "relation": ["depends-on"] },
+    { "from": "Order Service", "to": "Payment Service", "relation": ["depends-on"] },
+    { "from": "Order Service", "to": "Inventory Service", "relation": ["depends-on"] },
+    { "from": "Order Service", "to": "Kafka", "relation": ["depends-on", "leads-to"] },
+    {
+      "from": "Inventory Service", "to": "Kafka", "relation": ["depends-on"],
+      "alternatives": [ { "from": "Kafka", "to": "Inventory Service", "relation": ["leads-to", "next"] } ]
+    },
+    {
+      "from": "Notification Service", "to": "Kafka", "relation": ["depends-on"],
+      "alternatives": [ { "from": "Kafka", "to": "Notification Service", "relation": ["leads-to", "next"] } ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": ["API 게이트웨이", "주문 서비스", "결제 서비스"],
+    "substrings": ["Stripe", "RabbitMQ", "MongoDB"]
+  },
+  "notes": "영어 입력. 제목을 한국어로 번역하면 안 된다(locale이 ko여도). 원문에 없는 기술(Stripe, RabbitMQ 등)을 지식으로 채우면 안 된다."
+}

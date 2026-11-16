@@ -1,0 +1,92 @@
+{
+  "id": "50-sheet-en-remote-work",
+  "category": "sheet",
+  "lang": "en",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "Remote Work Survival Guide",
+    "cards": [
+      {
+        "title": "Set up your space",
+        "pieces": [
+          "checklist",
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "A desk you only use for work",
+          "A chair that supports your back"
+        ]
+      },
+      {
+        "title": "Daily routine",
+        "pieces": [
+          "flow",
+          "text",
+          "checklist"
+        ],
+        "keep": [
+          "block two hours for deep work",
+          "take a real lunch break"
+        ]
+      },
+      {
+        "title": "Communication",
+        "pieces": [
+          "text",
+          "checklist"
+        ],
+        "keep": [
+          "Post a short status in the team channel every morning",
+          "Turn the camera on for one-on-ones"
+        ]
+      },
+      {
+        "title": "Avoid burnout",
+        "pieces": [
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "you are not working remotely, you are always working"
+        ]
+      },
+      {
+        "title": "Useful tools",
+        "pieces": [
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "Slack",
+          "Notion",
+          "Toggl",
+          "Krisp"
+        ]
+      }
+    ]
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": [
+      "도구",
+      "소통",
+      "루틴"
+    ]
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "영어 원문: 카드 · 조각 모두 영어 그대로(번역 금지 — 한국어 낱말이 나오면 위반)."
+}

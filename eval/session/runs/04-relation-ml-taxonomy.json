@@ -1,0 +1,594 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "머신러닝 개념",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "인공지능",
+          "kind": "concept",
+          "source": {
+            "quote": "인공지능"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "머신러닝",
+          "kind": "concept",
+          "body": "명시적인 규칙 대신 데이터로부터 패턴을 학습",
+          "source": {
+            "quote": "명시적인 규칙 대신 데이터로부터 패턴을 학습합니다"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "지도 학습",
+          "kind": "concept",
+          "body": "정답(레이블)이 있는 데이터로 학습",
+          "group": "지도 학습",
+          "source": {
+            "quote": "정답(레이블)이 있는 데이터로 학습합니다"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "비지도 학습",
+          "kind": "concept",
+          "body": "정답 없이 데이터의 구조를 찾음",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "정답 없이 데이터의 구조를 찾습니다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "강화 학습",
+          "kind": "concept",
+          "body": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습",
+          "group": "강화 학습",
+          "source": {
+            "quote": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습합니다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "분류",
+          "kind": "concept",
+          "body": "입력이 어느 범주에 속하는지 맞히는 문제",
+          "group": "지도 학습",
+          "source": {
+            "quote": "입력이 어느 범주에 속하는지 맞히는 문제입니다"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "회귀",
+          "kind": "concept",
+          "body": "연속적인 값을 예측하는 문제",
+          "group": "지도 학습",
+          "source": {
+            "quote": "연속적인 값을 예측하는 문제입니다"
+          }
+        },
+        {
+          "key": "n8",
+          "title": "스팸 메일 필터",
+          "kind": "concept",
+          "body": "메일을 스팸/정상으로 분류",
+          "group": "지도 학습",
+          "source": {
+            "quote": "메일을 스팸/정상으로 분류합니다"
+          }
+        },
+        {
+          "key": "n9",
+          "title": "주택 가격 예측",
+          "kind": "concept",
+          "group": "지도 학습",
+          "source": {
+            "quote": "대표적인 회귀 문제입니다"
+          }
+        },
+        {
+          "key": "n10",
+          "title": "군집화",
+          "kind": "concept",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "정답 없이 데이터의 구조를 찾습니다. 대표적인 기법이"
+          }
+        },
+        {
+          "key": "n11",
+          "title": "고객 세분화",
+          "kind": "concept",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "군집화를 활용한 예입니다"
+          }
+        },
+        {
+          "key": "n12",
+          "title": "알파고",
+          "kind": "concept",
+          "group": "강화 학습",
+          "source": {
+            "quote": "강화 학습으로 유명해진 사례입니다"
+          }
+        },
+        {
+          "key": "n13",
+          "title": "딥러닝",
+          "kind": "concept",
+          "body": "- 인공신경망을 깊게 쌓아 쓰는 머신러닝의 하위 분야\n- 별도의 네 번째 분류가 아님\n- 지도 학습·비지도 학습·강화 학습 어디에나 쓰일 수 있음",
+          "source": {
+            "quote": "인공신경망을 깊게 쌓아 쓰는 머신러닝의 하위 분야입니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "part-of"
+        },
+        {
+          "from": "n3",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n4",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n5",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n6",
+          "to": "n3",
+          "relation": "part-of"
+        },
+        {
+          "from": "n7",
+          "to": "n3",
+          "relation": "part-of"
+        },
+        {
+          "from": "n8",
+          "to": "n6",
+          "relation": "example-of"
+        },
+        {
+          "from": "n9",
+          "to": "n7",
+          "relation": "example-of"
+        },
+        {
+          "from": "n10",
+          "to": "n4",
+          "relation": "part-of"
+        },
+        {
+          "from": "n11",
+          "to": "n10",
+          "relation": "example-of"
+        },
+        {
+          "from": "n12",
+          "to": "n5",
+          "relation": "example-of"
+        },
+        {
+          "from": "n13",
+          "to": "n2",
+          "relation": "part-of"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "머신러닝 개념",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "인공지능",
+          "kind": "concept",
+          "source": {
+            "quote": "의 한 분야로, 명시적인 규칙 대신 데이터로부터 패턴을 학습합니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "머신러닝",
+          "kind": "concept",
+          "body": "- 명시적인 규칙 대신 데이터로부터 패턴을 학습\n- 학습 방식에 따라 크게 세 가지로 나뉨",
+          "source": {
+            "quote": "머신러닝은 학습 방식에 따라 크게 세 가지로 나뉩니다"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "지도 학습",
+          "kind": "concept",
+          "body": "정답(레이블)이 있는 데이터로 학습. 대표적인 문제 유형은 두 가지",
+          "group": "지도 학습",
+          "source": {
+            "quote": "정답(레이블)이 있는 데이터로 학습합니다"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "비지도 학습",
+          "kind": "concept",
+          "body": "정답 없이 데이터의 구조를 찾음",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "정답 없이 데이터의 구조를 찾습니다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "강화 학습",
+          "kind": "concept",
+          "body": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습",
+          "group": "강화 학습",
+          "source": {
+            "quote": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습합니다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "분류",
+          "kind": "concept",
+          "body": "입력이 어느 범주에 속하는지 맞히는 문제",
+          "group": "지도 학습",
+          "source": {
+            "quote": "입력이 어느 범주에 속하는지 맞히는 문제입니다"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "회귀",
+          "kind": "concept",
+          "body": "연속적인 값을 예측하는 문제",
+          "group": "지도 학습",
+          "source": {
+            "quote": "연속적인 값을 예측하는 문제입니다"
+          }
+        },
+        {
+          "key": "n8",
+          "title": "스팸 메일 필터",
+          "kind": "concept",
+          "body": "메일을 스팸/정상으로 분류",
+          "group": "지도 학습",
+          "source": {
+            "quote": "메일을 스팸/정상으로 분류합니다"
+          }
+        },
+        {
+          "key": "n9",
+          "title": "주택 가격 예측",
+          "kind": "concept",
+          "group": "지도 학습",
+          "source": {
+            "quote": "대표적인 회귀 문제입니다"
+          }
+        },
+        {
+          "key": "n10",
+          "title": "군집화",
+          "kind": "concept",
+          "body": "비지도 학습의 대표적인 기법",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "정답 없이 데이터의 구조를 찾습니다. 대표적인 기법이"
+          }
+        },
+        {
+          "key": "n11",
+          "title": "고객 세분화",
+          "kind": "concept",
+          "body": "쇼핑몰의 고객 세분화가 군집화를 활용한 예",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "군집화를 활용한 예입니다"
+          }
+        },
+        {
+          "key": "n12",
+          "title": "알파고",
+          "kind": "concept",
+          "body": "강화 학습으로 유명해진 사례",
+          "group": "강화 학습",
+          "source": {
+            "quote": "강화 학습으로 유명해진 사례입니다"
+          }
+        },
+        {
+          "key": "n13",
+          "title": "딥러닝",
+          "kind": "concept",
+          "body": "- 별도의 네 번째 분류가 아님\n- 지도 학습·비지도 학습·강화 학습 어디에나 쓰일 수 있음",
+          "source": {
+            "quote": "인공신경망을 깊게 쌓아 쓰는 머신러닝의 하위 분야입니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "part-of"
+        },
+        {
+          "from": "n3",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n4",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n5",
+          "to": "n2",
+          "relation": "part-of"
+        },
+        {
+          "from": "n6",
+          "to": "n3",
+          "relation": "part-of"
+        },
+        {
+          "from": "n7",
+          "to": "n3",
+          "relation": "part-of"
+        },
+        {
+          "from": "n8",
+          "to": "n6",
+          "relation": "example-of"
+        },
+        {
+          "from": "n9",
+          "to": "n7",
+          "relation": "example-of"
+        },
+        {
+          "from": "n10",
+          "to": "n4",
+          "relation": "part-of"
+        },
+        {
+          "from": "n11",
+          "to": "n10",
+          "relation": "example-of"
+        },
+        {
+          "from": "n12",
+          "to": "n5",
+          "relation": "example-of"
+        },
+        {
+          "from": "n13",
+          "to": "n2",
+          "relation": "part-of"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "머신러닝",
+      "nodes": [
+        {
+          "key": "ai",
+          "title": "인공지능",
+          "kind": "concept",
+          "source": {
+            "quote": "의 한 분야로, 명시적인 규칙 대신 데이터로부터 패턴을 학습합니다"
+          }
+        },
+        {
+          "key": "ml",
+          "title": "머신러닝",
+          "kind": "concept",
+          "body": "명시적인 규칙 대신 데이터로부터 패턴을 학습합니다.",
+          "source": {
+            "quote": "머신러닝은 학습 방식에 따라 크게 세 가지로 나뉩니다"
+          }
+        },
+        {
+          "key": "sup",
+          "title": "지도 학습",
+          "kind": "concept",
+          "body": "정답(레이블)이 있는 데이터로 학습합니다.",
+          "group": "지도 학습",
+          "source": {
+            "quote": "정답(레이블)이 있는 데이터로 학습합니다"
+          }
+        },
+        {
+          "key": "cls",
+          "title": "분류",
+          "kind": "concept",
+          "body": "입력이 어느 범주에 속하는지 맞히는 문제입니다.",
+          "group": "지도 학습",
+          "source": {
+            "quote": "입력이 어느 범주에 속하는지 맞히는 문제입니다"
+          }
+        },
+        {
+          "key": "reg",
+          "title": "회귀",
+          "kind": "concept",
+          "body": "연속적인 값을 예측하는 문제입니다.",
+          "group": "지도 학습",
+          "source": {
+            "quote": "연속적인 값을 예측하는 문제입니다"
+          }
+        },
+        {
+          "key": "spam",
+          "title": "스팸 메일 필터",
+          "kind": "concept",
+          "body": "메일을 스팸/정상으로 분류합니다.",
+          "group": "지도 학습",
+          "source": {
+            "quote": "메일을 스팸/정상으로 분류합니다"
+          }
+        },
+        {
+          "key": "house",
+          "title": "주택 가격 예측",
+          "kind": "concept",
+          "body": "대표적인 회귀 문제입니다.",
+          "group": "지도 학습",
+          "source": {
+            "quote": "이 대표적인 회귀 문제입니다"
+          }
+        },
+        {
+          "key": "unsup",
+          "title": "비지도 학습",
+          "kind": "concept",
+          "body": "정답 없이 데이터의 구조를 찾습니다.",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "정답 없이 데이터의 구조를 찾습니다"
+          }
+        },
+        {
+          "key": "cluster",
+          "title": "군집화",
+          "kind": "concept",
+          "body": "비지도 학습의 대표적인 기법입니다.",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "구조를 찾습니다. 대표적인 기법이"
+          }
+        },
+        {
+          "key": "seg",
+          "title": "고객 세분화",
+          "kind": "concept",
+          "body": "쇼핑몰의 고객 세분화가 군집화를 활용한 예입니다.",
+          "group": "비지도 학습",
+          "source": {
+            "quote": "가 군집화를 활용한 예입니다"
+          }
+        },
+        {
+          "key": "rl",
+          "title": "강화 학습",
+          "kind": "concept",
+          "body": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습합니다.",
+          "group": "강화 학습",
+          "source": {
+            "quote": "에이전트가 환경과 상호작용하며 보상을 최대화하는 행동을 학습합니다"
+          }
+        },
+        {
+          "key": "alphago",
+          "title": "알파고",
+          "kind": "concept",
+          "body": "강화 학습으로 유명해진 사례입니다.",
+          "group": "강화 학습",
+          "source": {
+            "quote": "가 강화 학습으로 유명해진 사례입니다"
+          }
+        },
+        {
+          "key": "dl",
+          "title": "딥러닝",
+          "kind": "concept",
+          "body": "- 별도의 네 번째 분류가 아니라 머신러닝의 하위 분야\n- 인공신경망을 깊게 쌓아 쓰는 방식\n- 지도 학습·비지도 학습·강화 학습 어디에나 쓰일 수 있어요",
+          "source": {
+            "quote": "인공신경망을 깊게 쌓아 쓰는 머신러닝의 하위 분야입니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "ml",
+          "to": "ai",
+          "relation": "part-of"
+        },
+        {
+          "from": "sup",
+          "to": "ml",
+          "relation": "part-of"
+        },
+        {
+          "from": "unsup",
+          "to": "ml",
+          "relation": "part-of"
+        },
+        {
+          "from": "rl",
+          "to": "ml",
+          "relation": "part-of"
+        },
+        {
+          "from": "cls",
+          "to": "sup",
+          "relation": "part-of"
+        },
+        {
+          "from": "reg",
+          "to": "sup",
+          "relation": "part-of"
+        },
+        {
+          "from": "cluster",
+          "to": "unsup",
+          "relation": "part-of"
+        },
+        {
+          "from": "spam",
+          "to": "cls",
+          "relation": "example-of"
+        },
+        {
+          "from": "house",
+          "to": "reg",
+          "relation": "example-of"
+        },
+        {
+          "from": "seg",
+          "to": "cluster",
+          "relation": "example-of"
+        },
+        {
+          "from": "alphago",
+          "to": "rl",
+          "relation": "example-of"
+        },
+        {
+          "from": "dl",
+          "to": "ml",
+          "relation": "part-of"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  }
+]

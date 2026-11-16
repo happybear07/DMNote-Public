@@ -1,0 +1,102 @@
+{
+  "id": "49-sheet-swot-cafe",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": [
+    "sheet",
+    "diagram"
+  ],
+  "sheet": {
+    "title": "동네 카페 SWOT 분석",
+    "cards": [
+      {
+        "title": "강점 (S)",
+        "pieces": [
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "직접 볶는 원두",
+          "단골 손님이 많다"
+        ]
+      },
+      {
+        "title": "약점 (W)",
+        "pieces": [
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "좌석이 12석뿐이다",
+          "주차 공간이 없다"
+        ]
+      },
+      {
+        "title": "기회 (O)",
+        "pieces": [
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "새 오피스텔 입주",
+          "원두 정기 배송 수요 증가"
+        ]
+      },
+      {
+        "title": "위협 (T)",
+        "pieces": [
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "대형 프랜차이즈 개점",
+          "원두 가격 상승"
+        ]
+      },
+      {
+        "title": "다음 할 일",
+        "pieces": [
+          "conclusion",
+          "callout",
+          "text",
+          "checklist"
+        ],
+        "keep": [
+          "원두 정기 배송을 먼저 시작해"
+        ]
+      }
+    ]
+  },
+  "aliases": {
+    "강점 (S)": [
+      "강점"
+    ],
+    "약점 (W)": [
+      "약점"
+    ],
+    "기회 (O)": [
+      "기회"
+    ],
+    "위협 (T)": [
+      "위협"
+    ]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "SWOT: 카드 네 장(2열이면 2×2)도, 사분면 도식(S-13)도 맞다 — 갈래 두 가지 모두 허용. 칸 사이 화살표를 지어내지 않는다."
+}

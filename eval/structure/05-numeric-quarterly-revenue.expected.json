@@ -1,0 +1,48 @@
+{
+  "id": "05-numeric-quarterly-revenue",
+  "category": "numeric",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-56"], "pattern": "chart" },
+  "aliases": {
+    "흑자 전환": ["영업이익 흑자 전환", "처음으로 흑자 전환"]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [
+    {
+      "kind": ["line", "bar"],
+      "unit": "억 원",
+      "series": [
+        {
+          "name": "매출",
+          "points": [
+            { "x": "1분기", "y": 12.4 },
+            { "x": "2분기", "y": 15.8 },
+            { "x": "3분기", "y": 21.3 },
+            { "x": "4분기", "y": 27.9 }
+          ]
+        },
+        {
+          "name": "영업이익",
+          "points": [
+            { "x": "1분기", "y": -3.2 },
+            { "x": "2분기", "y": -1.5 },
+            { "x": "3분기", "y": 0.8 },
+            { "x": "4분기", "y": 2.6 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tables": [],
+  "forbid": {
+    "charts": false,
+    "tables": false,
+    "numbers": [77.4, 19.35, 3.4, 5.5, 6.6],
+    "chartNumbers": [150],
+    "nodeTitles": [],
+    "substrings": ["77.4", "합계", "평균"]
+  },
+  "notes": "분기 추이 → line(bar도 허용). 매출·영업이익은 같은 x를 가진 두 시리즈(한 차트 또는 차트 2개 모두 허용). 연간 합계(77.4)·평균·성장률을 계산해 넣으면 실패. 2026년 목표 150억 원은 실적 시리즈에 섞으면 안 된다(원문에 있는 수치라 forbid.chartNumbers에 둠)."
+}

@@ -1,0 +1,173 @@
+// 수식 확인 (FR-018): $식$ 입력 규칙 → 인라인 수식(KaTeX), 슬래시 "수식" → 블록 수식 + LaTeX 입력 칸 → 적용, 편집을 끝내도 수식으로 보임,
+// 다시 눌러 고치기, 문서 뷰 · Markdown · 검색. 사용: dev 서버 실행 후 `node e2e/math.mjs [스크린샷 폴더]`
+import { chromium } from 'playwright-core';
+
+const BASE = process.env.DN_URL ?? 'http://localhost:5173';
+const OUT = process.argv[2] ?? '.';
+const results = [];
+const check = (name, ok, detail = '') => { results.push({ name, ok }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`); };
+const browser = await chromium.launch({ channel: process.env.DN_CHANNEL ?? 'msedge', headless: true });
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.addInitScript(() => localStorage.setItem('dn:no-env-key', '1'));
+const page = await ctx.newPage();
+const errors = [];
+page.on('pageerror', (e) => errors.push(String(e)));
+page.on('console', (m) => { if (m.type() === 'error' && !/favicon/.test(m.text())) errors.push(m.text()); });
+const ws = (fn, arg) => page.evaluate(fn, arg);
+const wait = (ms) => page.waitForTimeout(ms);
+await page.goto(BASE);
+await page.waitForSelector('.dn-block', { timeout: 15000 });
+await wait(400);
+const texts = () => ws(() => { const v = window.__dn.view; return [...v.engine.contents()].filter((c) => c.type === 'text').map((c) => JSON.stringify(c.doc)).join('\n'); });
+
+await ws(() => { const v = window.__dn.view; v.setCamera({ ...v.cam, x: v.cam.x + 3000 }); });
+await wait(100);
+await page.evaluate(() => window.__dn.view.setTool('block')); await page.mouse.click(600, 250);
+await wait(300);
+await page.keyboard.type('수식 시험');
+await page.keyboard.press('Enter');
+await page.keyboard.type('넓이는 $\\pi r^2$');
+await wait(150);
+check('$식$ 입력 → 인라인 수식 (KaTeX)', (await page.locator('.dn-text-editing .dn-math .katex').count()) === 1 && (await texts()).includes('"tex":"\\\\pi r^2"'));
+await page.keyboard.type(' 이다.');
+await page.keyboard.press('Enter');
+await page.keyboard.type('/수식');
+await wait(250);
+await page.keyboard.press('Enter');
+await page.waitForSelector('.dn-math-input', { timeout: 3000 });
+check('슬래시 "수식" → 블록 수식 + LaTeX 입력 칸', (await page.locator('.dn-text-editing .dn-math-block').count()) === 1);
+await page.keyboard.type('\\frac{a+b}{2}');
+await wait(100);
+check('입력하는 대로 미리보기', (await page.locator('.dn-math-block .dn-math-view .katex .mfrac').count()) === 1);
+await page.keyboard.press('Enter');
+await wait(150);
+check('Enter로 적용', (await texts()).includes('"tex":"\\\\frac{a+b}{2}"') && (await page.locator('.dn-math-input').count()) === 0);
+await page.keyboard.press('Escape');
+await wait(200);
+check('편집을 끝내도 수식으로 보임', (await page.locator('.dn-block .dn-math .katex').count()) >= 1 && (await page.locator('.dn-block .dn-math-block .katex-display').count()) === 1);
+await page.screenshot({ path: `${OUT}/math.png` });
+
+// 다시 들어가 고치기
+const blk = page.locator('.dn-block', { has: page.locator('.dn-math-block') });
+const bb = await blk.boundingBox();
+await page.mouse.dblclick(bb.x + 20, bb.y + 14);
+await wait(250);
+await page.locator('.dn-text-editing .dn-math-block').click();
+await page.waitForSelector('.dn-math-input');
+await page.keyboard.press('Control+a');
+await page.keyboard.type('\\sqrt{x}');
+await page.keyboard.press('Enter');
+await wait(150);
+check('눌러서 고치기', (await texts()).includes('"tex":"\\\\sqrt{x}"') && !(await texts()).includes('frac'));
+await page.keyboard.press('Escape');
+await wait(600);
+
+const noteId = await ws(() => window.__dn.state.currentId);
+const md = await ws((id) => window.__dn.noteMarkdown(id), noteId);
+check('Markdown: $식$ · $$블록$$', md.includes('$\\pi r^2$') && md.includes('$$\n\\sqrt{x}\n$$'), md.slice(-120));
+await wait(500);
+check('검색: LaTeX 원문', (await ws(() => window.__dn.index.query('sqrt', window.__dn.state.notes, 5).length)) === 1);
+await page.locator('.view-toggle button', { hasText: '문서' }).click();
+await page.waitForSelector('.dn-doc-item');
+check('문서 뷰에도 수식', (await page.locator('.doc-host .katex').count()) >= 2);
+// 문서 뷰에서도 수식 입력 도우미
+await page.locator('.doc-host .dn-doc-text', { has: page.locator('.dn-math-block') }).first().click();
+await wait(250);
+await page.locator('.doc-host .dn-text-editing .dn-math-block').first().click();
+await page.waitForSelector('.doc-host .dn-math-editor', { timeout: 3000 }).catch(() => {});
+await page.locator('.doc-host .dn-math-key[aria-label="분수"]').click().catch(() => {});
+const docTa = await page.locator('.doc-host .dn-math-input').inputValue().catch(() => '');
+check('문서 뷰에서도 수식 입력 도우미', docTa.endsWith('\\frac{}{}'), docTa);
+await page.keyboard.type('z');
+await page.locator('.doc-host .dn-doc-page').click({ position: { x: 5, y: 5 } });
+await wait(250);
+check('문서 뷰: 수식 입력 중 바깥을 누르면 적용', (await texts()).includes('\\frac{z}{}'), (await texts()).slice(0, 300));
+await page.locator('.view-toggle button', { hasText: '캔버스' }).click();
+
+// ── 수식 입력 도우미: 틀 · 빈칸 Tab · 기호 · 고른 글 감싸기 · 문법 오류 · 공식, 글 속 수식으로 ──
+await ws(() => window.__dn.newNote());
+await wait(300);
+await page.evaluate(() => window.__dn.view.setTool('block')); await page.mouse.click(600, 300);
+await wait(300);
+await page.keyboard.type('/수식');
+await wait(200);
+await page.keyboard.press('Enter');
+await page.waitForSelector('.dn-math-editor .dn-math-pal', { timeout: 3000 });
+const ta = page.locator('.dn-math-editor .dn-math-input');
+check('수식 입력 칸 + 도우미 판 (틀 · 미적분 · 기호 · 그리스 · 함수 · 행렬 · 공식)', (await page.locator('.dn-math-tab').allInnerTexts()).join() === '틀,미적분,기호,그리스,함수,행렬,공식');
+await page.locator('.dn-math-tab', { hasText: '틀' }).click();
+await page.locator('.dn-math-key[aria-label="분수"]').click();
+const st1 = await ta.evaluate((t) => ({ v: t.value, at: t.selectionStart, focus: document.activeElement === t }));
+check('틀 넣기 → 첫 빈칸에 커서 · 입력 칸 초점 그대로', st1.v === '\\frac{}{}' && st1.at === 6 && st1.focus, JSON.stringify(st1));
+await page.keyboard.type('a');
+await page.keyboard.press('Tab');
+await page.keyboard.type('b');
+await page.keyboard.press('Tab');
+await page.locator('.dn-math-tab', { hasText: '그리스' }).click();
+await page.locator('.dn-math-key[aria-label="파이"]').click();
+check('Tab으로 다음 빈칸 · 끝으로, 기호 넣기', (await ta.inputValue()) === '\\frac{a}{b}\\pi ', await ta.inputValue());
+await page.keyboard.type('+x+1');
+await ta.evaluate((t) => { const i = t.value.indexOf('x+1'); t.setSelectionRange(i, i + 3); });
+await page.locator('.dn-math-tab', { hasText: '틀' }).click();
+await page.locator('.dn-math-key[aria-label="제곱근"]').click();
+check('고른 글을 틀로 감싸기', (await ta.inputValue()) === '\\frac{a}{b}\\pi +\\sqrt{x+1}', await ta.inputValue());
+check('미리보기에 근호 · 분수', (await page.locator('.dn-text-editing .dn-math-block .dn-math-view .katex .sqrt').count()) === 1 && (await page.locator('.dn-text-editing .dn-math-block .dn-math-view .katex .mfrac').count()) === 1);
+await page.keyboard.press('End');
+await page.keyboard.type('\\frac{');
+await wait(100);
+check('문법이 틀리면 무엇이 틀렸는지 안내', (await page.locator('.dn-math-err').isVisible()) && (await page.locator('.dn-math-err').innerText()).includes('수식 문법을 확인해 주세요'));
+await page.keyboard.press('Backspace');
+await page.keyboard.press('Backspace');
+await page.keyboard.press('Backspace');
+await page.keyboard.press('Backspace');
+await page.keyboard.press('Backspace');
+await page.keyboard.press('Backspace');
+await wait(100);
+check('고치면 안내가 사라짐', !(await page.locator('.dn-math-err').isVisible()));
+await page.keyboard.press('Enter');
+await wait(150);
+check('Enter로 적용 → 저장', (await texts()).includes('"tex":"\\\\frac{a}{b}\\\\pi +\\\\sqrt{x+1}"'), (await texts()).slice(0, 200));
+// 공식 넣기
+await page.keyboard.press('Enter');
+await page.keyboard.type('/수식');
+await wait(200);
+await page.keyboard.press('Enter');
+await page.waitForSelector('.dn-math-editor .dn-math-pal');
+await page.locator('.dn-math-tab', { hasText: '공식' }).click();
+await page.locator('.dn-math-key[aria-label="근의 공식"]').click();
+// 입력 창 안 두 번 누르기 · 휠: 새 블록이 생기거나 화면이 움직이지 않고 입력은 그대로
+const nBefore = await ws(() => window.__dn.view.engine.blockCount), camBefore = await ws(() => JSON.stringify(window.__dn.view.camera));
+await page.locator('.dn-math-help').dblclick();
+const grid = await page.locator('.dn-math-grid').boundingBox();
+await page.mouse.move(grid.x + 20, grid.y + 20);
+await page.mouse.wheel(0, 200);
+await wait(150);
+check('입력 창 안 두 번 누르기 · 휠 → 캔버스는 그대로 · 입력 창 열린 채', (await ws(() => window.__dn.view.engine.blockCount)) === nBefore && (await ws(() => JSON.stringify(window.__dn.view.camera))) === camBefore && (await page.locator('.dn-math-editor').count()) === 1);
+await page.keyboard.press('Enter');
+await wait(150);
+check('공식 넣기 (근의 공식)', (await texts()).includes('x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}'));
+// 글 속 수식으로: 고른 글 → 서식 막대 ∑
+await page.keyboard.press('Enter');
+await page.keyboard.type('E=mc^2');
+await page.keyboard.press('Shift+Home');
+await wait(200);
+await page.locator('.dn-bubble:not([hidden]) .dn-bubble-turn').click(); // 수식은 '바꾸기 ▾' 안 (DS-008)
+await page.locator('.dn-bubble button[data-cmd="mathInline"]').click();
+await wait(200);
+const mixedBefore = await texts();
+await page.keyboard.press('End');
+await page.keyboard.type(' 그리고 끝');
+await page.keyboard.press('Shift+Home');
+await wait(200);
+await page.locator('.dn-bubble:not([hidden]) .dn-bubble-turn').click(); // 수식은 '바꾸기 ▾' 안 (DS-008)
+await page.locator('.dn-bubble button[data-cmd="mathInline"]').click();
+await wait(200);
+check('수식이 섞인 글은 글 속 수식으로 바꾸지 않음 (지워지지 않게)', (await texts()).includes('E=mc^2') && (await texts()).includes('그리고 끝'), (await texts()).slice(-160));
+check('고른 글 → 글 속 수식 (서식 막대 ∑)', (await texts()).includes('"type":"math_inline","attrs":{"tex":"E=mc^2"}') && (await page.locator('.dn-text-editing .dn-math .katex').count()) >= 1, (await texts()).slice(-200));
+await page.keyboard.press('Escape');
+
+check('콘솔 오류 없음', errors.length === 0, errors.slice(0, 3).join(' | '));
+await browser.close();
+const fail = results.filter((r) => !r.ok).length;
+console.log(`\n${results.length - fail}/${results.length} passed`);
+process.exit(fail ? 1 : 0);

@@ -1,0 +1,52 @@
+/* 앱 토큰 — 색 · 글자 · 둥글기 · 간격 · 그림자 · 겹침 단계 (styles.css에서 옮김, 11/09). 어두운 테마 값은 theme-dark.css */
+:root {
+  --bg: #ffffff;
+  /* 따뜻한 종이 위의 또렷한 잉크 (DESIGN-HUMAN 3.3, 11/11) — 회색은 종이 색, 글은 진하게, 강조는 덜 쨍한 잉크 파랑 하나 */
+  --desk: #ebe9e4;
+  --side: #f7f6f3;
+  --line: #e5e3dd;   /* 장식 구분선 */
+  --line-strong: #d6d2ca;  /* 입력 칸 · 표 칸 · 캔버스 상자 테두리 */
+  --text: #2c2a26;   /* 흰 14.3:1 */
+  --muted: #645f57;  /* 흰 6.3 · 올림 5.4:1 */
+  --faint: #8c877e;   /* 장식 · 아이콘 전용 — 글자에는 쓰지 않는다 (흰 배경 3.6:1, 올림 3.0:1: 그래픽 3:1 기준) */
+  --subtle: var(--muted);  /* 옛 이름 — --muted와 같다 (DS-F2: 회색 글은 --text · --muted 두 단계 + 장식 --faint) */
+  --hover: #eeece7;
+  --card: #ffffff;   /* 상자 · 카드 · 입력 칸 · 메뉴 바탕 */
+  --soft: #f4f2ee;   /* 보조 단추 · 머리글 · 코드 · 키 바탕 */
+  --accent: #3451c7;  /* 잉크 파랑 hsl(228 59% 49%) — 흰 바탕 · 흰 글자 6.7:1 (옛 #3d5fe0 채도 72%) */
+  --accent-soft: #eef1fb;  /* 고른 상태 · 강조 바탕 — 위에 --accent 글자 (고른 표시는 이것 하나) */
+  --accent-fill: var(--accent);  /* 채운 면(흰 글자 얹음) — 어두운 테마는 더 진하게 (DESIGN-HUMAN 3.3) */
+  --tag: #2160c4;  /* 사이드바 #태그 글자 (인스타그램 해시태그처럼 파랑, 사이드 바탕 5.4:1) */
+  /* 상태 색 (DS-F2) — 뜻이 있을 때만: 위험(지우기 · 오류) · 경고(주의 · 충돌) · 완료. 각각 옅은 바탕 하나 */
+  --danger: #c4362b; --danger-soft: #fdf3f1;
+  --warn: #b5480f; --warn-soft: #fdf3e9;
+  --ok: #2c7a3f; --ok-soft: #edf6ee;  /* 흰 5.3:1 (옛 #2b8a3e 4.37 — AA 미달) */
+  /* 둥글기 4단 (DESIGN-HUMAN 3.4) — 바깥 = 안쪽 + 여백: 메뉴 12 = 줄 6 + 여백 6, 아래 막대 12 = 단추 8 + 여백 4. 알약은 태그 칩만 */
+  --r-sm: 4px; --r: 6px; --r-md: 8px; --r-lg: 12px;
+  /* 간격 4/8 리듬 (3.5) — 묶음 안은 좁게, 묶음 사이는 넓게 */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px;
+  /* 그림자 두 겹 · 따뜻한 색 — 뜬 면(메뉴 · 막대 · 팝업)은 테두리 대신 --sh-2 안의 1px 고리 하나 */
+  --sh-1: 0 1px 2px rgba(28, 24, 16, .06);
+  --sh-2: 0 0 0 1px rgba(28, 24, 16, .07), 0 8px 24px rgba(28, 24, 16, .1);
+  --sh-3: 0 0 0 1px rgba(28, 24, 16, .05), 0 24px 56px rgba(28, 24, 16, .18);
+  /* 겹침 단계 (DS-F9) — 숫자를 직접 쓰지 말고 여기서 고른다(상자 · 에디터 안 쌓임 1 ~ 12와 편집 중 상자는 따로): 막대 < 메뉴 · 옆 판 < 칩 · 알림 줄 < 가림막 · 위 막대 메뉴 < 아래 판 < 떠 있는 판 < 그 위 판 < 캔버스 팝업 < 모달 창 < 알림 < 잠금 화면 */
+  --z-bar: 20; --z-menu: 25; --z-float: 30; --z-overlay: 40; --z-side: 50; --z-pop: 60; --z-pop-top: 70; --z-canvas-pop: 78; --z-modal: 80; --z-toast: 90; --z-lock: 200;
+  --dn-ink-w: #37352f;  /* 흰 펜이 밝은 바탕에서 보이는 색 (AT-021 — 문서 뷰 그림 SVG. 캔버스는 theme.ts shownInk) */
+  --dn-font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  /* 글자 (DESIGN-HUMAN 3.1, 11/09) — 크기 5단 정수 · 굵기 3단(Pretendard 가변이라 450 · 550 · 650). 0.5px 단계 · 700 넘는 굵기 금지.
+     1단계: --fs-1 · --fs-2만 1px 키움(11 → 12 · 12 → 13). 2단계(13 → 14 · 15 → 16)는 써 본 뒤 --fs-3 · --fs-4 값만 바꾼다 */
+  --fs-1: 12px;  /* 캡션 · 단축키 · 섹션 머리 · 작은 메타 */
+  --fs-2: 13px;  /* 보조 글 · 설명 · 칩 · 단추 · 알림 */
+  --fs-3: 13px;  /* UI 기본 — 메뉴 줄 · 입력 · 설정 줄 */
+  --fw-1: 450;   /* 본문 · UI 기본 · 설명 */
+  --fw-2: 550;   /* 단추 · 고른 줄 · 섹션 머리 · 표 머리 */
+  --fw-3: 650;   /* 제목 · 숫자 강조 */
+  font-family: var(--dn-font);
+  font-weight: var(--fw-1);
+  color: var(--text);
+  background: var(--bg);
+}
+/* 제목 · 표 머리는 브라우저 기본 굵게(700) 대신 --fw-3 — 노트 안 글의 굵게(strong)는 text.css에서 700 */
+h1, h2, h3, h4, th { font-weight: var(--fw-3); }
+/* macOS: 밝은 글 위 어두운 바탕에서만 얇게 그리기(밝은 테마 글이 가늘어지지 않게) */
+:root[data-theme='dark'] { -webkit-font-smoothing: antialiased; }

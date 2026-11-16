@@ -1,0 +1,601 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해 실물경제에 영향을 줍니다",
+      "nodes": [
+        {
+          "key": "rate_hike",
+          "title": "기준금리 인상",
+          "kind": "concept",
+          "body": "한국은행이 결정하면 시중은행의 대출 금리 상승으로 곧바로 이어집니다",
+          "source": {
+            "quote": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해"
+          }
+        },
+        {
+          "key": "loan_rate",
+          "title": "대출 금리 상승",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "대출 금리가 오르면 가계의 이자 부담이 커지고"
+          }
+        },
+        {
+          "key": "burden",
+          "title": "이자 부담",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "가계의 이자 부담이 커지고"
+          }
+        },
+        {
+          "key": "consumption",
+          "title": "가계 소비 감소",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "체감(역자산 효과)을 통해 가계 소비 감소를 더 키웁니다"
+          }
+        },
+        {
+          "key": "sales",
+          "title": "기업 매출 둔화",
+          "kind": "concept",
+          "body": "내수 기업을 중심으로 나타납니다",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "소비가 줄어들면 결국 내수 기업을 중심으로"
+          }
+        },
+        {
+          "key": "realestate",
+          "title": "부동산 가격 하락",
+          "kind": "concept",
+          "body": "미래 현금흐름의 현재가치가 낮아져 하락 압력이 생깁니다",
+          "group": "2. 자산 가격 경로",
+          "source": {
+            "quote": "부동산 가격 하락은 \"내 자산이 줄었다\"는 체감(역자산 효과)을 통해"
+          }
+        },
+        {
+          "key": "inflow",
+          "title": "해외 자금 유입",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "해외 자금 유입을 늘려"
+          }
+        },
+        {
+          "key": "won",
+          "title": "원화 강세",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "해외 자금 유입을 늘려 **원화 강세**를 유발합니다"
+          }
+        },
+        {
+          "key": "import_price",
+          "title": "수입 물가 하락",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "원화 강세는 **수입 물가 하락**으로 이어지고"
+          }
+        },
+        {
+          "key": "price_stability",
+          "title": "물가 안정",
+          "kind": "conclusion",
+          "body": "기준금리 인상은 이 정책 목표를 달성하기 위한 수단입니다",
+          "group": "결론",
+          "source": {
+            "quote": "물가 안정이라는 정책 목표를 달성하기 위한 수단입니다"
+          }
+        },
+        {
+          "key": "recession",
+          "title": "경기 침체 위험",
+          "kind": "concept",
+          "body": "인상 폭이 크면 위험이 커집니다",
+          "group": "결론",
+          "source": {
+            "quote": "인상 폭이 크면 경기 침체 위험이 커지기 때문에"
+          }
+        },
+        {
+          "key": "gradual",
+          "title": "단계적으로 조정",
+          "kind": "conclusion",
+          "body": "중앙은행은 보통 0.25%p씩 단계적으로 조정하면서 지표를 확인합니다",
+          "group": "결론",
+          "source": {
+            "quote": "0.25%p씩 단계적으로 조정하면서 지표를 확인합니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "rate_hike",
+          "to": "loan_rate",
+          "relation": "leads-to"
+        },
+        {
+          "from": "loan_rate",
+          "to": "burden",
+          "relation": "causes"
+        },
+        {
+          "from": "burden",
+          "to": "consumption",
+          "relation": "causes"
+        },
+        {
+          "from": "consumption",
+          "to": "sales",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate_hike",
+          "to": "realestate",
+          "relation": "causes"
+        },
+        {
+          "from": "realestate",
+          "to": "consumption",
+          "relation": "causes",
+          "label": "역자산 효과"
+        },
+        {
+          "from": "rate_hike",
+          "to": "inflow",
+          "relation": "causes"
+        },
+        {
+          "from": "inflow",
+          "to": "won",
+          "relation": "causes"
+        },
+        {
+          "from": "won",
+          "to": "import_price",
+          "relation": "leads-to"
+        },
+        {
+          "from": "import_price",
+          "to": "price_stability",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate_hike",
+          "to": "price_stability",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate_hike",
+          "to": "recession",
+          "relation": "causes",
+          "label": "인상 폭이 크면"
+        },
+        {
+          "from": "recession",
+          "to": "gradual",
+          "relation": "causes"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해 실물경제에 영향을 줍니다",
+      "nodes": [
+        {
+          "key": "rate_hike",
+          "title": "기준금리 인상",
+          "kind": "concept",
+          "body": "한국은행이 결정",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해 실물경제에 영향을 줍니다"
+          }
+        },
+        {
+          "key": "loan_rate_up",
+          "title": "대출 금리 상승",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "대출 금리 상승"
+          }
+        },
+        {
+          "key": "interest_burden",
+          "title": "이자 부담",
+          "kind": "concept",
+          "body": "가계의 이자 부담이 커짐",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "대출 금리가 오르면 가계의 이자 부담이 커지고"
+          }
+        },
+        {
+          "key": "consumption_down",
+          "title": "가계 소비 감소",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "통해 가계 소비 감소를 더 키웁니다"
+          }
+        },
+        {
+          "key": "sales_slow",
+          "title": "기업 매출 둔화",
+          "kind": "concept",
+          "body": "내수 기업을 중심으로 나타남",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "소비가 줄어들면 결국 내수 기업을 중심으로"
+          }
+        },
+        {
+          "key": "realestate_down",
+          "title": "부동산 가격 하락",
+          "kind": "concept",
+          "body": "미래 현금흐름의 현재가치가 낮아져 하락 압력이 생김",
+          "group": "2. 자산 가격 경로",
+          "source": {
+            "quote": "부동산 가격 하락은"
+          }
+        },
+        {
+          "key": "foreign_inflow",
+          "title": "해외 자금 유입",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "금리 인상은 해외 자금 유입을 늘려"
+          }
+        },
+        {
+          "key": "won_strong",
+          "title": "원화 강세",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "원화 강세는"
+          }
+        },
+        {
+          "key": "import_price_down",
+          "title": "수입 물가 하락",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "수입 물가 하락"
+          }
+        },
+        {
+          "key": "price_stability",
+          "title": "물가 안정",
+          "kind": "conclusion",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "물가 안정이라는 정책 목표를 달성하기 위한 수단입니다"
+          }
+        },
+        {
+          "key": "recession_risk",
+          "title": "경기 침체 위험",
+          "kind": "concept",
+          "group": "결론",
+          "source": {
+            "quote": "인상 폭이 크면 경기 침체 위험이 커지기 때문에"
+          }
+        },
+        {
+          "key": "stepwise",
+          "title": "단계적으로 조정",
+          "kind": "concept",
+          "body": "중앙은행은 보통 0.25%p씩 단계적으로 조정하면서 지표를 확인",
+          "group": "결론",
+          "source": {
+            "quote": "중앙은행은 보통 0.25%p씩 단계적으로 조정하면서 지표를 확인합니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "rate_hike",
+          "to": "loan_rate_up",
+          "relation": "leads-to",
+          "label": "곧바로"
+        },
+        {
+          "from": "loan_rate_up",
+          "to": "interest_burden",
+          "relation": "causes"
+        },
+        {
+          "from": "interest_burden",
+          "to": "consumption_down",
+          "relation": "causes"
+        },
+        {
+          "from": "consumption_down",
+          "to": "sales_slow",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate_hike",
+          "to": "realestate_down",
+          "relation": "causes",
+          "label": "현재가치가 낮아져"
+        },
+        {
+          "from": "realestate_down",
+          "to": "consumption_down",
+          "relation": "causes",
+          "label": "역자산 효과"
+        },
+        {
+          "from": "rate_hike",
+          "to": "foreign_inflow",
+          "relation": "causes"
+        },
+        {
+          "from": "foreign_inflow",
+          "to": "won_strong",
+          "relation": "causes"
+        },
+        {
+          "from": "won_strong",
+          "to": "import_price_down",
+          "relation": "leads-to"
+        },
+        {
+          "from": "import_price_down",
+          "to": "price_stability",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate_hike",
+          "to": "price_stability",
+          "relation": "leads-to",
+          "label": "달성하기 위한 수단"
+        },
+        {
+          "from": "rate_hike",
+          "to": "recession_risk",
+          "relation": "causes",
+          "label": "인상 폭이 크면"
+        },
+        {
+          "from": "recession_risk",
+          "to": "stepwise",
+          "relation": "causes"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해 실물경제에 영향을 줍니다",
+      "nodes": [
+        {
+          "key": "rate",
+          "title": "기준금리 인상",
+          "kind": "concept",
+          "body": "한 가지 경로가 아니라 여러 경로(대출, 자산 가격, 환율)를 통해 실물경제에 영향을 줌",
+          "source": {
+            "quote": "기준금리 인상은 한 가지 경로가 아니라 여러 경로를 통해 실물경제에 영향을 줍니다"
+          }
+        },
+        {
+          "key": "loan",
+          "title": "대출 금리 상승",
+          "kind": "concept",
+          "body": "시중은행의 대출 금리 상승으로 곧바로 이어짐",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "시중은행의 **대출 금리 상승**으로 곧바로 이어집니다"
+          }
+        },
+        {
+          "key": "burden",
+          "title": "이자 부담",
+          "kind": "concept",
+          "body": "가계의 이자 부담이 커짐",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "대출 금리가 오르면 가계의 이자 부담이 커지고"
+          }
+        },
+        {
+          "key": "consume",
+          "title": "가계 소비 감소",
+          "kind": "concept",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "이는 **가계 소비 감소**를 일으킵니다"
+          }
+        },
+        {
+          "key": "sales",
+          "title": "기업 매출 둔화",
+          "kind": "concept",
+          "body": "내수 기업을 중심으로 나타남",
+          "group": "1. 대출 경로",
+          "source": {
+            "quote": "내수 기업을 중심으로 **기업 매출 둔화**가 나타납니다"
+          }
+        },
+        {
+          "key": "estate",
+          "title": "부동산 가격 하락",
+          "kind": "concept",
+          "body": "미래 현금흐름의 현재가치가 낮아져 하락 압력이 생김",
+          "group": "2. 자산 가격 경로",
+          "source": {
+            "quote": "미래 현금흐름의 현재가치가 낮아져 **부동산 가격 하락** 압력이 생깁니다"
+          }
+        },
+        {
+          "key": "reverse",
+          "title": "역자산 효과",
+          "kind": "concept",
+          "body": "\"내 자산이 줄었다\"는 체감",
+          "group": "2. 자산 가격 경로",
+          "source": {
+            "quote": "체감(역자산 효과)을 통해 가계 소비 감소를 더 키웁니다"
+          }
+        },
+        {
+          "key": "inflow",
+          "title": "해외 자금 유입",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "금리 인상은 해외 자금 유입을 늘려"
+          }
+        },
+        {
+          "key": "won",
+          "title": "원화 강세",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "해외 자금 유입을 늘려 **원화 강세**를 유발합니다"
+          }
+        },
+        {
+          "key": "import",
+          "title": "수입 물가 하락",
+          "kind": "concept",
+          "group": "3. 환율 경로",
+          "source": {
+            "quote": "원화 강세는 **수입 물가 하락**으로 이어지고"
+          }
+        },
+        {
+          "key": "price",
+          "title": "물가 안정",
+          "kind": "conclusion",
+          "body": "기준금리 인상이 달성하려는 정책 목표",
+          "group": "결론",
+          "source": {
+            "quote": "물가 안정이라는 정책 목표를 달성하기 위한 수단입니다"
+          }
+        },
+        {
+          "key": "recession",
+          "title": "경기 침체 위험",
+          "kind": "concept",
+          "body": "인상 폭이 크면 커짐",
+          "group": "결론",
+          "source": {
+            "quote": "인상 폭이 크면 경기 침체 위험이 커지기 때문에"
+          }
+        },
+        {
+          "key": "gradual",
+          "title": "단계적 조정",
+          "kind": "concept",
+          "body": "중앙은행은 보통 0.25%p씩 조정하면서 지표를 확인",
+          "group": "결론",
+          "source": {
+            "quote": "중앙은행은 보통 0.25%p씩 단계적으로 조정하면서 지표를 확인합니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "rate",
+          "to": "loan",
+          "relation": "leads-to"
+        },
+        {
+          "from": "loan",
+          "to": "burden",
+          "relation": "causes"
+        },
+        {
+          "from": "burden",
+          "to": "consume",
+          "relation": "causes"
+        },
+        {
+          "from": "consume",
+          "to": "sales",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate",
+          "to": "estate",
+          "relation": "causes"
+        },
+        {
+          "from": "estate",
+          "to": "reverse",
+          "relation": "leads-to"
+        },
+        {
+          "from": "reverse",
+          "to": "consume",
+          "relation": "causes"
+        },
+        {
+          "from": "rate",
+          "to": "inflow",
+          "relation": "causes"
+        },
+        {
+          "from": "inflow",
+          "to": "won",
+          "relation": "causes"
+        },
+        {
+          "from": "won",
+          "to": "import",
+          "relation": "leads-to"
+        },
+        {
+          "from": "import",
+          "to": "price",
+          "relation": "leads-to"
+        },
+        {
+          "from": "rate",
+          "to": "price",
+          "relation": "leads-to",
+          "label": "달성하기 위한 수단"
+        },
+        {
+          "from": "rate",
+          "to": "recession",
+          "relation": "causes",
+          "label": "인상 폭이 크면"
+        },
+        {
+          "from": "recession",
+          "to": "gradual",
+          "relation": "causes"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  }
+]

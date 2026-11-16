@@ -1,0 +1,188 @@
+/* 문서 뷰를 워드처럼 (engine-dom doc-word.ts · doc-pages.ts): 이어진 문단 · A4 쪽 보기 · 위쪽 서식 막대(DocRibbon) */
+
+/* 이어진 한 문서: 항목 테두리 · 편집 테두리 없이 문단처럼, 빈 곳을 눌러도 커서 */
+.dn-doc-word .dn-doc-page { gap: 10px; cursor: text; }
+.dn-doc-word .dn-doc-item { border-color: transparent !important; padding: 2px 0; border-radius: 0; }
+.dn-doc-word .dn-doc-item[data-color]:not([data-color='']) { padding: 8px 12px; border-radius: 6px; }
+.dn-doc-word .dn-doc-heading { padding-top: 12px; }
+.dn-doc-word .dn-doc-text.dn-doc-editing { outline: none; }
+.dn-doc-word .dn-doc-empty { cursor: text; }
+
+/* 쪽 보기: 종이 바깥은 옆 판 색, 종이는 카드 색(어두운 테마에서도 글자가 보이게) */
+.dn-doc-paged { background: var(--side); }
+.dn-doc-paged .dn-doc-page { position: relative; box-sizing: border-box; width: 794px; max-width: none; margin: 24px auto 48px; padding: 96px 96px 0; }
+.dn-doc-sheets { position: absolute; inset: 0; pointer-events: none; }
+.dn-doc-sheet { position: absolute; left: 0; width: 794px; height: 1123px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--sh-2); box-sizing: border-box; }
+/* 머리글 · 바닥글 · 쪽 번호 (쪽 설정): [글 | 가운데 번호 | 오른쪽 번호] */
+.dn-sheet-head, .dn-sheet-foot { position: absolute; display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; font-size: 11px; line-height: 16px; color: var(--muted, #6b6b68); }
+.dn-sheet-l { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.dn-sheet-r { text-align: right; }
+.dn-doc-paged .dn-doc-page > :not(.dn-doc-sheets) { position: relative; }
+
+/* 서식 막대 (리본) — 문서 뷰 위 */
+.doc-ribbon {
+  position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; padding: 6px 12px;
+  background: var(--card); border-bottom: 1px solid var(--line);
+}
+.doc-ribbon .rb-group { display: inline-flex; align-items: center; gap: 1px; padding-right: 6px; margin-right: 2px; border-right: 1px solid var(--line); }
+.doc-ribbon .rb-group:last-child { border-right: 0; }
+.doc-ribbon button {
+  min-width: 30px; height: 30px; padding: 0 6px; display: inline-grid; place-items: center; border: 0; border-radius: 6px;
+  background: none; color: var(--muted); font: inherit; font-size: var(--fs-3); cursor: pointer;
+}
+.doc-ribbon button:hover:not(:disabled) { background: var(--hover); color: var(--text); }
+.doc-ribbon button.on { background: var(--accent-soft); color: var(--accent); }
+.doc-ribbon button:disabled { opacity: .5; cursor: default; }
+.doc-ribbon select { height: 28px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); font: inherit; font-size: var(--fs-2); padding: 0 4px; }
+.doc-ribbon select:disabled { opacity: .6; }
+.doc-ribbon .rb-u { text-decoration: underline; } .doc-ribbon .rb-s { text-decoration: line-through; }
+@media (max-width: 768px) { .doc-ribbon { flex-wrap: nowrap; overflow-x: auto; } .doc-ribbon button { min-width: 40px; height: 40px; } }
+
+/* 상태 줄 (DocStatus.tsx) — 문서 뷰 아래: 글자 수 · 낱말 수 · 확대 */
+.doc-status { flex: none; display: flex; align-items: center; gap: 12px; height: 28px; padding: 0 8px 0 12px; border-top: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: var(--fs-1); white-space: nowrap; overflow: hidden; }
+.doc-status .ds-count { font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+.doc-status .ds-zoom { margin-left: auto; display: inline-flex; align-items: center; gap: 2px; }
+.doc-status .ds-zoom button { height: 22px; min-width: 22px; padding: 0 6px; border: 0; border-radius: 6px; background: none; color: var(--muted); font: inherit; font-size: var(--fs-1); cursor: pointer; }
+.doc-status .ds-zoom button:hover { background: var(--hover); color: var(--text); }
+.doc-status .ds-zoom button.on { color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.doc-status .ds-pct { min-width: 44px !important; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) { .doc-status .ds-zoom { display: none; } }
+
+/* 도식 그림 (engine-dom doc-diagram.ts): '문서에서 그림으로' 묶음 — 캔버스 모양 그대로 그림 한 장 + 묶음 이름 */
+.dn-doc .dn-doc-diagram { margin: 6px 0; text-align: center; cursor: default; }
+.dn-doc .dn-doc-diagram img { display: inline-block; max-width: 100%; height: auto; vertical-align: top; }
+.dn-doc .dn-doc-diagram img:not([src]) { min-height: 80px; min-width: 200px; background: var(--hover); border-radius: 6px; }
+.dn-doc .dn-doc-diagram-cap { margin-top: 4px; font-size: 12px; color: var(--muted); }
+.dn-doc .dn-doc-diagram.dn-missing::after { content: '도식을 그리지 못했어요 — 캔버스에서 확인해 주세요'; display: block; font-size: 12px; color: var(--muted); }
+
+/* 다단계 번호 판 단추 */
+.doc-ribbon .rb-nums { font-size: var(--fs-2); font-weight: var(--fw-2); letter-spacing: -.02em; }
+
+/* 제목 번호 (노트 설정 headingNumbers — engine-core toc.ts와 같은 셈): 제목 상자 · 제목 1 = 1., 제목 2 = 1.1, 3 = 1.1.1, 4 = 1.1.1.1.
+   제목들이 상자마다 다른 부모 안에 있어 아래 단계는 counter-reset(새 범위) 대신 counter-set으로 0. 건너뛴 단계는 0 (워드처럼) */
+.dn-doc.dn-hnum { counter-reset: dn-h1 dn-h2 dn-h3 dn-h4; }
+.dn-hnum :is(.dn-doc-title, .dn-doc-title > .ProseMirror) > p:first-child:not(:empty),
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h1:not(:empty) { counter-increment: dn-h1; counter-set: dn-h2 0 dn-h3 0 dn-h4 0; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h2:not(:empty) { counter-increment: dn-h2; counter-set: dn-h3 0 dn-h4 0; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h3:not(:empty) { counter-increment: dn-h3; counter-set: dn-h4 0; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h4:not(:empty) { counter-increment: dn-h4; }
+.dn-hnum :is(.dn-doc-title, .dn-doc-title > .ProseMirror) > p:first-child:not(:empty)::before,
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h1:not(:empty)::before { content: counter(dn-h1) '.'; margin-right: .5em; font-variant-numeric: tabular-nums; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h2:not(:empty)::before { content: counter(dn-h1) '.' counter(dn-h2); margin-right: .5em; font-variant-numeric: tabular-nums; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h3:not(:empty)::before { content: counter(dn-h1) '.' counter(dn-h2) '.' counter(dn-h3); margin-right: .5em; font-variant-numeric: tabular-nums; }
+.dn-hnum :is(.dn-doc-text, .dn-doc-text > .ProseMirror) > h4:not(:empty)::before { content: counter(dn-h1) '.' counter(dn-h2) '.' counter(dn-h3) '.' counter(dn-h4); margin-right: .5em; font-variant-numeric: tabular-nums; }
+
+/* 인쇄 · PDF: 종이 · 민 여백은 빼고 브라우저 쪽 나눔으로, 쪽 나눔 상자는 새 쪽에서 */
+@media print {
+  .doc-ribbon, .doc-status, .dn-doc-sheets { display: none !important; }
+  .dn-doc-page { zoom: 1 !important; }
+  .dn-doc-paged { background: none; }
+  .dn-doc-paged .dn-doc-page { width: auto !important; margin: 0; padding: 0 !important; min-height: 0 !important; }
+  .dn-doc-paged .dn-doc-page > * { margin-top: 0 !important; }
+  .dn-doc-paged tr[data-dn-spacer] { display: none !important; }
+  .dn-doc-break { break-before: page; }
+}
+
+/* 캔버스의 논리 구조 (engine-core flow.ts): 한 줄 흐름은 단계 번호, 다음 단계로 가는 화살표는 '↓ 라벨', 갈래 흐름은 들여쓰기(인라인 margin) */
+.dn-doc-item[data-step]:not([data-step='']) { position: relative; padding-left: 34px !important; }
+.dn-doc-item[data-step]:not([data-step=''])::before {
+  content: attr(data-step); position: absolute; left: 0; top: 6px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--soft); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); font-size: 12px; font-weight: var(--fw-2); /* 회색 숫자 — 내용이 먼저 (U-5) */
+}
+.dn-doc-flow { margin: 6px 0 0; font-size: 12px; color: var(--subtle); }
+.dn-doc-ink { margin: 0; }
+.dn-doc-ink .dn-ink-svg svg { display: block; max-width: 100%; height: auto; }
+
+/* 문서 뷰 표: 칸을 눌러 고치기 (doc-table.ts) */
+.dn-doc .dn-table td, .dn-doc .dn-table th { cursor: text; }
+.dn-doc .dn-table-tools { margin: 0; }
+
+/* 문서 뷰 블록 고르기 (doc-select.ts) */
+.dn-doc:focus { outline: none; }
+.dn-doc .dn-doc-item.dn-doc-sel { background: color-mix(in srgb, var(--accent) 13%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 4px; }
+.dn-doc .dn-doc-item.dn-doc-sel ::selection { background: transparent; }
+
+/* 블록 손잡이 ⋮⋮ · 놓을 자리 줄 · 블록 메뉴 (doc-handle.ts) */
+.dn-doc-word { position: relative; }
+.dn-doc-grip {
+  position: absolute; z-index: 5; width: 20px; height: 24px; padding: 0; border: 0; border-radius: 4px; background: none;
+  color: var(--subtle); font-size: var(--fs-3); letter-spacing: -3px; line-height: 24px; cursor: grab; opacity: .55;
+}
+.dn-doc-grip:hover { opacity: 1; background: var(--hover, rgba(0, 0, 0, .06)); }
+.dn-doc-dragging, .dn-doc-dragging * { cursor: grabbing !important; user-select: none; }
+.dn-doc-drop { position: absolute; z-index: 6; height: 3px; border-radius: 4px; background: var(--accent); pointer-events: none; }
+.dn-doc-menu {
+  position: fixed; z-index: var(--z-pop); min-width: 190px; padding: 4px; background: var(--card); color: var(--text);
+  border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); display: flex; flex-direction: column;
+}
+.dn-doc-menu button { display: flex; justify-content: space-between; gap: 16px; padding: 6px 10px; border: 0; border-radius: 6px; background: none; color: inherit; font: inherit; font-size: var(--fs-3); text-align: left; cursor: pointer; }
+.dn-doc-menu button:hover, .dn-doc-menu button:focus-visible { background: var(--hover, rgba(0, 0, 0, .06)); outline: none; }
+.dn-doc-menu kbd { color: var(--subtle); font: inherit; font-size: var(--fs-1); }
+
+/* 리본 팝오버: 글자 색 · 줄 간격 — 버튼 하나, 아래로 펼침 */
+.doc-ribbon .rb-pop { position: relative; display: inline-flex; }
+/* 글자 색 버튼: 알록달록한 원 + 가운데 지금 색 */
+.doc-ribbon .rb-color-trigger { position: relative; display: block; width: 18px; height: 18px; border-radius: 50%; background: conic-gradient(var(--danger), #d9730d, #dfab01, #0f7b6c, #0b6e99, #6940a5, #ad1a72, var(--danger)); box-shadow: 0 0 0 1px rgba(0, 0, 0, .08); }
+.doc-ribbon .rb-color-trigger i { position: absolute; inset: 5px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--card); }
+.doc-ribbon button:disabled .rb-color-trigger { filter: grayscale(.6); }
+.doc-ribbon .rb-pop-panel { position: fixed; z-index: var(--z-pop-top); top: 0; left: 0; max-height: calc(100vh - 16px); overflow-y: auto; min-width: 168px; padding: 8px; background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--sh-2); }
+.doc-ribbon .rb-pop-title { margin: 0 2px 6px; font-size: var(--fs-1); font-weight: var(--fw-2); letter-spacing: .02em; color: var(--muted, #6b6b68); }
+.doc-ribbon .rb-opt { display: flex; justify-content: space-between; align-items: center; gap: 14px; width: 100%; height: 30px; padding: 0 8px; }
+.doc-ribbon .rb-opt span { font-size: var(--fs-3); }
+.doc-ribbon .rb-opt i { display: block; width: 22px; border-top: 2px solid currentColor; border-bottom: 2px solid currentColor; opacity: .55; }
+.doc-ribbon .rb-opt.on { background: var(--accent-soft); color: var(--accent); }
+
+/* 글자 색 판 (ColorPalette — 서식 막대 · 캔버스 글자 메뉴): 테마 견본 · 최근 쓴 색 · 팔레트 · 직접 고르기 */
+.color-palette { width: 236px; display: flex; flex-direction: column; gap: 6px; }
+.color-palette .cp-title { margin: 2px 2px 0; font-size: var(--fs-1); font-weight: var(--fw-2); letter-spacing: .02em; color: var(--muted, #6b6b68); }
+.color-palette .cp-theme { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.color-palette button { font: inherit; color: inherit; cursor: pointer; }
+.color-palette .cp-sw { display: grid; gap: 1px; place-items: center; height: 46px; min-width: 0; padding: 4px 0; border: 1px solid transparent; border-radius: 10px; background: none; }
+.color-palette .cp-sw span { font-size: 17px; font-weight: var(--fw-3); line-height: 22px; }
+.color-palette .cp-sw small { font-size: var(--fs-1); color: var(--muted); }
+.color-palette .cp-sw:hover { background: var(--hover); }
+.color-palette .cp-sw.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.color-palette .cp-grid { display: grid; grid-template-columns: repeat(10, 18px); gap: 4px 4px; justify-content: space-between; padding: 0 2px; }
+.color-palette .cp-dot { width: 18px; height: 18px; min-width: 0; padding: 0; border: 0; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); transition: transform .08s; }
+.color-palette .cp-dot:hover { transform: scale(1.18); }
+.color-palette .cp-dot.on { box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--accent); }
+.color-palette .cp-more { display: flex; align-items: center; gap: 8px; width: 100%; height: 32px; padding: 0 8px; border: 1px solid var(--line); border-radius: 10px; background: none; font-size: var(--fs-2); }
+.color-palette .cp-more:hover { background: var(--hover); }
+.color-palette .cp-more > span:last-child { margin-left: auto; color: var(--muted); font-size: var(--fs-1); }
+.color-palette .cp-rainbow { width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(#e03e3e, #d9730d, #dfab01, #0f7b6c, #0b6e99, #6940a5, #ad1a72, #e03e3e); }
+/* 팔레트 단추 고리 — 가운데는 늘 흰색(지금 색을 따라 바뀌지 않게, 필기 막대 ＋) */
+.color-palette .cp-rainbow.cp-ring { position: relative; width: 18px; height: 18px; flex: none; }
+.color-palette .cp-rainbow.cp-ring i { position: absolute; inset: 4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .08); }
+.color-palette .cp-custom { display: flex; align-items: center; gap: 6px; }
+.color-palette .cp-picker { position: relative; flex: none; width: 28px; height: 28px; border-radius: 50%; overflow: hidden; cursor: pointer; background: conic-gradient(#e03e3e, #d9730d, #dfab01, #0f7b6c, #0b6e99, #6940a5, #ad1a72, #e03e3e); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1); }
+.color-palette .cp-picker input { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); opacity: 0; cursor: pointer; }
+.color-palette .cp-code { flex: 1; min-width: 0; height: 28px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); font: 12px/26px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.color-palette .cp-code.bad { border-color: #e03e3e; }
+.color-palette .cp-apply { flex: none; height: 28px; padding: 0 10px; border: 0; border-radius: 6px; background: var(--accent); color: #fff !important; font-size: var(--fs-2); font-weight: var(--fw-2); }
+.menu .color-palette { width: auto; margin: 2px 2px 6px; }
+.color-palette .cp-bg span { display: grid; place-items: center; width: 24px; height: 22px; border-radius: 6px; font-size: var(--fs-3); color: var(--text); }
+.color-palette .cp-bg.none span { box-shadow: inset 0 0 0 1px var(--line); }
+.doc-ribbon .rb-pop-sub { margin-top: 10px; }
+.doc-ribbon .rb-chips { display: flex; flex-wrap: wrap; gap: 4px; max-width: 220px; }
+.doc-ribbon .rb-chip { height: 26px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); font-size: var(--fs-2); }
+.doc-ribbon .rb-chip.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+/* 쪽 설정 판 (PageSetupPanel.tsx) */
+.doc-ribbon .rb-page-setup { width: 264px; }
+.doc-ribbon .rb-page-setup .rb-chips { max-width: none; }
+.doc-ribbon .rb-ps-field { display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 6px; margin: 4px 2px; font-size: var(--fs-2); color: var(--muted); }
+.doc-ribbon .rb-ps-field input { height: 28px; min-width: 0; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); font: inherit; font-size: var(--fs-2); }
+.doc-ribbon .rb-ps-check { display: flex; align-items: center; gap: 6px; margin: 8px 2px 4px; font-size: var(--fs-2); }
+.doc-ribbon .rb-ps-hint { margin: 4px 2px 0; font-size: var(--fs-1); color: var(--muted, #6b6b68); }
+/* 서식 복사(붓)로 칠하는 중 */
+.dn-doc.dn-painting .dn-doc-text, .dn-doc.dn-painting .dn-doc-text * { cursor: copy; }
+.rb-chip { font-size: var(--fs-1); padding: 0 6px; border-radius: 999px; background: var(--hover); line-height: 1.6; }
+/* 첫 쪽 표지 (engine-dom doc-cover.ts): 쪽 보기면 첫 쪽 본문 칸을 다 쓰고 본문은 다음 쪽부터, 흐름 보기면 가운데 작은 표지 */
+.dn-doc-cover {
+  display: flex; align-items: center; justify-content: center; width: min(100%, 420px); aspect-ratio: 210 / 297; margin: 0 auto 36px;
+  border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: var(--card);
+}
+.dn-doc-paged .dn-doc-cover { width: auto; aspect-ratio: auto; height: var(--dn-content-h, 960px); margin: 0; border: 0; border-radius: 0; }
+.dn-doc-cover img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.dn-doc-cover-title { padding: 24px; text-align: center; }
+.dn-doc-cover-title h1 { margin: 0 0 12px; font-size: 30px; font-weight: var(--fw-3); line-height: 1.3; word-break: keep-all; }
+.dn-doc-cover-title p { margin: 0; font-size: 13px; color: var(--muted); }

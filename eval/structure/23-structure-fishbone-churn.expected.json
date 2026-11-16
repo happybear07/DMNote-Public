@@ -1,0 +1,69 @@
+{
+  "id": "23-structure-fishbone-churn",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-02"
+    ],
+    "pattern": "fishbone"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "가입자 이탈 증가",
+    "복잡한 첫 화면",
+    "월 구독료",
+    "느린 답변",
+    "과장된 광고 문구"
+  ],
+  "mustEdges": [
+    {
+      "from": "복잡한 첫 화면",
+      "to": "가입자 이탈 증가",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "월 구독료",
+      "to": "가입자 이탈 증가",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "느린 답변",
+      "to": "가입자 이탈 증가",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "과장된 광고 문구",
+      "to": "가입자 이탈 증가",
+      "relation": [
+        "causes",
+        "leads-to"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "다중 원인(S-02 피시본): 결과 하나에 원인 넷이 모두 causes로 모인다. 제품 · 가격 · 지원 · 마케팅은 원인 범주(묶음이나 역할)로 써도 좋다. 원인끼리 인과를 지어내지 않는다."
+}

@@ -1,0 +1,20 @@
+{
+  "id": "13-structure-cycle-water",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-05"], "pattern": "cycle" },
+  "aliases": {},
+  "mustNodes": ["증발", "응결", "강수", "유출"],
+  "mustEdges": [
+    { "from": "증발", "to": "응결", "relation": ["next", "leads-to", "causes", "becomes"] },
+    { "from": "응결", "to": "강수", "relation": ["next", "leads-to", "causes", "becomes"] },
+    { "from": "강수", "to": "유출", "relation": ["next", "leads-to", "causes", "becomes"] },
+    { "from": "유출", "to": "증발", "relation": ["next", "leads-to", "causes", "becomes"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": true, "numbers": [], "nodeTitles": ["물의 순환 과정"], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "순환(S-05): 마지막 단계(유출)에서 처음(증발)으로 되돌아가는 화살표가 있어야 고리. 번호 목록이라 S-03 단계로 오인하기 쉽다 — '다시 · 반복' 신호어가 순환을 가른다."
+}

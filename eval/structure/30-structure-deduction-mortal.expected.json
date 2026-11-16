@@ -1,0 +1,51 @@
+{
+  "id": "30-structure-deduction-mortal",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-16"
+    ],
+    "pattern": "argument"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "모든 포유류는 폐로 숨을 쉰다",
+    "고래는 포유류이다",
+    "고래는 폐로 숨을 쉰다"
+  ],
+  "mustEdges": [
+    {
+      "from": "모든 포유류는 폐로 숨을 쉰다",
+      "to": "고래는 폐로 숨을 쉰다",
+      "relation": [
+        "implies",
+        "supports"
+      ]
+    },
+    {
+      "from": "고래는 포유류이다",
+      "to": "고래는 폐로 숨을 쉰다",
+      "relation": [
+        "implies",
+        "supports"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "전제-결론(S-16 연역): 전제 둘(premise, premises 묶음 가능)에서 결론으로 implies. 전제끼리 잇지 않는다."
+}

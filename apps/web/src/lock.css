@@ -1,0 +1,22 @@
+/* 잠금 (FR-144 · 145): 앱 잠금 화면은 불투명하게 전부 가린다 · 잠긴 노트 풀기 · 설정 › 보안 */
+.lock-screen { position: fixed; inset: 0; z-index: var(--z-lock); display: flex; align-items: center; justify-content: center; background: var(--bg); }
+.lock-card, .note-unlock { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; padding: 28px; max-width: 360px; width: calc(100% - 32px); }
+.lock-card h2, .note-unlock h2 { margin: 4px 0 0; font-size: 24px; color: var(--text); }
+.lock-card p, .note-unlock p { margin: 0; color: var(--muted); font-size: var(--fs-3); }
+.lock-icon { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 16px; background: var(--hover); color: var(--muted); }
+.note-unlock { position: absolute; inset: 0; z-index: 4; margin: auto; height: fit-content; background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--sh-2); }
+.unlock-form { display: flex; gap: 8px; width: 100%; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.unlock-form input { flex: 1; min-width: 160px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font: inherit; background: var(--card); color: var(--text); }
+.unlock-form input[aria-invalid="true"] { border-color: var(--danger); }
+.unlock-wrong { width: 100%; margin: 0; color: var(--danger); font-size: var(--fs-2); }
+.lock-mark { display: inline-flex; color: var(--faint); margin-left: -2px; }
+.security .pw-form { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0; }
+.security .pw-form input { flex: 1; min-width: 140px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; font: inherit; font-size: var(--fs-3); background: var(--card); color: var(--text); }
+.security h4 { margin: 14px 0 4px; font-size: var(--fs-3); }
+.security .warn { color: var(--danger); }
+.security .protect { padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.security label.inline, .security label.check { display: flex; align-items: center; gap: 8px; font-size: var(--fs-3); margin: 6px 0; }
+
+/* 탭 동기화 표시 (FR-095) */
+.tab-sync { font-size: var(--fs-1); color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+@media (max-width: 600px) { .tab-sync { display: none; } }

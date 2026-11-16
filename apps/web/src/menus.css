@@ -1,0 +1,39 @@
+/* 메뉴 (블록 메뉴 · 화살표 메뉴 · 하위 메뉴 판) — styles.css에서 나눔 (400줄 한도) */
+/* 블록 메뉴 */
+.menu {
+  position: fixed; z-index: var(--z-menu); width: 232px; padding: 6px; background: var(--card);
+  border-radius: 12px; box-shadow: var(--sh-2); font-size: var(--fs-3); /* 테두리 대신 --sh-2의 고리 · 바깥 12 = 줄 6 + 여백 6 */
+}
+.menu button[role=menuitem], .menu > button[role=menuitemcheckbox], .menu > button[role=menuitemradio] {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; height: 32px;
+  padding: 0 10px; border: 0; border-radius: 6px; background: none; color: inherit; font: inherit; cursor: pointer; text-align: left;
+}
+.menu button[role=menuitem]:hover, .menu button[role=menuitem]:focus-visible,
+.menu > button[role=menuitemcheckbox]:hover, .menu > button[role=menuitemcheckbox]:focus-visible,
+.menu > button[role=menuitemradio]:hover, .menu > button[role=menuitemradio]:focus-visible { background: var(--hover); outline: none; }
+.menu kbd { font: inherit; font-size: var(--fs-1); color: var(--subtle); }
+.menu-head { font-size: var(--fs-1); font-weight: var(--fw-2); color: var(--subtle); padding: 6px 8px 4px; }
+.menu-head-one { color: var(--text); font-weight: var(--fw-2); font-size: var(--fs-2); max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mean-select { display: block; width: calc(100% - 16px); margin: 0 8px 6px; padding: 4px 6px; font: inherit; font-size: var(--fs-3); color: var(--text); background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+.menu-sep { height: 1px; background: var(--line); margin: 4px 0; }
+/* 하위 메뉴 (SubMenu.tsx, DS-001): 줄 오른쪽 › 표시, 판은 옆에 — 한 번에 하나 */
+.menu-sub { position: relative; }
+.menu-sub > button[role=menuitem].open { background: var(--hover); }
+.menu-sub-end { display: inline-flex; align-items: center; gap: 8px; }
+.menu-caret { width: 6px; height: 6px; margin-right: 2px; border-top: 1.5px solid var(--faint); border-right: 1.5px solid var(--faint); transform: rotate(45deg); }
+.menu.menu-panel { position: absolute; top: -7px; left: calc(100% + 6px); }
+.menu.menu-panel.left { left: auto; right: calc(100% + 6px); }
+.menu .danger-item span { color: var(--danger); }
+.menu-types button[role=menuitem] { justify-content: flex-start; }
+.menu-types button[role=menuitem].on { background: var(--accent-soft); color: var(--accent); }
+.menu-types .ti { width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 4px; font-size: var(--fs-1); color: var(--muted); }
+.swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; padding: 4px 8px 6px; }
+.menu .swatches .sw {
+  width: 100%; height: 26px; padding: 0; border: 1px solid rgba(0,0,0,.08); border-radius: 6px; cursor: pointer;
+}
+.menu .swatches .sw:hover { outline: 2px solid #c5d0fb; }
+.menu .swatches .sw.none { background: linear-gradient(135deg, var(--card) 45%, #e03131 46%, #e03131 54%, var(--card) 55%); }
+/* 노트형 (CardMenu.tsx): 카드 이름 칸 · 겹침 단추 */
+.menu .card-name { width: 100%; box-sizing: border-box; margin: 2px 0 6px; }
+.card-fix-pill { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: var(--z-float); border: 1px solid var(--warn); background: var(--warn-soft, #fff4e5); color: var(--warn); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: var(--fs-2); font-weight: var(--fw-2); cursor: pointer; box-shadow: var(--sh-1); }
+.card-fix-pill:hover { background: var(--card); }

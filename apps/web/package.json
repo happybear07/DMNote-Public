@@ -1,0 +1,31 @@
+{
+  "name": "@dn/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p . && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dn/ai-pipeline": "workspace:*",
+    "@dn/engine-core": "workspace:*",
+    "@dn/engine-dom": "workspace:*",
+    "@dn/search": "workspace:*",
+    "@dn/storage-idb": "workspace:*",
+    "@dn/sync": "workspace:^",
+    "@dn/text-pm": "workspace:*",
+    "@huggingface/transformers": "4.3.1",
+    "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.11"
+  }
+}

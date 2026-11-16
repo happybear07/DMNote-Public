@@ -1,0 +1,19 @@
+{
+  "id": "21-structure-definition-ssg",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-20", "S-11"], "pattern": "radial" },
+  "aliases": {},
+  "mustNodes": ["정적 사이트 생성기", "Hugo", "Jekyll", "Astro"],
+  "mustEdges": [
+    { "from": "Hugo", "to": "정적 사이트 생성기", "relation": ["example-of", "kind-of"] },
+    { "from": "Jekyll", "to": "정적 사이트 생성기", "relation": ["example-of", "kind-of"] },
+    { "from": "Astro", "to": "정적 사이트 생성기", "relation": ["example-of", "kind-of"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": false, "numbers": [], "nodeTitles": ["Next.js", "Gatsby"], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "정의-예시(S-20): 가운데 정의 노드(definition) + 예시 셋(example → example-of). 원문에 없는 다른 도구(Next.js · Gatsby)를 보태면 위반."
+}

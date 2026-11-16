@@ -1,0 +1,23 @@
+node_modules/
+dist/
+coverage/
+.vite/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+exports/
+dist-e2e/
+# 에이전트 · QA 작업 트리, 개인 설정
+.claude/worktrees/
+.claude/settings.local.json
+
+# e2e가 저장소 루트에 남기는 스크린샷 · 내보내기 파일 · 가져오기 시험 폴더 (node e2e/*.mjs 의 기본 출력 위치)
+/*.png
+/*.zip
+/vault/
+/*.pdf
+/Claude API 구조 정리.*
+/내보내기 시험.*
+/comments.md

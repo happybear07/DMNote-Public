@@ -1,0 +1,1 @@
+{ "n": 2, "found": "2026-10-13 DN_FUZZ_RUNS=10000", "actions": [{"k":"erase","r":0,"pick":0,"at":0,"len":1},{"k":"create","r":1,"x":0,"y":0,"text":"가","title":false},{"k":"erase","r":0,"pick":0,"at":0,"len":1},{"k":"rewire","r":1,"pick":0,"pick2":7},{"k":"delete","r":1,"pick":0},{"k":"dup","r":1,"pick":0},{"k":"ungroup","r":0,"pick":0},{"k":"undo","r":0}] }

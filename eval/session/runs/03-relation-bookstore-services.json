@@ -1,0 +1,722 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "Microservice breakdown for the online bookstore",
+      "nodes": [
+        {
+          "key": "api_gateway",
+          "title": "API Gateway",
+          "kind": "concept",
+          "body": "All client traffic goes through it. It doesn't handle authentication itself.",
+          "group": "Request path",
+          "source": {
+            "quote": "All client traffic goes through the"
+          }
+        },
+        {
+          "key": "auth",
+          "title": "Auth Service",
+          "kind": "concept",
+          "body": "Validates every token the gateway forwards before the request is routed.",
+          "group": "Request path",
+          "source": {
+            "quote": "for validation before routing the request"
+          }
+        },
+        {
+          "key": "catalog",
+          "title": "Catalog Service",
+          "kind": "concept",
+          "body": "Serves book listings and search. Catalog reads are extremely frequent.",
+          "group": "Core services",
+          "source": {
+            "quote": "serves book listings and search"
+          }
+        },
+        {
+          "key": "redis",
+          "title": "Redis",
+          "kind": "concept",
+          "body": "Cache that catalog reads go through.",
+          "group": "Core services",
+          "source": {
+            "quote": "Because catalog reads are extremely frequent, it reads through a"
+          }
+        },
+        {
+          "key": "postgres",
+          "title": "PostgreSQL",
+          "kind": "concept",
+          "body": "The Catalog Service's own database, used only on a cache miss.",
+          "group": "Core services",
+          "source": {
+            "quote": "database on a cache miss"
+          }
+        },
+        {
+          "key": "order",
+          "title": "Order Service",
+          "kind": "concept",
+          "body": "Owns the checkout flow. If either call fails, the order is rejected.",
+          "group": "Core services",
+          "source": {
+            "quote": "owns the checkout flow"
+          }
+        },
+        {
+          "key": "payment",
+          "title": "Payment Service",
+          "kind": "concept",
+          "body": "Authorizes the card. The only service that talks to the provider directly.",
+          "group": "Core services",
+          "source": {
+            "quote": "wraps the external payment provider"
+          }
+        },
+        {
+          "key": "provider",
+          "title": "payment provider",
+          "kind": "concept",
+          "body": "External provider that only the Payment Service talks to.",
+          "group": "Core services",
+          "source": {
+            "quote": "It is the only service that talks to the provider directly"
+          }
+        },
+        {
+          "key": "inventory",
+          "title": "Inventory Service",
+          "kind": "concept",
+          "body": "Reserves stock and tracks stock levels per warehouse.",
+          "group": "Core services",
+          "source": {
+            "quote": "tracks stock levels per warehouse"
+          }
+        },
+        {
+          "key": "kafka",
+          "title": "Kafka",
+          "kind": "concept",
+          "body": "Receives the `OrderPlaced` event when an order is confirmed.",
+          "group": "Events",
+          "source": {
+            "quote": "When an order is confirmed, the Order Service publishes an"
+          }
+        },
+        {
+          "key": "notification",
+          "title": "Notification Service",
+          "kind": "concept",
+          "body": "A separate service that emails the customer.",
+          "group": "Events",
+          "source": {
+            "quote": "consumes it to email the customer"
+          }
+        },
+        {
+          "key": "benefit",
+          "title": "scale independently",
+          "kind": "claim",
+          "body": "The main benefit: Catalog (read-heavy) and Order (write-heavy, transactional) scale independently.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "Catalog (read-heavy) and Order (write-heavy, transactional) can scale independently"
+          }
+        },
+        {
+          "key": "complexity",
+          "title": "operational complexity",
+          "kind": "claim",
+          "body": "The trade-off of the split.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "The trade-off is operational complexity"
+          }
+        },
+        {
+          "key": "tracing",
+          "title": "distributed tracing",
+          "kind": "concept",
+          "group": "Why this split?",
+          "source": {
+            "quote": "you now need distributed tracing"
+          }
+        },
+        {
+          "key": "retry",
+          "title": "retry policy",
+          "kind": "concept",
+          "body": "A clear policy for the Order → Payment call, since payments must never be charged twice.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "a clear retry policy for the Order → Payment call"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "api_gateway",
+          "to": "auth",
+          "relation": "depends-on",
+          "label": "forwards every token"
+        },
+        {
+          "from": "catalog",
+          "to": "redis",
+          "relation": "depends-on",
+          "label": "reads through"
+        },
+        {
+          "from": "catalog",
+          "to": "postgres",
+          "relation": "depends-on",
+          "label": "falls back to"
+        },
+        {
+          "from": "order",
+          "to": "payment",
+          "relation": "depends-on",
+          "label": "calls"
+        },
+        {
+          "from": "order",
+          "to": "inventory",
+          "relation": "depends-on",
+          "label": "calls"
+        },
+        {
+          "from": "payment",
+          "to": "provider",
+          "relation": "depends-on",
+          "label": "wraps"
+        },
+        {
+          "from": "order",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "publishes"
+        },
+        {
+          "from": "inventory",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "notification",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "benefit",
+          "to": "complexity",
+          "relation": "contrasts"
+        },
+        {
+          "from": "complexity",
+          "to": "tracing",
+          "relation": "leads-to"
+        },
+        {
+          "from": "complexity",
+          "to": "retry",
+          "relation": "leads-to"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "microservice breakdown for the online bookstore",
+      "nodes": [
+        {
+          "key": "gateway",
+          "title": "API Gateway",
+          "kind": "concept",
+          "body": "All client traffic goes through it. Forwards every token to the Auth Service before routing the request.",
+          "group": "Request path",
+          "source": {
+            "quote": "handle authentication itself"
+          }
+        },
+        {
+          "key": "auth",
+          "title": "Auth Service",
+          "kind": "concept",
+          "body": "Validates every token the gateway forwards.",
+          "group": "Request path",
+          "source": {
+            "quote": "for validation before routing the request"
+          }
+        },
+        {
+          "key": "catalog",
+          "title": "Catalog Service",
+          "kind": "concept",
+          "body": "Serves book listings and search.",
+          "group": "Core services",
+          "source": {
+            "quote": "serves book listings and search"
+          }
+        },
+        {
+          "key": "redis",
+          "title": "Redis",
+          "kind": "concept",
+          "body": "Cache for catalog reads, which are extremely frequent.",
+          "group": "Core services",
+          "source": {
+            "quote": "reads through a **Redis** cache"
+          }
+        },
+        {
+          "key": "postgres",
+          "title": "PostgreSQL",
+          "kind": "concept",
+          "body": "Catalog's own database, used only on a cache miss.",
+          "group": "Core services",
+          "source": {
+            "quote": "database on a cache miss"
+          }
+        },
+        {
+          "key": "order",
+          "title": "Order Service",
+          "kind": "concept",
+          "body": "Owns the checkout flow. If either call fails, the order is rejected.",
+          "group": "Core services",
+          "source": {
+            "quote": "owns the checkout flow"
+          }
+        },
+        {
+          "key": "payment",
+          "title": "Payment Service",
+          "kind": "concept",
+          "body": "Wraps the external payment provider. The only service that talks to the provider directly.",
+          "group": "Core services",
+          "source": {
+            "quote": "wraps the external payment provider"
+          }
+        },
+        {
+          "key": "inventory",
+          "title": "Inventory Service",
+          "kind": "concept",
+          "body": "- Tracks stock levels per warehouse\n- Consumes `OrderPlaced` to turn the reservation into a permanent decrement",
+          "group": "Core services",
+          "source": {
+            "quote": "tracks stock levels per warehouse"
+          }
+        },
+        {
+          "key": "notif",
+          "title": "Notification Service",
+          "kind": "concept",
+          "body": "Consumes `OrderPlaced` to email the customer.",
+          "group": "Events",
+          "source": {
+            "quote": "consumes it to email the customer"
+          }
+        },
+        {
+          "key": "kafka",
+          "title": "Kafka",
+          "kind": "concept",
+          "body": "Receives the `OrderPlaced` event.",
+          "group": "Events",
+          "source": {
+            "quote": "an `OrderPlaced` event to **Kafka**"
+          }
+        },
+        {
+          "key": "evt",
+          "title": "OrderPlaced",
+          "kind": "concept",
+          "body": "Published when an order is confirmed.",
+          "group": "Events",
+          "source": {
+            "quote": "When an order is confirmed, the Order Service publishes"
+          }
+        },
+        {
+          "key": "benefit",
+          "title": "scale independently",
+          "kind": "claim",
+          "body": "Catalog (read-heavy) and Order (write-heavy, transactional) can scale independently.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "can scale independently"
+          }
+        },
+        {
+          "key": "tradeoff",
+          "title": "operational complexity",
+          "kind": "claim",
+          "body": "You now need distributed tracing and a clear retry policy.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "The trade-off is operational complexity"
+          }
+        },
+        {
+          "key": "tracing",
+          "title": "distributed tracing",
+          "kind": "concept",
+          "group": "Why this split?",
+          "source": {
+            "quote": "you now need distributed tracing"
+          }
+        },
+        {
+          "key": "retry",
+          "title": "retry policy",
+          "kind": "concept",
+          "body": "For the Order → Payment call, since payments must never be charged twice.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "a clear retry policy for the Order"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "gateway",
+          "to": "auth",
+          "relation": "depends-on",
+          "label": "forwards every token"
+        },
+        {
+          "from": "catalog",
+          "to": "redis",
+          "relation": "depends-on",
+          "label": "reads through"
+        },
+        {
+          "from": "catalog",
+          "to": "postgres",
+          "relation": "depends-on",
+          "label": "falls back to"
+        },
+        {
+          "from": "order",
+          "to": "payment",
+          "relation": "depends-on",
+          "label": "authorize the card"
+        },
+        {
+          "from": "order",
+          "to": "inventory",
+          "relation": "depends-on",
+          "label": "reserve stock"
+        },
+        {
+          "from": "order",
+          "to": "evt",
+          "relation": "leads-to",
+          "label": "publishes"
+        },
+        {
+          "from": "evt",
+          "to": "kafka",
+          "relation": "leads-to"
+        },
+        {
+          "from": "inventory",
+          "to": "evt",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "notif",
+          "to": "evt",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "catalog",
+          "to": "benefit",
+          "relation": "supports",
+          "label": "read-heavy"
+        },
+        {
+          "from": "order",
+          "to": "benefit",
+          "relation": "supports",
+          "label": "write-heavy"
+        },
+        {
+          "from": "benefit",
+          "to": "tradeoff",
+          "relation": "contrasts"
+        },
+        {
+          "from": "tradeoff",
+          "to": "tracing",
+          "relation": "depends-on"
+        },
+        {
+          "from": "tradeoff",
+          "to": "retry",
+          "relation": "depends-on"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "Microservice breakdown for the online bookstore",
+      "nodes": [
+        {
+          "key": "gateway",
+          "title": "API Gateway",
+          "kind": "concept",
+          "body": "All client traffic goes through it. It does not handle authentication itself.",
+          "group": "Request path",
+          "source": {
+            "quote": "All client traffic goes through the"
+          }
+        },
+        {
+          "key": "auth",
+          "title": "Auth Service",
+          "kind": "concept",
+          "body": "Receives every token from the gateway for validation before the request is routed.",
+          "group": "Request path",
+          "source": {
+            "quote": "for validation before routing the request"
+          }
+        },
+        {
+          "key": "catalog",
+          "title": "Catalog Service",
+          "kind": "concept",
+          "body": "Serves book listings and search.",
+          "group": "Core services",
+          "source": {
+            "quote": "serves book listings and search"
+          }
+        },
+        {
+          "key": "redis",
+          "title": "Redis",
+          "kind": "concept",
+          "body": "Cache that Catalog Service reads through, since catalog reads are extremely frequent.",
+          "group": "Core services",
+          "source": {
+            "quote": "Because catalog reads are extremely frequent"
+          }
+        },
+        {
+          "key": "postgres",
+          "title": "PostgreSQL",
+          "kind": "concept",
+          "body": "Catalog Service's own database, used only on a cache miss.",
+          "group": "Core services",
+          "source": {
+            "quote": "database on a cache miss"
+          }
+        },
+        {
+          "key": "order",
+          "title": "Order Service",
+          "kind": "concept",
+          "body": "Owns the checkout flow. If either call fails, the order is rejected.",
+          "group": "Core services",
+          "source": {
+            "quote": "owns the checkout flow"
+          }
+        },
+        {
+          "key": "payment",
+          "title": "Payment Service",
+          "kind": "concept",
+          "body": "Wraps the external payment provider. The only service that talks to the provider directly.",
+          "group": "Core services",
+          "source": {
+            "quote": "It is the only service that talks to the provider directly"
+          }
+        },
+        {
+          "key": "provider",
+          "title": "payment provider",
+          "kind": "concept",
+          "body": "External; only the Payment Service talks to it directly.",
+          "group": "Core services",
+          "source": {
+            "quote": "wraps the external payment provider"
+          }
+        },
+        {
+          "key": "inventory",
+          "title": "Inventory Service",
+          "kind": "concept",
+          "body": "Tracks stock levels per warehouse. Consumes the `OrderPlaced` event to turn the reservation into a permanent decrement.",
+          "group": "Core services",
+          "source": {
+            "quote": "tracks stock levels per warehouse"
+          }
+        },
+        {
+          "key": "kafka",
+          "title": "Kafka",
+          "kind": "concept",
+          "body": "Order Service publishes an `OrderPlaced` event here when an order is confirmed.",
+          "group": "Events",
+          "source": {
+            "quote": "publishes an `OrderPlaced` event to"
+          }
+        },
+        {
+          "key": "notify",
+          "title": "Notification Service",
+          "kind": "concept",
+          "body": "A separate service that consumes the event to email the customer.",
+          "group": "Events",
+          "source": {
+            "quote": "consumes it to email the customer"
+          }
+        },
+        {
+          "key": "benefit",
+          "title": "scale independently",
+          "kind": "claim",
+          "body": "The main benefit: Catalog (read-heavy) and Order (write-heavy, transactional) can scale independently.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "The main benefit is that Catalog (read-heavy) and Order (write-heavy, transactional) can scale independently"
+          }
+        },
+        {
+          "key": "complexity",
+          "title": "operational complexity",
+          "kind": "claim",
+          "body": "The trade-off: you now need distributed tracing and a clear retry policy for the Order → Payment call.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "The trade-off is operational complexity"
+          }
+        },
+        {
+          "key": "tracing",
+          "title": "distributed tracing",
+          "kind": "concept",
+          "group": "Why this split?",
+          "source": {
+            "quote": "you now need distributed tracing"
+          }
+        },
+        {
+          "key": "retry",
+          "title": "retry policy",
+          "kind": "concept",
+          "body": "A clear retry policy for the Order → Payment call.",
+          "group": "Why this split?",
+          "source": {
+            "quote": "a clear retry policy"
+          }
+        },
+        {
+          "key": "twice",
+          "title": "payments must never be charged twice",
+          "kind": "evidence",
+          "group": "Why this split?",
+          "source": {
+            "quote": "payments must never be charged twice"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "gateway",
+          "to": "auth",
+          "relation": "depends-on",
+          "label": "forwards every token"
+        },
+        {
+          "from": "catalog",
+          "to": "redis",
+          "relation": "depends-on",
+          "label": "reads through"
+        },
+        {
+          "from": "catalog",
+          "to": "postgres",
+          "relation": "depends-on",
+          "label": "falls back to"
+        },
+        {
+          "from": "order",
+          "to": "payment",
+          "relation": "depends-on",
+          "label": "authorize the card"
+        },
+        {
+          "from": "order",
+          "to": "inventory",
+          "relation": "depends-on",
+          "label": "reserve stock"
+        },
+        {
+          "from": "payment",
+          "to": "provider",
+          "relation": "depends-on",
+          "label": "wraps"
+        },
+        {
+          "from": "order",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "publishes"
+        },
+        {
+          "from": "inventory",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "notify",
+          "to": "kafka",
+          "relation": "depends-on",
+          "label": "consumes"
+        },
+        {
+          "from": "benefit",
+          "to": "complexity",
+          "relation": "contrasts"
+        },
+        {
+          "from": "complexity",
+          "to": "tracing",
+          "relation": "leads-to",
+          "label": "you now need"
+        },
+        {
+          "from": "complexity",
+          "to": "retry",
+          "relation": "leads-to",
+          "label": "you now need"
+        },
+        {
+          "from": "twice",
+          "to": "retry",
+          "relation": "supports"
+        }
+      ],
+      "charts": [],
+      "tables": []
+    }
+  }
+]

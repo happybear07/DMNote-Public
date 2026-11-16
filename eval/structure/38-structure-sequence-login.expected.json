@@ -1,0 +1,76 @@
+{
+  "id": "38-structure-sequence-login",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-52"
+    ],
+    "pattern": "lanes"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "브라우저",
+    "인증 서버",
+    "사용자 DB"
+  ],
+  "mustEdges": [
+    {
+      "from": "브라우저",
+      "to": "인증 서버",
+      "relation": [
+        "sends",
+        "leads-to",
+        "next",
+        "flows-to"
+      ]
+    },
+    {
+      "from": "인증 서버",
+      "to": "사용자 DB",
+      "relation": [
+        "sends",
+        "leads-to",
+        "next",
+        "flows-to",
+        "depends-on"
+      ]
+    },
+    {
+      "from": "사용자 DB",
+      "to": "인증 서버",
+      "relation": [
+        "sends",
+        "leads-to",
+        "next",
+        "flows-to"
+      ]
+    },
+    {
+      "from": "인증 서버",
+      "to": "브라우저",
+      "relation": [
+        "sends",
+        "leads-to",
+        "next",
+        "flows-to"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "메시지 시퀀스(S-52): 행위자 셋(레인 또는 actor 노드) 사이 sends(order 1~4, 라벨 = 메시지). 응답(reply)도 원문대로. 행위자를 lane 묶음으로만 두고 메시지를 step 노드로 그려도 허용 — 그때는 노드 재현이 떨어질 수 있다. (10/12: 원문 3 · 4의 응답 메시지도 기대에 넣음 — 첫 기대가 요청만 담아 맞는 응답을 틀리게 셌다)"
+}

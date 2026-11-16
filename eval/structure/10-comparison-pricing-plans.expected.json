@@ -1,0 +1,29 @@
+{
+  "id": "10-comparison-pricing-plans",
+  "category": "comparison",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-08", "S-10"], "pattern": "table" },
+  "aliases": {
+    "월 가격": ["가격", "월 요금", "요금"],
+    "AI 기능": ["AI"],
+    "버전 기록": ["버전 기록 보관", "버전 보관"]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": ["월 가격", "저장 공간", "공동 편집", "AI 기능", "버전 기록"],
+      "rowLabels": ["무료 요금제", "프로 요금제", "팀 요금제"]
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [118800, 178800, 99000],
+    "nodeTitles": [],
+    "substrings": ["118,800", "178,800", "연 118", "할인율 20%", "엔터프라이즈"]
+  },
+  "notes": "다기준 비교 안의 가격은 표에만 넣는다(차트 금지 — 프롬프트의 '비교 기준 중 하나인 수치는 표로' 규칙). 연간 가격(9,900×12=118,800 등)이나 할인율을 계산 · 추측해 넣으면 실패. 셀의 수치는 원문 표기(9,900원, 1TB 등)와 같아야 한다."
+}

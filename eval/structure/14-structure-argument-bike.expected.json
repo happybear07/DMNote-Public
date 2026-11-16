@@ -1,0 +1,80 @@
+{
+  "id": "14-structure-argument-bike",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-15"
+    ],
+    "pattern": "argument"
+  },
+  "aliases": {
+    "자전거 도로 확충": [
+      "자전거 도로 확충이 필요하다"
+    ]
+  },
+  "mustNodes": [
+    "자전거 도로 확충",
+    "교통 체증 완화",
+    "상권 활성화",
+    "겨울철 이용 감소",
+    "연간 이용 효과"
+  ],
+  "mustEdges": [
+    {
+      "from": "교통 체증 완화",
+      "to": "자전거 도로 확충",
+      "relation": [
+        "supports"
+      ]
+    },
+    {
+      "from": "상권 활성화",
+      "to": "자전거 도로 확충",
+      "relation": [
+        "supports"
+      ]
+    },
+    {
+      "from": "겨울철 이용 감소",
+      "to": "자전거 도로 확충",
+      "relation": [
+        "refutes",
+        "contrasts"
+      ]
+    },
+    {
+      "from": "연간 이용 효과",
+      "to": "겨울철 이용 감소",
+      "relation": [
+        "refutes",
+        "contrasts"
+      ],
+      "alternatives": [
+        {
+          "from": "연간 이용 효과",
+          "to": "자전거 도로 확충",
+          "relation": [
+            "supports"
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "주장-근거-반박(S-15): 근거 둘은 supports, 반론은 refutes(또는 contrasts), 재반박은 반론을 refutes 하거나 주장을 supports. 반론을 근거처럼 supports로 그리면 틀림. (10/12: 끝의 '따라서 … 투자' 문장이 같은 주장을 결론 노드로 한 번 더 만들어 빼고, 주장을 첫 문장 하나로)"
+}

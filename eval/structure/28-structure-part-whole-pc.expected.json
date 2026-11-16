@@ -1,0 +1,62 @@
+{
+  "id": "28-structure-part-whole-pc",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-12"
+    ],
+    "pattern": "nest"
+  },
+  "aliases": {
+    "중앙처리장치(CPU)": [
+      "중앙처리장치",
+      "CPU"
+    ]
+  },
+  "mustNodes": [
+    "컴퓨터",
+    "중앙처리장치(CPU)",
+    "메모리",
+    "저장장치"
+  ],
+  "mustEdges": [
+    {
+      "from": "중앙처리장치(CPU)",
+      "to": "컴퓨터",
+      "relation": [
+        "part-of"
+      ]
+    },
+    {
+      "from": "메모리",
+      "to": "컴퓨터",
+      "relation": [
+        "part-of"
+      ]
+    },
+    {
+      "from": "저장장치",
+      "to": "컴퓨터",
+      "relation": [
+        "part-of"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "부분-전체(S-12): 부분 셋이 part-of로 전체를 향한다(또는 whole 묶음). kind-of(종류)와 헷갈리면 틀림."
+}

@@ -1,0 +1,52 @@
+{
+  "id": "31-structure-myth-reality-coffee",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-18"
+    ],
+    "pattern": "columns"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "커피는 탈수를 일으킨다",
+    "적당량은 수분 섭취로 친다",
+    "커피는 키 성장을 막는다",
+    "키와의 관계는 확인되지 않았다"
+  ],
+  "mustEdges": [
+    {
+      "from": "적당량은 수분 섭취로 친다",
+      "to": "커피는 탈수를 일으킨다",
+      "relation": [
+        "refutes",
+        "contrasts"
+      ]
+    },
+    {
+      "from": "키와의 관계는 확인되지 않았다",
+      "to": "커피는 키 성장을 막는다",
+      "relation": [
+        "refutes",
+        "contrasts"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "통념-반박(S-18): 통념(status belief · refuted)과 실제가 짝으로 refutes(또는 contrasts). 두 쌍을 서로 섞지 않는다."
+}

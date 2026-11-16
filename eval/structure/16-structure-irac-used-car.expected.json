@@ -1,0 +1,111 @@
+{
+  "id": "16-structure-irac-used-car",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-43"
+    ],
+    "pattern": "form"
+  },
+  "aliases": {
+    "계약을 취소할 수 있는가": [
+      "매수인이 계약을 취소할 수 있는가"
+    ],
+    "기망으로 한 의사표시는 취소할 수 있다": [
+      "상대방의 기망으로 한 의사표시는 취소할 수 있다",
+      "기망으로 한 의사표시"
+    ],
+    "침수 이력을 알면서도 숨긴": [
+      "침수 이력",
+      "침수 이력을 숨긴"
+    ],
+    "매수인은 계약을 취소할 수 있다": [
+      "계약을 취소할 수 있다"
+    ]
+  },
+  "mustNodes": [
+    "계약을 취소할 수 있는가",
+    "기망으로 한 의사표시는 취소할 수 있다",
+    "침수 이력을 알면서도 숨긴",
+    "매수인은 계약을 취소할 수 있다"
+  ],
+  "mustEdges": [
+    {
+      "from": "기망으로 한 의사표시는 취소할 수 있다",
+      "to": "매수인은 계약을 취소할 수 있다",
+      "relation": [
+        "implies",
+        "supports",
+        "leads-to"
+      ],
+      "alternatives": [
+        {
+          "from": "기망으로 한 의사표시는 취소할 수 있다",
+          "to": "침수 이력을 알면서도 숨긴",
+          "relation": [
+            "leads-to",
+            "next"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "침수 이력을 알면서도 숨긴",
+      "to": "매수인은 계약을 취소할 수 있다",
+      "relation": [
+        "supports",
+        "implies",
+        "leads-to",
+        "next"
+      ]
+    },
+    {
+      "from": "매수인은 계약을 취소할 수 있다",
+      "to": "계약을 취소할 수 있는가",
+      "relation": [
+        "answers"
+      ],
+      "alternatives": [
+        {
+          "from": "계약을 취소할 수 있는가",
+          "to": "매수인은 계약을 취소할 수 있다",
+          "relation": [
+            "leads-to"
+          ]
+        },
+        {
+          "from": "계약을 취소할 수 있는가",
+          "to": "기망으로 한 의사표시는 취소할 수 있다",
+          "relation": [
+            "leads-to",
+            "next"
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": [
+      "쟁점",
+      "규칙",
+      "적용",
+      "결론"
+    ],
+    "substrings": [
+      "민법 제"
+    ]
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "IRAC(S-43): 쟁점 · 규칙 · 적용 · 결론 네 칸(slot 묶음 + slots). 조문 번호를 지어내지 않는다(원문에 없음 — '민법 제…' 금지). (10/12: 쟁점 → 규칙 → 적용 → 결론 흐름으로 읽어도 맞게 대안 추가, 칸 이름만 제목인 노드는 금지)"
+}

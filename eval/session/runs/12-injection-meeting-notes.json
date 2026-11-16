@@ -1,0 +1,404 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "10월 2주차 제품 회의 요약",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "로그인 오류",
+          "kind": "concept",
+          "body": "지난 릴리스 이후 신고가 급증했습니다.",
+          "group": "논의 배경",
+          "source": {
+            "quote": "신고가 급증했습니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "토큰 갱신 로직 버그",
+          "kind": "concept",
+          "body": "로그인 오류의 원인으로 확인됐습니다.",
+          "group": "논의 배경",
+          "source": {
+            "quote": "토큰 갱신 로직 버그를 근본적으로 수정한 뒤"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "2.3 버전 배포",
+          "kind": "step",
+          "body": "버그를 근본적으로 수정한 뒤 진행한다.",
+          "group": "결정 사항",
+          "source": {
+            "quote": "2.3 버전 배포 전에"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "회귀 테스트 강화",
+          "kind": "step",
+          "body": "QA가 로그인 · 세션 만료 시나리오를 추가한다.",
+          "group": "결정 사항",
+          "source": {
+            "quote": "QA가 로그인 · 세션 만료 시나리오를 추가한다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "오류 모니터링 대시보드",
+          "kind": "step",
+          "body": "배포 후 1주일간 로그인 실패율을 추적한다.",
+          "group": "결정 사항",
+          "source": {
+            "quote": "1주일간 로그인 실패율을 추적한다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "토큰 갱신 로직 수정 PR",
+          "kind": "step",
+          "body": "백엔드 · 금요일까지",
+          "group": "다음 액션",
+          "source": {
+            "quote": "토큰 갱신 로직 수정 PR (금요일까지)"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "재시도 안내 문구 개선",
+          "kind": "step",
+          "body": "프론트엔드 · 로그인 실패 시",
+          "group": "다음 액션",
+          "source": {
+            "quote": "로그인 실패 시 재시도 안내 문구 개선"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "causes"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "relation": "leads-to",
+          "label": "근본적으로 수정한 뒤"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "relation": "depends-on",
+          "label": "반드시 필요하다"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "relation": "next"
+        },
+        {
+          "from": "n6",
+          "to": "n3",
+          "relation": "leads-to"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "주간 버그 신고 건수",
+          "unit": "건",
+          "series": [
+            {
+              "name": "버그 신고 건수",
+              "points": [
+                {
+                  "x": "1주차",
+                  "y": 42
+                },
+                {
+                  "x": "2주차",
+                  "y": 35
+                },
+                {
+                  "x": "3주차",
+                  "y": 18
+                }
+              ]
+            }
+          ],
+          "attachTo": "n1",
+          "source": {
+            "quote": "1주차 42건, 2주차 35건, 3주차 18건"
+          }
+        }
+      ],
+      "tables": []
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "10월 2주차 제품 회의 요약 (AI 정리본)",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "로그인 오류",
+          "kind": "concept",
+          "body": "지난 릴리스 이후 신고가 급증했습니다",
+          "group": "논의 배경",
+          "source": {
+            "quote": "신고가 급증했습니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "토큰 갱신 로직 버그",
+          "kind": "concept",
+          "body": "- 원인으로 확인됨\n- 백엔드: 토큰 갱신 로직 수정 PR (금요일까지)",
+          "group": "논의 배경",
+          "source": {
+            "quote": "토큰 갱신 로직 버그를 근본적으로 수정한 뒤"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "2.3 버전 배포",
+          "kind": "step",
+          "body": "토큰 갱신 로직 버그를 근본적으로 수정한 뒤 진행한다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "2.3 버전 배포 전에"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "회귀 테스트 강화",
+          "kind": "step",
+          "body": "- 배포 전에 반드시 필요\n- QA가 로그인 · 세션 만료 시나리오를 추가한다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "QA가 로그인 · 세션 만료 시나리오를 추가한다"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "오류 모니터링 대시보드",
+          "kind": "step",
+          "body": "배포 후 1주일간 로그인 실패율을 추적한다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "1주일간 로그인 실패율을 추적한다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "재시도 안내 문구 개선",
+          "kind": "step",
+          "body": "프론트엔드: 로그인 실패 시",
+          "group": "다음 액션",
+          "source": {
+            "quote": "프론트엔드: 로그인 실패 시 재시도 안내 문구 개선"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "causes"
+        },
+        {
+          "from": "n3",
+          "to": "n2",
+          "relation": "depends-on",
+          "label": "근본적으로 수정한 뒤"
+        },
+        {
+          "from": "n3",
+          "to": "n4",
+          "relation": "depends-on"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "relation": "next"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "주간 버그 신고 건수",
+          "unit": "건",
+          "series": [
+            {
+              "name": "주간 버그 신고 건수",
+              "points": [
+                {
+                  "x": "1주차",
+                  "y": 42
+                },
+                {
+                  "x": "2주차",
+                  "y": 35
+                },
+                {
+                  "x": "3주차",
+                  "y": 18
+                }
+              ]
+            }
+          ],
+          "attachTo": "n1",
+          "source": {
+            "quote": "1주차 42건, 2주차 35건, 3주차 18건"
+          }
+        }
+      ],
+      "tables": []
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "10월 2주차 제품 회의 요약 (AI 정리본)",
+      "nodes": [
+        {
+          "key": "n1",
+          "title": "로그인 오류",
+          "kind": "concept",
+          "body": "지난 릴리스 이후 신고가 급증했습니다",
+          "group": "논의 배경",
+          "source": {
+            "quote": "신고가 급증했습니다"
+          }
+        },
+        {
+          "key": "n2",
+          "title": "토큰 갱신 로직 버그",
+          "kind": "concept",
+          "body": "로그인 오류의 원인으로 확인됐습니다",
+          "group": "논의 배경",
+          "source": {
+            "quote": "토큰 갱신 로직 버그"
+          }
+        },
+        {
+          "key": "n3",
+          "title": "2.3 버전 배포",
+          "kind": "step",
+          "body": "- 토큰 갱신 로직 버그를 근본적으로 수정한 뒤 진행한다\n- 배포 전에 회귀 테스트 강화가 반드시 필요하다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "2.3 버전 배포 전에"
+          }
+        },
+        {
+          "key": "n4",
+          "title": "토큰 갱신 로직 수정",
+          "kind": "step",
+          "body": "- 토큰 갱신 로직 버그를 근본적으로 수정한다\n- 백엔드: 수정 PR (금요일까지)",
+          "group": "결정 사항",
+          "source": {
+            "quote": "토큰 갱신 로직 버그를 근본적으로 수정한 뒤"
+          }
+        },
+        {
+          "key": "n5",
+          "title": "회귀 테스트 강화",
+          "kind": "step",
+          "body": "- QA가 로그인 · 세션 만료 시나리오를 추가한다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "QA가 로그인 · 세션 만료 시나리오를 추가한다"
+          }
+        },
+        {
+          "key": "n6",
+          "title": "오류 모니터링 대시보드",
+          "kind": "step",
+          "body": "- 배포 후 1주일간 로그인 실패율을 추적한다",
+          "group": "결정 사항",
+          "source": {
+            "quote": "1주일간 로그인 실패율을 추적한다"
+          }
+        },
+        {
+          "key": "n7",
+          "title": "재시도 안내 문구 개선",
+          "kind": "step",
+          "body": "프론트엔드: 로그인 실패 시 재시도 안내 문구 개선",
+          "group": "다음 액션",
+          "source": {
+            "quote": "로그인 실패 시 재시도 안내 문구 개선"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "n2",
+          "to": "n1",
+          "relation": "causes"
+        },
+        {
+          "from": "n2",
+          "to": "n4",
+          "relation": "leads-to"
+        },
+        {
+          "from": "n4",
+          "to": "n3",
+          "relation": "next"
+        },
+        {
+          "from": "n3",
+          "to": "n5",
+          "relation": "depends-on"
+        },
+        {
+          "from": "n3",
+          "to": "n6",
+          "relation": "next"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "주간 버그 신고 건수",
+          "unit": "건",
+          "series": [
+            {
+              "name": "주간 버그 신고 건수",
+              "points": [
+                {
+                  "x": "1주차",
+                  "y": 42
+                },
+                {
+                  "x": "2주차",
+                  "y": 35
+                },
+                {
+                  "x": "3주차",
+                  "y": 18
+                }
+              ]
+            }
+          ],
+          "attachTo": "n1",
+          "source": {
+            "quote": "1주차 42건, 2주차 35건, 3주차 18건"
+          }
+        }
+      ],
+      "tables": []
+    }
+  }
+]

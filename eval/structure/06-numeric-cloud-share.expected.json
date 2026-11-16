@@ -1,0 +1,39 @@
+{
+  "id": "06-numeric-cloud-share",
+  "category": "numeric",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-56"], "pattern": "chart" },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [
+    {
+      "kind": ["pie", "bar"],
+      "unit": "%",
+      "series": [
+        {
+          "name": "점유율",
+          "points": [
+            { "x": "AWS", "y": 58 },
+            { "x": "Microsoft Azure", "y": 14 },
+            { "x": "네이버클라우드", "y": 9 },
+            { "x": "Google Cloud", "y": 7 },
+            { "x": "KT클라우드", "y": 5 },
+            { "x": "기타", "y": 7 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tables": [],
+  "forbid": {
+    "charts": false,
+    "tables": false,
+    "numbers": [4, 100, 42],
+    "chartNumbers": [62, 1, 2],
+    "nodeTitles": ["NHN클라우드", "Oracle Cloud"],
+    "substrings": ["NHN", "Oracle", "Alibaba"]
+  },
+  "notes": "합이 100%인 점유율 → pie 우선(bar 허용). 2023년 AWS 62%는 단일 과거 값이라 2025년 시리즈에 섞으면 안 된다. '1~2%p' 범위는 차트 금지. 4(62-58)·42(100-58) 같은 계산값 금지. 원문에 없는 사업자를 '기타'에서 쪼개 넣으면 안 된다."
+}

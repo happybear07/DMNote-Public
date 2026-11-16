@@ -1,0 +1,20 @@
+{
+  "id": "19-structure-swimlane-expense",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-62", "S-49", "S-03"], "pattern": "lanes" },
+  "aliases": {},
+  "mustNodes": ["정산 기안", "1차 검토", "반려", "최종 승인", "지급"],
+  "mustEdges": [
+    { "from": "정산 기안", "to": "1차 검토", "relation": ["next", "leads-to", "sends"] },
+    { "from": "1차 검토", "to": "반려", "relation": ["leads-to", "next"] },
+    { "from": "1차 검토", "to": "최종 승인", "relation": ["next", "leads-to"] },
+    { "from": "최종 승인", "to": "지급", "relation": ["next", "leads-to"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": false, "numbers": [], "nodeTitles": [], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "업무 프로세스(S-62 스윔레인): 신청자 · 팀장 · 재무팀이 레인(lane 묶음)이면 띠로 놓인다. 반려는 1차 검토의 갈래(라벨 '빠진 영수증'). 레인 대신 owner만 써도 흐름 채점은 같다."
+}

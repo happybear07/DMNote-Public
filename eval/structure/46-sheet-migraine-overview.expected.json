@@ -1,0 +1,84 @@
+{
+  "id": "46-sheet-migraine-overview",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "편두통 기본 정보",
+    "cards": [
+      {
+        "title": "흔한 증상",
+        "pieces": [
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "한쪽 머리가 욱신거림",
+          "빛과 소리에 예민해짐",
+          "메스꺼움"
+        ]
+      },
+      {
+        "title": "잘 알려진 유발 요인",
+        "pieces": [
+          "text",
+          "chips"
+        ],
+        "keep": [
+          "수면 부족",
+          "카페인 갑자기 끊기",
+          "불규칙한 식사"
+        ]
+      },
+      {
+        "title": "생활 관리",
+        "pieces": [
+          "checklist",
+          "text"
+        ],
+        "keep": [
+          "매일 같은 시간에 자고 일어나기",
+          "두통 일기 쓰기",
+          "끼니 거르지 않기"
+        ]
+      },
+      {
+        "title": "병원에 가야 할 때",
+        "pieces": [
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "바로 응급실에 가세요"
+        ]
+      }
+    ]
+  },
+  "aliases": {
+    "잘 알려진 유발 요인": [
+      "유발 요인"
+    ]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": [
+      "진통제",
+      "트립탄",
+      "타이레놀"
+    ]
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "건강 정보: 원문에 없는 약 이름 · 치료법을 보태지 않는다(가장 위험한 지어냄). 경고는 콜아웃(alert, 분홍 카드 허용). 면책 문장은 closing."
+}

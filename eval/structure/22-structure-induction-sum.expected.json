@@ -1,0 +1,80 @@
+{
+  "id": "22-structure-induction-sum",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-29",
+      "S-26"
+    ],
+    "pattern": "proof"
+  },
+  "aliases": {
+    "n = 1일 때": [
+      "n = 1일 때 성립"
+    ],
+    "n = k+1일 때도 성립한다": [
+      "n = k+1일 때도 성립"
+    ],
+    "모든 자연수 n에 대해 명제가 성립한다": [
+      "모든 자연수 n에 대해 명제가 성립",
+      "명제가 성립한다"
+    ]
+  },
+  "mustNodes": [
+    "n = 1일 때",
+    "n = k+1일 때도 성립한다",
+    "모든 자연수 n에 대해 명제가 성립한다"
+  ],
+  "mustEdges": [
+    {
+      "from": "n = 1일 때",
+      "to": "모든 자연수 n에 대해 명제가 성립한다",
+      "relation": [
+        "implies",
+        "supports",
+        "leads-to"
+      ],
+      "alternatives": [
+        {
+          "from": "n = 1일 때",
+          "to": "n = k+1일 때도 성립한다",
+          "relation": [
+            "next",
+            "leads-to",
+            "implies"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "n = k+1일 때도 성립한다",
+      "to": "모든 자연수 n에 대해 명제가 성립한다",
+      "relation": [
+        "implies",
+        "supports",
+        "leads-to",
+        "next"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": [
+      "기초 단계",
+      "귀납 단계"
+    ],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "수학적 귀납법(S-29): 기초 단계 · 귀납 단계는 칸(slot 묶음 + slots) 이름이고 노드 제목은 그 칸의 내용(n = 1일 때 …). 두 칸에서 결론으로 implies · supports. 식은 math에 원문 그대로 — 정리하거나 계산을 보태지 않는다. 수식 속 숫자를 차트로 만들면 위반."
+}

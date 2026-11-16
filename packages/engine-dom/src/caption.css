@@ -1,0 +1,5 @@
+/* 그림 · 표 캡션 (caption-view.ts) */
+.dn-caption { font-size: calc(12px * var(--dn-fs, 1)); line-height: 1.5; color: var(--muted, #6b6b68); text-align: center; margin: 6px 0 2px; cursor: text; }
+.dn-caption[data-kind='표'] { margin: 0 0 6px; }
+.dn-caption:hover { color: var(--text, #37352f); }
+.dn-caption-input { position: fixed; z-index: calc(var(--z-canvas-pop, 80) + 1); box-sizing: border-box; padding: 6px 9px; font: inherit; font-size: 13px; border: 1px solid var(--accent, #3d5fe0); border-radius: 6px; background: var(--card, #fff); color: var(--text, #37352f); box-shadow: 0 6px 20px rgba(0, 0, 0, .14); outline: none; }

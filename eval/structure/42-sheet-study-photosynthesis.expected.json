@@ -1,0 +1,103 @@
+{
+  "id": "42-sheet-study-photosynthesis",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "광합성 정리 (중학교 과학)",
+    "cards": [
+      {
+        "title": "정의",
+        "pieces": [
+          "text",
+          "quote",
+          "callout"
+        ],
+        "keep": [
+          "빛 에너지를 이용해 이산화탄소와 물로 포도당을 만드는 과정"
+        ]
+      },
+      {
+        "title": "일어나는 곳",
+        "pieces": [
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "엽록체",
+          "울타리 조직"
+        ]
+      },
+      {
+        "title": "과정",
+        "pieces": [
+          "flow",
+          "text"
+        ],
+        "keep": [
+          "빛 흡수",
+          "물 분해",
+          "산소 방출",
+          "포도당 합성"
+        ]
+      },
+      {
+        "title": "필요한 것",
+        "pieces": [
+          "chips",
+          "checklist",
+          "text"
+        ],
+        "keep": [
+          "빛",
+          "이산화탄소",
+          "물"
+        ]
+      },
+      {
+        "title": "시험 포인트",
+        "pieces": [
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "산소는 물에서 나온다",
+          "녹말로 저장된다"
+        ]
+      },
+      {
+        "title": "함께 외우기",
+        "pieces": [
+          "text",
+          "callout",
+          "conclusion"
+        ],
+        "keep": [
+          "포도당을 분해해 에너지를 얻는다"
+        ]
+      }
+    ]
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": [
+      "명반응",
+      "캘빈 회로"
+    ]
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "공부 노트: 과정은 카드 안 한 줄 흐름(flow). 원문에 없는 용어(명반응 · 캘빈 회로)를 보태지 않는다."
+}

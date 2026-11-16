@@ -1,0 +1,59 @@
+{
+  "id": "11-mixed-ev-battery",
+  "category": "mixed",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-01", "S-08", "S-10", "S-56"], "pattern": "chain" },
+  "aliases": {
+    "LFP": ["LFP 배터리", "LFP(리튬인산철)", "LFP(리튬인산철) 배터리"],
+    "전기차 가격 인하": ["가격 인하"],
+    "낮은 에너지 밀도": ["에너지 밀도", "LFP의 약점"]
+  },
+  "mustNodes": [
+    "LFP",
+    "배터리 원가 하락",
+    "전기차 가격 인하",
+    "전기차 보급 확대",
+    "낮은 에너지 밀도",
+    "주행거리 감소"
+  ],
+  "mustEdges": [
+    { "from": "LFP", "to": "배터리 원가 하락", "relation": ["causes", "leads-to"] },
+    { "from": "배터리 원가 하락", "to": "전기차 가격 인하", "relation": ["causes", "leads-to"] },
+    { "from": "전기차 가격 인하", "to": "전기차 보급 확대", "relation": ["causes", "leads-to"] },
+    { "from": "낮은 에너지 밀도", "to": "주행거리 감소", "relation": ["causes", "leads-to"] }
+  ],
+  "charts": [
+    {
+      "kind": ["line", "bar"],
+      "unit": "%",
+      "series": [
+        {
+          "name": "LFP 점유율",
+          "points": [
+            { "x": "2021년", "y": 31 },
+            { "x": "2022년", "y": 37 },
+            { "x": "2023년", "y": 41 },
+            { "x": "2024년", "y": 45 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "columns": ["항목", "LFP", "NCM"],
+      "rowLabels": ["에너지 밀도", "수명(충방전 횟수)", "열 안정성", "원가", "주요 사용처"],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": false,
+    "tables": false,
+    "numbers": [69, 63, 59, 55, 14],
+    "chartNumbers": [160, 250, 3000, 1000, 2000],
+    "nodeTitles": ["NCM 점유율"],
+    "substrings": ["LMFP", "나트륨", "전고체"]
+  },
+  "notes": "관계 + 수치 + 비교 혼합. NCM 점유율은 원문이 일부러 생략했으므로 100-LFP(69, 63, 59, 55)로 계산해 넣으면 실패. 에너지 밀도 160/250 · 수명 3,000은 표에만 있어야 하며 차트 점으로 나오면 실패(forbid.chartNumbers). 원문의 Markdown 표는 열 · 행 순서 그대로 재현."
+}

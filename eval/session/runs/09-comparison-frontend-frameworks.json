@@ -1,0 +1,468 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "side-by-side comparison of the three frameworks",
+      "nodes": [
+        {
+          "key": "vue",
+          "title": "Vue",
+          "kind": "conclusion",
+          "body": "The safest choice for this team",
+          "source": {
+            "quote": "is the safest choice"
+          }
+        },
+        {
+          "key": "react",
+          "title": "React",
+          "kind": "option",
+          "body": "Pick instead if you expect to hire frontend specialists later",
+          "source": {
+            "quote": "if you expect to hire frontend specialists later"
+          }
+        },
+        {
+          "key": "team",
+          "title": "mostly backend developers",
+          "kind": "evidence",
+          "body": "Most of your team writes backend code",
+          "source": {
+            "quote": "most of your team writes backend code"
+          }
+        },
+        {
+          "key": "internal",
+          "title": "internal dashboard",
+          "kind": "evidence",
+          "body": "The dashboard is internal",
+          "source": {
+            "quote": "the dashboard is internal"
+          }
+        },
+        {
+          "key": "syntax",
+          "title": "template syntax",
+          "kind": "evidence",
+          "body": "Easiest to pick up",
+          "source": {
+            "quote": "the template syntax is the easiest to pick up"
+          }
+        },
+        {
+          "key": "tooling",
+          "title": "official tooling",
+          "kind": "evidence",
+          "body": "Means fewer decisions",
+          "source": {
+            "quote": "the official tooling means fewer decisions"
+          }
+        },
+        {
+          "key": "hiring",
+          "title": "hiring pool",
+          "kind": "evidence",
+          "body": "Much bigger",
+          "source": {
+            "quote": "the hiring pool is much bigger"
+          }
+        },
+        {
+          "key": "bundle",
+          "title": "bundle size",
+          "kind": "claim",
+          "body": "Rarely matters for an internal dashboard; don't let it drive the decision",
+          "source": {
+            "quote": "bundle size rarely matters for an internal dashboard"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "team",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "internal",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "syntax",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "tooling",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "hiring",
+          "to": "react",
+          "relation": "supports"
+        },
+        {
+          "from": "vue",
+          "to": "react",
+          "relation": "contrasts"
+        },
+        {
+          "from": "internal",
+          "to": "bundle",
+          "relation": "supports"
+        }
+      ],
+      "charts": [],
+      "tables": [
+        {
+          "key": "t1",
+          "title": "side-by-side comparison",
+          "columns": [
+            "Framework",
+            "Learning curve",
+            "Reactivity model",
+            "Bundle size",
+            "Ecosystem",
+            "Best fit"
+          ],
+          "rows": [
+            [
+              "React",
+              "Moderate (JSX, hooks rules)",
+              "Re-render + virtual DOM",
+              "Larger",
+              "Largest; most libraries and hiring pool",
+              "Large apps, long-term hiring"
+            ],
+            [
+              "Vue",
+              "Gentle (templates feel like HTML)",
+              "Proxy-based fine-grained tracking",
+              "Medium",
+              "Large; official router and state libraries",
+              "Teams new to frontend"
+            ],
+            [
+              "Svelte",
+              "Gentle once you accept the compiler",
+              "Compile-time reactivity",
+              "Smallest",
+              "Smaller but growing",
+              "Performance-sensitive widgets"
+            ]
+          ],
+          "attachTo": "vue",
+          "source": {
+            "quote": "side-by-side comparison of the three frameworks"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "side-by-side comparison of the three frameworks",
+      "nodes": [
+        {
+          "key": "team",
+          "title": "mostly backend developers",
+          "kind": "evidence",
+          "body": "Small team, new dashboard project",
+          "source": {
+            "quote": "small team, mostly backend developers"
+          }
+        },
+        {
+          "key": "internal",
+          "title": "dashboard is internal",
+          "kind": "evidence",
+          "source": {
+            "quote": "the dashboard is internal"
+          }
+        },
+        {
+          "key": "vue",
+          "title": "Vue",
+          "kind": "conclusion",
+          "body": "- Safest choice for this team\n- Template syntax is the easiest to pick up\n- Official tooling means fewer decisions",
+          "source": {
+            "quote": "the template syntax is the easiest to pick up"
+          }
+        },
+        {
+          "key": "react",
+          "title": "React",
+          "kind": "option",
+          "body": "Pick **React** instead if you expect to hire frontend specialists later.",
+          "source": {
+            "quote": "Large apps, long-term hiring"
+          }
+        },
+        {
+          "key": "svelte",
+          "title": "Svelte",
+          "kind": "option",
+          "body": "- Compile-time reactivity\n- Smallest bundle size",
+          "source": {
+            "quote": "Performance-sensitive widgets"
+          }
+        },
+        {
+          "key": "hiring",
+          "title": "hiring pool",
+          "kind": "evidence",
+          "body": "The hiring pool is much bigger",
+          "source": {
+            "quote": "because the hiring pool is much bigger"
+          }
+        },
+        {
+          "key": "bundle",
+          "title": "bundle size rarely matters",
+          "kind": "claim",
+          "body": "Rarely matters for an internal dashboard, so don't let it drive the decision.",
+          "source": {
+            "quote": "bundle size rarely matters for an internal dashboard"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "team",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "internal",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "hiring",
+          "to": "react",
+          "relation": "supports"
+        },
+        {
+          "from": "internal",
+          "to": "bundle",
+          "relation": "supports"
+        },
+        {
+          "from": "react",
+          "to": "vue",
+          "relation": "contrasts"
+        }
+      ],
+      "charts": [],
+      "tables": [
+        {
+          "key": "t1",
+          "columns": [
+            "Framework",
+            "Learning curve",
+            "Reactivity model",
+            "Bundle size",
+            "Ecosystem",
+            "Best fit"
+          ],
+          "rows": [
+            [
+              "React",
+              "Moderate (JSX, hooks rules)",
+              "Re-render + virtual DOM",
+              "Larger",
+              "Largest; most libraries and hiring pool",
+              "Large apps, long-term hiring"
+            ],
+            [
+              "Vue",
+              "Gentle (templates feel like HTML)",
+              "Proxy-based fine-grained tracking",
+              "Medium",
+              "Large; official router and state libraries",
+              "Teams new to frontend"
+            ],
+            [
+              "Svelte",
+              "Gentle once you accept the compiler",
+              "Compile-time reactivity",
+              "Smallest",
+              "Smaller but growing",
+              "Performance-sensitive widgets"
+            ]
+          ],
+          "source": {
+            "quote": "Learning curve | Reactivity model | Bundle size"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "side-by-side comparison of the three frameworks",
+      "nodes": [
+        {
+          "key": "vue",
+          "title": "Vue",
+          "kind": "conclusion",
+          "body": "The safest choice.",
+          "source": {
+            "quote": "is the safest choice"
+          }
+        },
+        {
+          "key": "react",
+          "title": "React",
+          "kind": "option",
+          "body": "Pick instead if you expect to hire frontend specialists later.",
+          "source": {
+            "quote": "if you expect to hire frontend specialists later"
+          }
+        },
+        {
+          "key": "team",
+          "title": "mostly backend developers",
+          "kind": "concept",
+          "body": "Small team on a new dashboard project.",
+          "source": {
+            "quote": "small team, mostly backend developers"
+          }
+        },
+        {
+          "key": "dash",
+          "title": "internal dashboard",
+          "kind": "concept",
+          "body": "The dashboard is internal.",
+          "source": {
+            "quote": "the dashboard is internal"
+          }
+        },
+        {
+          "key": "tmpl",
+          "title": "template syntax",
+          "kind": "evidence",
+          "body": "The easiest to pick up.",
+          "source": {
+            "quote": "the template syntax is the easiest to pick up"
+          }
+        },
+        {
+          "key": "tools",
+          "title": "official tooling",
+          "kind": "evidence",
+          "body": "Means fewer decisions.",
+          "source": {
+            "quote": "the official tooling means fewer decisions"
+          }
+        },
+        {
+          "key": "pool",
+          "title": "hiring pool",
+          "kind": "evidence",
+          "body": "The hiring pool is much bigger.",
+          "source": {
+            "quote": "the hiring pool is much bigger"
+          }
+        },
+        {
+          "key": "bundle",
+          "title": "bundle size",
+          "kind": "claim",
+          "body": "Rarely matters for an internal dashboard; don't let it drive the decision.",
+          "source": {
+            "quote": "bundle size rarely matters for an internal dashboard"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "team",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "dash",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "tmpl",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "tools",
+          "to": "vue",
+          "relation": "supports"
+        },
+        {
+          "from": "vue",
+          "to": "react",
+          "relation": "contrasts"
+        },
+        {
+          "from": "pool",
+          "to": "react",
+          "relation": "supports"
+        },
+        {
+          "from": "dash",
+          "to": "bundle",
+          "relation": "supports"
+        }
+      ],
+      "charts": [],
+      "tables": [
+        {
+          "key": "t1",
+          "title": "comparison of the three frameworks",
+          "columns": [
+            "Framework",
+            "Learning curve",
+            "Reactivity model",
+            "Bundle size",
+            "Ecosystem",
+            "Best fit"
+          ],
+          "rows": [
+            [
+              "React",
+              "Moderate (JSX, hooks rules)",
+              "Re-render + virtual DOM",
+              "Larger",
+              "Largest; most libraries and hiring pool",
+              "Large apps, long-term hiring"
+            ],
+            [
+              "Vue",
+              "Gentle (templates feel like HTML)",
+              "Proxy-based fine-grained tracking",
+              "Medium",
+              "Large; official router and state libraries",
+              "Teams new to frontend"
+            ],
+            [
+              "Svelte",
+              "Gentle once you accept the compiler",
+              "Compile-time reactivity",
+              "Smallest",
+              "Smaller but growing",
+              "Performance-sensitive widgets"
+            ]
+          ],
+          "source": {
+            "quote": "Framework | Learning curve | Reactivity model | Bundle size | Ecosystem | Best fit"
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "id": "20-structure-pyramid-maslow",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-70"], "pattern": "levels" },
+  "aliases": {},
+  "mustNodes": ["생리적 욕구", "안전 욕구", "소속 욕구", "존중 욕구", "자아실현 욕구"],
+  "mustEdges": [
+    {
+      "from": "생리적 욕구", "to": "안전 욕구", "relation": ["next", "leads-to"],
+      "alternatives": [ { "from": "안전 욕구", "to": "생리적 욕구", "relation": ["depends-on"] } ]
+    },
+    {
+      "from": "안전 욕구", "to": "소속 욕구", "relation": ["next", "leads-to"],
+      "alternatives": [ { "from": "소속 욕구", "to": "안전 욕구", "relation": ["depends-on"] } ]
+    },
+    {
+      "from": "소속 욕구", "to": "존중 욕구", "relation": ["next", "leads-to"],
+      "alternatives": [ { "from": "존중 욕구", "to": "소속 욕구", "relation": ["depends-on"] } ]
+    },
+    {
+      "from": "존중 욕구", "to": "자아실현 욕구", "relation": ["next", "leads-to"],
+      "alternatives": [ { "from": "자아실현 욕구", "to": "존중 욕구", "relation": ["depends-on"] } ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": true, "numbers": [], "nodeTitles": [], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "층위 피라미드(S-70): 아래부터 나열 → orderFrom 'bottom'. '아래가 채워져야 위로'는 위가 아래에 depends-on(또는 아래 → 위 next). 단계 번호(order) 1~5."
+}

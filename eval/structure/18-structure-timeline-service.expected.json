@@ -1,0 +1,19 @@
+{
+  "id": "18-structure-timeline-service",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-04"], "pattern": "timeline" },
+  "aliases": {},
+  "mustNodes": ["첫 버전 출시", "유료 플랜 도입", "해외 진출", "모바일 앱 공개"],
+  "mustEdges": [
+    { "from": "첫 버전 출시", "to": "유료 플랜 도입", "relation": ["next", "leads-to"] },
+    { "from": "유료 플랜 도입", "to": "해외 진출", "relation": ["next", "leads-to"] },
+    { "from": "해외 진출", "to": "모바일 앱 공개", "relation": ["next", "leads-to"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": { "charts": true, "tables": false, "numbers": [], "nodeTitles": [], "substrings": [] },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "시간순 연표(S-04): 사건 노드(event) + time(원문 그대로 '2019년 3월'). 연도는 차트 값이 아니다 — 차트 금지. 사건 사이 인과를 지어내지 않는다(next · leads-to만)."
+}

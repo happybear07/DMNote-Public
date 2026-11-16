@@ -1,0 +1,73 @@
+{
+  "id": "24-structure-decision-refund",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-06"
+    ],
+    "pattern": "decision"
+  },
+  "aliases": {
+    "결제 후 7일 이내": [
+      "7일 이내"
+    ],
+    "사용 이력": [
+      "사용 이력 확인"
+    ]
+  },
+  "mustNodes": [
+    "결제 후 7일 이내",
+    "환불 불가",
+    "사용 이력",
+    "전액 환불",
+    "부분 환불"
+  ],
+  "mustEdges": [
+    {
+      "from": "결제 후 7일 이내",
+      "to": "환불 불가",
+      "relation": [
+        "leads-to"
+      ]
+    },
+    {
+      "from": "결제 후 7일 이내",
+      "to": "사용 이력",
+      "relation": [
+        "leads-to",
+        "next"
+      ]
+    },
+    {
+      "from": "사용 이력",
+      "to": "전액 환불",
+      "relation": [
+        "leads-to"
+      ]
+    },
+    {
+      "from": "사용 이력",
+      "to": "부분 환불",
+      "relation": [
+        "leads-to"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "조건 분기(S-06): 조건 노드(condition) 둘에서 갈래마다 leads-to + 조건 값 라벨('7일이 지났으면' 등). 7을 차트로 만들면 위반."
+}

@@ -1,0 +1,61 @@
+// 문서 뷰에도 노드 종류 태그 · 상태 · 발화자 · 중괄호 묶음이 나온다 (캔버스와 같은 뜻).
+// 사용: dev 서버 실행 후 `node e2e/doc-kind.mjs`
+import { chromium } from 'playwright-core';
+import { fsPath } from './lib/fs-path.mjs';
+
+const BASE = process.env.DN_URL ?? 'http://localhost:5173';
+const results = [];
+const check = (name, ok, detail = '') => { results.push({ name, ok }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`); };
+const browser = await chromium.launch({ channel: process.env.DN_CHANNEL ?? 'msedge', headless: true });
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.addInitScript(() => localStorage.setItem('dn:no-env-key', '1'));
+const page = await ctx.newPage();
+const errors = [];
+page.on('pageerror', (e) => errors.push(String(e)));
+page.on('console', (m) => { if (m.type() === 'error' && !/favicon/.test(m.text())) errors.push(m.text()); });
+const ws = (fn, arg) => page.evaluate(fn, arg);
+const wait = (ms) => page.waitForTimeout(ms);
+await page.goto(BASE);
+await page.waitForSelector('.dn-block', { timeout: 15000 });
+await ws(() => window.__dn.newNote());
+await wait(300);
+await ws(() => window.__dn.setViewMode('doc'));
+await wait(300);
+await page.locator('.dn-doc-page').click({ position: { x: 300, y: 200 } });
+await wait(200);
+await page.keyboard.type('정리 하나');
+await page.keyboard.press('Enter');
+await page.keyboard.press('Enter');
+await wait(200);
+await page.keyboard.type('가정 둘');
+await wait(200);
+await page.keyboard.press('Escape');
+await wait(200);
+await ws(async (CORE) => {
+  const core = await import(CORE);
+  const e = window.__dn.view.engine;
+  const [a, b] = [...e.blocks()].sort((x, y) => x.y - y.y);
+  e.transact((tx) => {
+    tx.set('block', a.id, { nodeKind: 'theorem', emphasis: 'warning', role: '보조정리', speaker: '갑' });
+    tx.set('block', b.id, { nodeKind: 'assumption', hedge: true });
+  }, { origin: 'user' });
+  const g = core.groupBlocks(e, [a.id, b.id]);
+  core.setGroupMeta(e, g.value, { kind: 'premises', bracket: 'brace' });
+}, fsPath('packages/engine-core/src/index.ts'));
+await wait(400);
+const tags = await page.locator('.dn-doc-item > .dn-kind-tag').allTextContents();
+check('첫 상자 태그: 경고 ⚠ · 역할 · 종류 · 발화자', tags.length === 2 && /⚠/.test(tags[0]) && /보조정리/.test(tags[0]) && /theorem/.test(tags[0]) && /갑/.test(tags[0]), JSON.stringify(tags));
+check('둘째 상자 태그: 가정', /assumption|가정/.test(tags[1] ?? ''), JSON.stringify(tags));
+const st = await ws(() => [...document.querySelectorAll('.dn-doc-item')].map((el) => [el.dataset.kind, el.dataset.state ?? '', el.classList.contains('dn-hedge'), el.dataset.brace]));
+check('종류 · 상태 · 불확실 · 중괄호 표시가 문서 항목에 붙음', JSON.stringify(st) === JSON.stringify([['theorem', 'warning', false, '1'], ['assumption', '', false, '1']]), JSON.stringify(st));
+await page.locator('.dn-doc-text').first().click();
+await wait(250);
+check('태그가 있어도 글을 바로 고칠 수 있음', (await page.locator('.dn-doc .dn-text-editing').count()) === 1);
+await page.keyboard.type('!');
+await wait(200);
+check('고쳐도 태그가 그대로', (await page.locator('.dn-doc-item > .dn-kind-tag').count()) === 2);
+check('콘솔 오류 없음', errors.length === 0, errors.join(' | '));
+await browser.close();
+const bad = results.filter((r) => !r.ok).length;
+console.log(`\n${results.length - bad}/${results.length} passed`);
+process.exit(bad ? 1 : 0);

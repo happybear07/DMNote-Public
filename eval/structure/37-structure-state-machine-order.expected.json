@@ -1,0 +1,72 @@
+{
+  "id": "37-structure-state-machine-order",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-50"
+    ],
+    "pattern": "network"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "결제 대기",
+    "배송 준비",
+    "배송 중",
+    "배송 완료",
+    "주문 취소"
+  ],
+  "mustEdges": [
+    {
+      "from": "결제 대기",
+      "to": "배송 준비",
+      "relation": [
+        "transitions",
+        "next",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "배송 준비",
+      "to": "배송 중",
+      "relation": [
+        "transitions",
+        "next",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "배송 중",
+      "to": "배송 완료",
+      "relation": [
+        "transitions",
+        "next",
+        "leads-to"
+      ]
+    },
+    {
+      "from": "결제 대기",
+      "to": "주문 취소",
+      "relation": [
+        "transitions",
+        "leads-to"
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "상태 기계(S-50): 상태(state) 노드 + 전이(transitions, 라벨 = 사건 '결제가 끝나면'). 예외 전이(취소)도 빠뜨리지 않는다."
+}

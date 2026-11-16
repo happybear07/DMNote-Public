@@ -1,0 +1,97 @@
+{
+  "id": "48-sheet-react-hooks-cheatsheet",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "React 훅 치트시트",
+    "cards": [
+      {
+        "title": "useState",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "바뀌는 값을 기억한다",
+          "다시 그린다"
+        ]
+      },
+      {
+        "title": "useEffect",
+        "pieces": [
+          "text",
+          "callout"
+        ],
+        "keep": [
+          "그린 뒤에 할 일",
+          "정리 함수를 돌려주지 않으면 구독이 쌓인다"
+        ]
+      },
+      {
+        "title": "useMemo",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "다시 계산하지 않는다"
+        ]
+      },
+      {
+        "title": "useRef",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "DOM 요소를 가리킨다"
+        ]
+      },
+      {
+        "title": "고르는 법",
+        "pieces": [
+          "table"
+        ],
+        "keep": [
+          "화면에 보이는 값 바꾸기",
+          "서버에서 불러오기",
+          "무거운 계산 줄이기"
+        ],
+        "table": 0
+      }
+    ]
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": [
+        "하고 싶은 것",
+        "훅"
+      ],
+      "rowLabels": [
+        "화면에 보이는 값 바꾸기",
+        "서버에서 불러오기",
+        "무거운 계산 줄이기"
+      ],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": [
+      "useCallback",
+      "useContext"
+    ]
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "치트시트: 영어 기술 용어 제목 그대로. 원문에 없는 훅(useCallback · useContext)을 보태지 않는다. 주의 인용은 콜아웃."
+}

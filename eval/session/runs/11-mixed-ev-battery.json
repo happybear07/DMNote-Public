@@ -1,0 +1,699 @@
+[
+  {
+    "run": 1,
+    "called_tool": true,
+    "tool_input": {
+      "title": "전기차 배터리 시장에서 LFP와 NCM이 어떻게 경쟁하고 있는지",
+      "nodes": [
+        {
+          "key": "lfp",
+          "title": "LFP(리튬인산철) 배터리",
+          "kind": "option",
+          "body": "코발트와 니켈을 쓰지 않습니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP(리튬인산철) 배터리는 코발트와 니켈을 쓰지 않습니다"
+          }
+        },
+        {
+          "key": "cost_down",
+          "title": "배터리 원가 하락",
+          "kind": "concept",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "배터리 원가 하락"
+          }
+        },
+        {
+          "key": "price_cut",
+          "title": "전기차 가격 인하",
+          "kind": "concept",
+          "body": "배터리는 전기차 원가에서 가장 큰 비중을 차지합니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "전기차 가격 인하"
+          }
+        },
+        {
+          "key": "subsidy",
+          "title": "보조금 의존도",
+          "kind": "concept",
+          "body": "가격이 내려가면 낮아집니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "보조금 의존도가 낮아지면서"
+          }
+        },
+        {
+          "key": "spread",
+          "title": "전기차 보급 확대",
+          "kind": "concept",
+          "body": "확대가 빨라집니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "전기차 보급 확대"
+          }
+        },
+        {
+          "key": "low_density",
+          "title": "낮은 에너지 밀도",
+          "kind": "concept",
+          "body": "LFP의 약점입니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP의 약점은 낮은 에너지 밀도입니다"
+          }
+        },
+        {
+          "key": "range_drop",
+          "title": "주행거리 감소",
+          "kind": "concept",
+          "body": "에너지 밀도가 낮으면 같은 무게에서 생깁니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "에너지 밀도가 낮으면 같은 무게에서"
+          }
+        },
+        {
+          "key": "ncm",
+          "title": "NCM",
+          "kind": "option",
+          "body": "장거리 프리미엄 차량에는 여전히 선호됩니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "장거리 프리미엄 차량에는 여전히 NCM이 선호됩니다"
+          }
+        },
+        {
+          "key": "split",
+          "title": "보급형은 LFP, 프리미엄은 NCM",
+          "kind": "conclusion",
+          "body": "단기적으로 시장이 나뉘는 구도가 이어질 것입니다",
+          "group": "결론",
+          "source": {
+            "quote": "보급형은 LFP, 프리미엄은 NCM으로 시장이 나뉘는 구도가 이어질 것입니다"
+          }
+        },
+        {
+          "key": "improve",
+          "title": "LFP의 에너지 밀도 개선 속도",
+          "kind": "concept",
+          "body": "이 경계는 계속 위로 올라갈 가능성이 큽니다",
+          "group": "결론",
+          "source": {
+            "quote": "LFP의 에너지 밀도 개선 속도에 따라"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "lfp",
+          "to": "cost_down",
+          "relation": "leads-to",
+          "label": "비싼 원료를 쓰지 않으니"
+        },
+        {
+          "from": "cost_down",
+          "to": "price_cut",
+          "relation": "causes"
+        },
+        {
+          "from": "price_cut",
+          "to": "subsidy",
+          "relation": "causes"
+        },
+        {
+          "from": "subsidy",
+          "to": "spread",
+          "relation": "leads-to"
+        },
+        {
+          "from": "low_density",
+          "to": "range_drop",
+          "relation": "causes"
+        },
+        {
+          "from": "range_drop",
+          "to": "ncm",
+          "relation": "causes"
+        },
+        {
+          "from": "lfp",
+          "to": "ncm",
+          "relation": "contrasts"
+        },
+        {
+          "from": "split",
+          "to": "improve",
+          "relation": "depends-on"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "LFP의 점유율",
+          "unit": "%",
+          "series": [
+            {
+              "name": "점유율",
+              "points": [
+                {
+                  "x": "2021년",
+                  "y": 31
+                },
+                {
+                  "x": "2022년",
+                  "y": 37
+                },
+                {
+                  "x": "2023년",
+                  "y": 41
+                },
+                {
+                  "x": "2024년",
+                  "y": 45
+                }
+              ]
+            }
+          ],
+          "attachTo": "lfp",
+          "source": {
+            "quote": "2021년: 31%"
+          }
+        }
+      ],
+      "tables": [
+        {
+          "key": "t1",
+          "title": "LFP vs NCM 비교",
+          "columns": [
+            "항목",
+            "LFP",
+            "NCM"
+          ],
+          "rows": [
+            [
+              "에너지 밀도",
+              "약 160Wh/kg",
+              "약 250Wh/kg"
+            ],
+            [
+              "수명(충방전 횟수)",
+              "3,000회 이상",
+              "1,000~2,000회"
+            ],
+            [
+              "열 안정성",
+              "높음 (열폭주 위험 낮음)",
+              "상대적으로 낮음"
+            ],
+            [
+              "원가",
+              "낮음",
+              "높음"
+            ],
+            [
+              "주요 사용처",
+              "보급형 · 상용차, ESS",
+              "장거리 · 프리미엄 차량"
+            ]
+          ],
+          "source": {
+            "quote": "에너지 밀도 | 약 160Wh/kg | 약 250Wh/kg"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "run": 2,
+    "called_tool": true,
+    "tool_input": {
+      "title": "전기차 배터리 시장에서 LFP와 NCM이 어떻게 경쟁하고 있는지",
+      "nodes": [
+        {
+          "key": "lfp",
+          "title": "LFP(리튬인산철) 배터리",
+          "kind": "option",
+          "body": "코발트와 니켈을 쓰지 않습니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP(리튬인산철) 배터리는 코발트와 니켈을 쓰지 않습니다"
+          }
+        },
+        {
+          "key": "cost_down",
+          "title": "배터리 원가 하락",
+          "kind": "concept",
+          "body": "배터리는 전기차 원가에서 가장 큰 비중을 차지합니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "배터리 원가 하락"
+          }
+        },
+        {
+          "key": "price_down",
+          "title": "전기차 가격 인하",
+          "kind": "concept",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "전기차 가격 인하"
+          }
+        },
+        {
+          "key": "subsidy",
+          "title": "보조금 의존도",
+          "kind": "concept",
+          "body": "가격이 내려가면 낮아집니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "가격이 내려가면 보조금 의존도가 낮아지면서"
+          }
+        },
+        {
+          "key": "adoption",
+          "title": "전기차 보급 확대",
+          "kind": "concept",
+          "body": "보급 확대가 빨라집니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "전기차 보급 확대"
+          }
+        },
+        {
+          "key": "low_density",
+          "title": "낮은 에너지 밀도",
+          "kind": "concept",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP의 약점은 낮은 에너지 밀도입니다"
+          }
+        },
+        {
+          "key": "range_drop",
+          "title": "주행거리 감소",
+          "kind": "concept",
+          "body": "에너지 밀도가 낮으면 같은 무게에서 주행거리 감소가 생깁니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "주행거리 감소"
+          }
+        },
+        {
+          "key": "ncm",
+          "title": "NCM",
+          "kind": "option",
+          "body": "장거리 프리미엄 차량에는 여전히 NCM이 선호됩니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "장거리 프리미엄 차량에는 여전히 NCM이 선호됩니다"
+          }
+        },
+        {
+          "key": "split",
+          "title": "보급형은 LFP, 프리미엄은 NCM",
+          "kind": "conclusion",
+          "body": "- 단기적으로 시장이 나뉘는 구도가 이어질 것입니다\n- 이 경계는 계속 위로 올라갈 가능성이 큽니다",
+          "group": "결론",
+          "source": {
+            "quote": "보급형은 LFP, 프리미엄은 NCM으로 시장이 나뉘는 구도가 이어질 것입니다"
+          }
+        },
+        {
+          "key": "improve",
+          "title": "LFP의 에너지 밀도 개선 속도",
+          "kind": "concept",
+          "group": "결론",
+          "source": {
+            "quote": "LFP의 에너지 밀도 개선 속도에 따라"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "lfp",
+          "to": "cost_down",
+          "relation": "causes",
+          "label": "비싼 원료를 쓰지 않으니"
+        },
+        {
+          "from": "cost_down",
+          "to": "price_down",
+          "relation": "causes"
+        },
+        {
+          "from": "price_down",
+          "to": "subsidy",
+          "relation": "leads-to"
+        },
+        {
+          "from": "subsidy",
+          "to": "adoption",
+          "relation": "leads-to"
+        },
+        {
+          "from": "low_density",
+          "to": "lfp",
+          "relation": "part-of",
+          "label": "약점"
+        },
+        {
+          "from": "low_density",
+          "to": "range_drop",
+          "relation": "causes"
+        },
+        {
+          "from": "range_drop",
+          "to": "ncm",
+          "relation": "leads-to",
+          "label": "NCM이 선호됩니다"
+        },
+        {
+          "from": "lfp",
+          "to": "ncm",
+          "relation": "contrasts"
+        },
+        {
+          "from": "lfp",
+          "to": "split",
+          "relation": "part-of"
+        },
+        {
+          "from": "ncm",
+          "to": "split",
+          "relation": "part-of"
+        },
+        {
+          "from": "split",
+          "to": "improve",
+          "relation": "depends-on",
+          "label": "이 경계는 계속 위로 올라갈 가능성"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "LFP의 점유율",
+          "unit": "%",
+          "series": [
+            {
+              "name": "점유율",
+              "points": [
+                {
+                  "x": "2021년",
+                  "y": 31
+                },
+                {
+                  "x": "2022년",
+                  "y": 37
+                },
+                {
+                  "x": "2023년",
+                  "y": 41
+                },
+                {
+                  "x": "2024년",
+                  "y": 45
+                }
+              ]
+            }
+          ],
+          "attachTo": "lfp",
+          "source": {
+            "quote": "2021년: 31%"
+          }
+        }
+      ],
+      "tables": [
+        {
+          "key": "t1",
+          "title": "LFP vs NCM 비교",
+          "columns": [
+            "항목",
+            "LFP",
+            "NCM"
+          ],
+          "rows": [
+            [
+              "에너지 밀도",
+              "약 160Wh/kg",
+              "약 250Wh/kg"
+            ],
+            [
+              "수명(충방전 횟수)",
+              "3,000회 이상",
+              "1,000~2,000회"
+            ],
+            [
+              "열 안정성",
+              "높음 (열폭주 위험 낮음)",
+              "상대적으로 낮음"
+            ],
+            [
+              "원가",
+              "낮음",
+              "높음"
+            ],
+            [
+              "주요 사용처",
+              "보급형 · 상용차, ESS",
+              "장거리 · 프리미엄 차량"
+            ]
+          ],
+          "attachTo": "ncm",
+          "source": {
+            "quote": "에너지 밀도 | 약 160Wh/kg | 약 250Wh/kg"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "run": 3,
+    "called_tool": true,
+    "tool_input": {
+      "title": "전기차 배터리 시장에서 LFP와 NCM",
+      "nodes": [
+        {
+          "key": "lfp",
+          "title": "LFP",
+          "kind": "option",
+          "body": "리튬인산철 배터리. 코발트와 니켈을 쓰지 않습니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP(리튬인산철) 배터리는 코발트와 니켈을 쓰지 않습니다"
+          }
+        },
+        {
+          "key": "cost_down",
+          "title": "배터리 원가 하락",
+          "kind": "concept",
+          "body": "배터리는 전기차 원가에서 가장 큰 비중을 차지합니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "비싼 원료를 쓰지 않으니 **배터리 원가 하락**으로 이어지고"
+          }
+        },
+        {
+          "key": "price_cut",
+          "title": "전기차 가격 인하",
+          "kind": "concept",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "원가 하락은 곧 **전기차 가격 인하**로 연결됩니다"
+          }
+        },
+        {
+          "key": "spread",
+          "title": "전기차 보급 확대",
+          "kind": "concept",
+          "body": "보조금 의존도가 낮아지면서 빨라집니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "가격이 내려가면 보조금 의존도가 낮아지면서 **전기차 보급 확대**가 빨라집니다"
+          }
+        },
+        {
+          "key": "low_density",
+          "title": "낮은 에너지 밀도",
+          "kind": "concept",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "LFP의 약점은 낮은 에너지 밀도입니다"
+          }
+        },
+        {
+          "key": "range_loss",
+          "title": "주행거리 감소",
+          "kind": "concept",
+          "body": "에너지 밀도가 낮으면 같은 무게에서 생깁니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "에너지 밀도가 낮으면 같은 무게에서 **주행거리 감소**가 생기기 때문에"
+          }
+        },
+        {
+          "key": "ncm",
+          "title": "NCM",
+          "kind": "option",
+          "body": "장거리 프리미엄 차량에는 여전히 선호됩니다",
+          "group": "1. 왜 LFP가 다시 주목받나",
+          "source": {
+            "quote": "장거리 프리미엄 차량에는 여전히 NCM이 선호됩니다"
+          }
+        },
+        {
+          "key": "split",
+          "title": "보급형은 LFP, 프리미엄은 NCM",
+          "kind": "conclusion",
+          "body": "단기적으로는 시장이 나뉘는 구도가 이어질 것입니다",
+          "group": "결론",
+          "source": {
+            "quote": "보급형은 LFP, 프리미엄은 NCM으로 시장이 나뉘는 구도가 이어질 것입니다"
+          }
+        },
+        {
+          "key": "speed",
+          "title": "LFP의 에너지 밀도 개선 속도",
+          "kind": "concept",
+          "group": "결론",
+          "source": {
+            "quote": "LFP의 에너지 밀도 개선 속도에 따라 이 경계는 계속 위로 올라갈 가능성이 큽니다"
+          }
+        },
+        {
+          "key": "boundary",
+          "title": "경계는 계속 위로 올라갈 가능성",
+          "kind": "concept",
+          "body": "LFP의 에너지 밀도 개선 속도에 따라 달라집니다",
+          "group": "결론",
+          "source": {
+            "quote": "이 경계는 계속 위로 올라갈 가능성이 큽니다"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": "lfp",
+          "to": "cost_down",
+          "relation": "leads-to"
+        },
+        {
+          "from": "cost_down",
+          "to": "price_cut",
+          "relation": "leads-to"
+        },
+        {
+          "from": "price_cut",
+          "to": "spread",
+          "relation": "leads-to"
+        },
+        {
+          "from": "low_density",
+          "to": "lfp",
+          "relation": "part-of",
+          "label": "약점"
+        },
+        {
+          "from": "low_density",
+          "to": "range_loss",
+          "relation": "causes"
+        },
+        {
+          "from": "range_loss",
+          "to": "ncm",
+          "relation": "causes"
+        },
+        {
+          "from": "lfp",
+          "to": "ncm",
+          "relation": "contrasts"
+        },
+        {
+          "from": "speed",
+          "to": "boundary",
+          "relation": "leads-to"
+        }
+      ],
+      "charts": [
+        {
+          "key": "c1",
+          "kind": "line",
+          "title": "LFP의 점유율",
+          "unit": "%",
+          "series": [
+            {
+              "name": "점유율",
+              "points": [
+                {
+                  "x": "2021년",
+                  "y": 31
+                },
+                {
+                  "x": "2022년",
+                  "y": 37
+                },
+                {
+                  "x": "2023년",
+                  "y": 41
+                },
+                {
+                  "x": "2024년",
+                  "y": 45
+                }
+              ]
+            }
+          ],
+          "attachTo": "lfp",
+          "source": {
+            "quote": "2021년: 31%"
+          }
+        }
+      ],
+      "tables": [
+        {
+          "key": "t1",
+          "title": "LFP vs NCM 비교",
+          "columns": [
+            "항목",
+            "LFP",
+            "NCM"
+          ],
+          "rows": [
+            [
+              "에너지 밀도",
+              "약 160Wh/kg",
+              "약 250Wh/kg"
+            ],
+            [
+              "수명(충방전 횟수)",
+              "3,000회 이상",
+              "1,000~2,000회"
+            ],
+            [
+              "열 안정성",
+              "높음 (열폭주 위험 낮음)",
+              "상대적으로 낮음"
+            ],
+            [
+              "원가",
+              "낮음",
+              "높음"
+            ],
+            [
+              "주요 사용처",
+              "보급형 · 상용차, ESS",
+              "장거리 · 프리미엄 차량"
+            ]
+          ],
+          "attachTo": "split",
+          "source": {
+            "quote": "| 에너지 밀도 | 약 160Wh/kg | 약 250Wh/kg |"
+          }
+        }
+      ]
+    }
+  }
+]

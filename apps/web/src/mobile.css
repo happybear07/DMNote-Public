@@ -1,0 +1,48 @@
+/* 모바일 · 태블릿 (FR-152): 좁은 화면 사이드바 서랍 · 터치 대상 44px · 폰 상단 바 */
+.menu-btn { display: none; border: 0; background: none; color: var(--muted); padding: 0; width: 36px; height: 36px; border-radius: 6px; align-items: center; justify-content: center; cursor: pointer; flex: none; }
+.menu-btn:hover { background: var(--hover); color: var(--text); }
+.drawer-backdrop { display: none; }
+@media (max-width: 960px) {
+  .menu-btn { display: inline-flex; margin-left: -6px; }
+  /* 사이드바 = 왼쪽에서 나오는 서랍. 평소엔 화면 밖 */
+  .sidebar, .app.side-hidden .sidebar { display: flex; position: fixed; z-index: var(--z-pop); top: 0; bottom: 0; left: 0; width: min(300px, 86vw);
+    transform: translateX(-105%); transition: transform 0.18s ease; box-shadow: var(--sh-2); visibility: hidden; }
+  .app.drawer-open .sidebar { transform: none; visibility: visible; }
+  .drawer-backdrop { display: block; position: fixed; inset: 0; z-index: calc(var(--z-pop) - 1); background: rgba(15, 15, 15, 0.32); }
+  .app.read-mode .menu-btn { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .sidebar { transition: none !important; } }
+
+/* 터치 기기: 누르는 대상 최소 44px */
+@media (pointer: coarse) {
+  .toolbar button, .zoom button, .ink-bar button, .menu-btn, .fav-btn, .panel-btn, .export-btn { min-width: 44px; min-height: 44px; }
+  .zoom { height: 44px; }
+  .note-item, .menu button, .menu [role="menuitem"] { min-height: 44px; }
+  .note-item.active .row-actions { display: flex; }
+  .view-toggle button { min-height: 36px; }
+  .dn-db-tab, .dn-db-btn, .dn-db-mi, .dn-db-prop, .dn-db-chips, .dn-db-add { min-height: 44px; }
+  .dn-db-grip, .dn-db-open-page, .dn-db-dadd { opacity: 1; min-width: 32px; min-height: 32px; }
+  .dn-db-table th, .dn-db-table td { height: 44px; }
+  .dn-db-input { height: 44px; }
+}
+/* 마우스가 없는 기기: 키보드 단축키 표기는 숨긴다 (DS-002) */
+@media (hover: none) and (pointer: coarse) {
+  .side-search kbd, .menu kbd, .cmd-row kbd { display: none; }
+}
+/* 폰 상단 바: 제목이 보이도록 — 태그 · 정보 버튼 · 문서 아이콘은 접고, 보기 전환은 한 줄로 */
+@media (max-width: 600px) {
+  .topbar { gap: 2px; }
+  .topbar .tag-bar, .topbar .doc-icon, .topbar .panel-btn, .topbar .crumbs { display: none; }
+  .topbar .title-input { flex: 1; min-width: 60px; }
+  .topbar .view-toggle button { padding: 4px 8px; }
+  /* DS-021 제목 자리를 넓힌다 — '저장됨'은 숨기고(대기 · 실패는 보임), 보기 전환은 바꿀 쪽 하나, 별은 ⋯ 안 */
+  .topbar .save-status.saved, .topbar .fav-btn { display: none; }
+  .topbar .view-toggle button.on { display: none; }
+  .top-more-menu .top-more-fav { display: flex; }
+}
+@media (pointer: coarse) and (max-width: 768px) { .zoom { bottom: 104px; } }
+/* 마우스를 올려야만 보이던 단추 — 올릴 수 없는 화면(손가락 · 펜)에서는 늘 보이게 (TABLET-CHECK T9) */
+@media (hover: none) {
+  .note-item.add .tpl-btn, .topbar .tag-bar.no-tags .tag-add-btn, .dn-btn-edit, .dn-db-calc { opacity: 1; }
+  .insert-pin { opacity: .6; }
+}

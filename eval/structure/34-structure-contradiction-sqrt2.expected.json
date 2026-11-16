@@ -1,0 +1,71 @@
+{
+  "id": "34-structure-contradiction-sqrt2",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-30",
+      "S-26"
+    ],
+    "pattern": "proof"
+  },
+  "aliases": {
+    "√2가 유리수라고 가정하자": [
+      "√2가 유리수라고 가정"
+    ],
+    "p와 q가 서로소라는 가정에 모순": [
+      "모순"
+    ]
+  },
+  "mustNodes": [
+    "√2가 유리수라고 가정하자",
+    "p와 q가 서로소라는 가정에 모순",
+    "√2는 무리수이다"
+  ],
+  "mustEdges": [
+    {
+      "from": "√2가 유리수라고 가정하자",
+      "to": "p와 q가 서로소라는 가정에 모순",
+      "relation": [
+        "implies",
+        "leads-to",
+        "next"
+      ]
+    },
+    {
+      "from": "p와 q가 서로소라는 가정에 모순",
+      "to": "√2는 무리수이다",
+      "relation": [
+        "implies",
+        "leads-to",
+        "next",
+        "refutes"
+      ],
+      "alternatives": [
+        {
+          "from": "p와 q가 서로소라는 가정에 모순",
+          "to": "√2가 유리수라고 가정하자",
+          "relation": [
+            "refutes"
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "귀류법(S-30): 가정(assumption) → 모순(contradiction) → 결론. 식은 math에 원문 그대로. 숫자를 차트 · 표로 만들면 위반."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "39-structure-asis-tobe-review",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-59"
+    ],
+    "pattern": "columns"
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": [
+        "항목",
+        "현행",
+        "개정안"
+      ],
+      "rowLabels": [
+        "리뷰어",
+        "기한"
+      ],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "현황-목표 차이(S-59 As-Is → To-Be): 원문 Markdown 표를 그대로. 표가 본체라 노드는 없어도 된다(있으면 현행 → 개정안 becomes)."
+}

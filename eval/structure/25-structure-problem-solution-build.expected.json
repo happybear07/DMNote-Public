@@ -1,0 +1,69 @@
+{
+  "id": "25-structure-problem-solution-build",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-07"
+    ],
+    "pattern": "chain"
+  },
+  "aliases": {},
+  "mustNodes": [
+    "빌드 시간 증가",
+    "빌드 캐시 도입",
+    "병렬 빌드"
+  ],
+  "mustEdges": [
+    {
+      "from": "빌드 캐시 도입",
+      "to": "빌드 시간 증가",
+      "relation": [
+        "solves"
+      ],
+      "alternatives": [
+        {
+          "from": "빌드 캐시 도입",
+          "to": "빌드 시간 증가",
+          "relation": [
+            "inhibits",
+            "leads-to"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "병렬 빌드",
+      "to": "빌드 시간 증가",
+      "relation": [
+        "solves"
+      ],
+      "alternatives": [
+        {
+          "from": "병렬 빌드",
+          "to": "빌드 시간 증가",
+          "relation": [
+            "inhibits",
+            "leads-to"
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "문제-해결(S-07): 문제 노드(problem) + 해결책(option · action)이 solves로 문제를 향한다. 해결책끼리 잇지 않는다."
+}

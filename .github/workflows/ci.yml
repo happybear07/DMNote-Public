@@ -1,0 +1,55 @@
+# 커밋마다 테스트 · 벤치 · 브라우저 스모크 (FR-009 "테스트와 벤치마크가 커밋마다 자동 실행", DEV-GUIDE 5절 ci.yml)
+name: ci
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24 # bench는 Node 24 내장 타입 제거로 TS를 바로 실행한다
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: node scripts/check-arch.mjs # 파일 크기 · 패키지 경계 · 금지 코드 · 비밀값
+      - run: pnpm typecheck
+      - run: pnpm test
+      # 기준선과 다른 기기라 10% 회귀 비교는 건너뛰고 절대 예산만 판정한다 (bench/run.ts)
+      - run: pnpm bench
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: check
+    env:
+      DN_CHANNEL: chrome # 러너에 설치된 Google Chrome
+      DN_URL: http://localhost:5173
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - name: dev 서버
+        run: |
+          pnpm dev > vite.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:5173 > /dev/null && break; sleep 1; done
+      - run: mkdir -p shots
+      - run: node e2e/smoke.mjs shots
+      - run: node e2e/p1.mjs shots
+      - run: node e2e/ai.mjs shots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-screenshots
+          path: shots

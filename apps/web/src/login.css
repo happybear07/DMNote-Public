@@ -1,0 +1,58 @@
+/* 로그인 창 (LoginDialog · 화면 17 · 17-4~6) — Figma 앱 화면 설계와 같은 모양 */
+.login-dialog { position: relative; width: min(420px, calc(100% - 24px)); max-height: calc(100vh - 24px); overflow-y: auto; padding: 32px 32px 22px; text-align: center; }
+.login-dialog .x { position: absolute; top: 12px; right: 14px; border: 0; background: none; font-size: 20px; color: var(--subtle); cursor: pointer; }
+.login-icon { width: 48px; height: 48px; margin: 0 auto 14px; display: grid; place-items: center; border-radius: 12px; background: var(--side); color: var(--accent); font-size: 24px; }
+.step-expired .login-icon { color: var(--danger); } .step-deletion .login-icon { color: #d9730d; }
+.login-dialog h2 { margin: 0 0 8px; font-size: 24px; }
+.login-sub { margin: 0 0 20px; font-size: var(--fs-3); line-height: 1.55; color: var(--muted); }
+.login-note { margin: -8px 0 14px; padding: 8px 10px; border-radius: 10px; font-size: var(--fs-2); color: var(--muted); background: var(--side); }
+.login-btn { width: 100%; height: 42px; margin-top: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; font-size: var(--fs-3); font-weight: var(--fw-2); cursor: pointer; }
+.login-btn:hover:not(:disabled) { background: var(--hover); }
+.login-btn:disabled { opacity: .45; cursor: default; }
+.login-btn .g { color: #4285f4; }
+.login-btn.apple { background: #000; color: #fff; border-color: #000; }
+.login-btn.apple:hover:not(:disabled) { background: #222; }
+.login-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.login-btn.primary:hover:not(:disabled) { filter: brightness(1.06); background: var(--accent); }
+.login-or { display: flex; align-items: center; gap: 12px; margin: 18px 0 14px; font-size: var(--fs-2); color: var(--subtle); }
+.login-or::before, .login-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.login-label { display: block; text-align: left; font-size: var(--fs-2); font-weight: var(--fw-2); color: var(--muted); margin-bottom: 6px; }
+.login-input { width: 100%; box-sizing: border-box; height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); font: inherit; font-size: var(--fs-3); }
+.login-input:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+.login-err { margin: 8px 0 0; text-align: left; font-size: var(--fs-2); color: var(--danger); }
+.login-hint { margin: 12px 0 0; font-size: var(--fs-2); line-height: 1.5; color: var(--subtle); }
+.login-skip { width: 100%; margin-top: 18px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--side); color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+.login-skip:hover { background: var(--hover); }
+.login-skip > span:first-child { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.login-skip b { font-size: var(--fs-3); } .login-skip small { font-size: var(--fs-2); color: var(--muted); }
+.login-box { margin: 0 0 14px; padding: 12px 14px; display: flex; align-items: center; gap: 8px; border-radius: 10px; font-size: var(--fs-2); color: var(--muted); background: #eff3ff; text-align: left; }
+.login-box i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.login-box.warn { background: #fff4f4; } .login-box.warn i { background: var(--danger); }
+.login-box.note { background: #fff8ef; } .login-box.note i { background: #d9730d; }
+:root[data-theme='dark'] .login-box { background: #262c45; } :root[data-theme='dark'] .login-box.warn { background: #3a2224; } :root[data-theme='dark'] .login-box.note { background: #3a2f1f; }
+:root[data-theme='dark'] .login-btn.apple { background: #e6e6e3; color: #191919; border-color: #e6e6e3; }
+.login-link { margin-top: 14px; border: 0; background: none; color: var(--accent); font: inherit; font-size: var(--fs-2); font-weight: var(--fw-2); text-decoration: underline; cursor: pointer; }
+/* 사이드바 아래 단추(노트에 묻기 · 로그인): 단추 기본 모양만 지우고 크기 · 색 · 간격은 다른 줄(.note-item)과 같게 */
+.side-btn { width: 100%; border: 0; background: transparent; font-family: inherit; text-align: left; } /* 한 단계 낮게 — .note-item:hover 배경이 이긴다 */
+/* 폰: 전체 화면, 단추 48px */
+@media (max-width: 600px) {
+  .login-dialog { width: 100%; max-height: none; min-height: 100%; border-radius: 0; padding: 56px 16px 24px; box-shadow: none; }
+  .login-btn, .login-input { height: 48px; }
+}
+
+/* 손글씨 → 글 미리보기 (OcrDialog) */
+.ocr-dialog { width: min(760px, calc(100% - 24px)); max-height: calc(100vh - 32px); display: flex; flex-direction: column; background: var(--card); border-radius: 12px; box-shadow: var(--sh-3); padding: 16px 18px; gap: 12px; }
+.ocr-dialog header { display: flex; justify-content: space-between; align-items: center; } .ocr-dialog h2 { margin: 0; font-size: 15px; }
+.ocr-dialog .x { border: 0; background: none; font-size: 20px; color: var(--subtle); cursor: pointer; }
+.ocr-body { display: flex; gap: 14px; min-height: 0; overflow: auto; }
+.ocr-ink { flex: 1; margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center; padding: 8px; min-width: 0; }
+.ocr-ink img { max-width: 100%; max-height: 360px; }
+.ocr-text { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ocr-text textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; line-height: 1.6; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text); resize: vertical; }
+.ocr-conf, .ocr-wait { margin: 0; display: flex; align-items: center; gap: 8px; font-size: var(--fs-2); color: var(--muted); }
+.ocr-conf i, .ocr-wait i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
+.ocr-conf.mid i { background: #d9730d; } .ocr-conf.lo i { background: var(--danger); }
+.ocr-wait i { animation: ocr-pulse 1s ease-in-out infinite; } @keyframes ocr-pulse { 50% { opacity: .3; } }
+.ocr-err { margin: 0; font-size: var(--fs-3); color: var(--danger); } .ocr-hint { margin: 0; font-size: var(--fs-2); color: var(--subtle); }
+.ocr-dialog footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+@media (max-width: 600px) { .ocr-body { flex-direction: column; } }

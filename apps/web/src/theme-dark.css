@@ -1,0 +1,97 @@
+/* 다크 테마 (FR-086): 토큰을 바꾸고, 토큰으로 못 바꾼 강조색 · 블록 색 · 콜아웃 · 형광펜만 따로 맞춘다.
+   html[data-theme="dark"]는 앱이 설정(밝게 · 어둡게 · 시스템)을 보고 붙인다. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  /* 밝은 테마와 같은 온도의 숯색 (DESIGN-HUMAN U-H4 A, 11/11) — 바닥 < 종이, 강조는 채도 67% */
+  --bg: #1a1917;
+  --desk: #121110;
+  --side: #1e1d1b;
+  --card: #242320;
+  --soft: #2a2926;
+  --hover: #302e2b;
+  --line: #3a3834;
+  --line-strong: #4a4741;
+  --text: #ecebe6;
+  --muted: #b2aea6;
+  --faint: #7f7b73;
+  --accent: #93a6ea;
+  --accent-soft: #262d45;
+  --accent-fill: #3f5bcc;  /* 흰 글자 5.9:1 — 밝은 --accent(#7c93ff)에 흰 글자는 2.8:1 */
+  --tag: #8fb4ff;
+  --danger: #ef8a80; --danger-soft: #3a2421;
+  --warn: #f2a36b; --warn-soft: #3a2c1e;
+  --ok: #8fcf9f; --ok-soft: #1f3125;
+  --sh-1: 0 1px 2px rgba(0, 0, 0, .3); --sh-2: 0 0 0 1px rgba(255, 255, 255, .06), 0 8px 24px rgba(0, 0, 0, .45); --sh-3: 0 0 0 1px rgba(255, 255, 255, .06), 0 24px 56px rgba(0, 0, 0, .6);
+  --ai: #b197fc; --ai-soft: #2d2540;
+  --dn-grid: #343434;
+  --dn-arrow: #8a8985;
+  --dn-ink-k: #e6e6e3; --dn-ink-w: initial;  /* 검정 펜은 밝게 보이게 (AT-021) */
+  /* 관계 색 (노트 v6 화살표, STRUCTURE-GUIDE 4.4) — 어두운 바탕에서 밝게 */
+  --dn-rel-purple: #a487f0; --dn-rel-orange: #e8914f; --dn-rel-green: #6cb487; --dn-rel-blue: #7c93ff; --dn-rel-red: #f07575; --dn-rel-brown: #c39580;
+  /* 블록 색 — 어두운 바탕에서 구분되되 글자가 읽히는 정도 */
+  --dn-block-gray: #2f2f2f; --dn-block-brown: #3a2f2c; --dn-block-orange: #46301f; --dn-block-yellow: #423a1f;
+  --dn-block-green: #243a2b; --dn-block-blue: #1f3440; --dn-block-purple: #342a40; --dn-block-pink: #402a35; --dn-block-red: #432726;
+}
+
+:root[data-theme='dark'] body { background: var(--bg); }
+
+/* 강조 바탕 (밝은 테마의 연파랑 #edf2ff 계열) */
+:root[data-theme='dark'] .tpl-item.on, :root[data-theme='dark'] .note-item.picked, :root[data-theme='dark'] .search-filters select.on,
+:root[data-theme='dark'] .filter-ai.on, :root[data-theme='dark'] .outline-item.on, :root[data-theme='dark'] .dn-doc-flash,
+:root[data-theme='dark'] .key-env, :root[data-theme='dark'] .reload-banner { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+:root[data-theme='dark'] .bulk-bar { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+:root[data-theme='dark'] .bulk-head { color: var(--accent); }
+
+/* 경고 · 안내 띠 — 밝은 쪽이 --warn · --warn-soft 토큰을 써서 어두운 값은 토큰이 맡는다 (DS-F2) */
+
+/* 블록 · 캔버스 */
+:root[data-theme='dark'] .dn-block { border-color: var(--line); color: var(--text); } /* 바탕은 밝은 테마처럼 비운다 (canvas.css) */
+:root[data-theme='dark'] .dn-block.dn-box-title { background: transparent; border-color: transparent; box-shadow: none; }
+:root[data-theme='dark'] .dn-block.dn-in-card, :root[data-theme='dark'] .dn-block.dn-box-divider { background: transparent; border-color: transparent; box-shadow: none; } /* 노트형 — 카드 안 상자 · 구분선 */
+:root[data-theme='dark'] .dn-block.dn-in-card:hover, :root[data-theme='dark'] .dn-block.dn-in-card.dn-editing { border-color: var(--line); }
+:root[data-theme='dark'] .dn-block.dn-box-title:hover, :root[data-theme='dark'] .dn-block.dn-box-title.dn-editing { background: rgba(37, 37, 37, .9); border-color: var(--line); }
+:root[data-theme='dark'] .dn-label-input, :root[data-theme='dark'] .dn-slash, :root[data-theme='dark'] .dn-link-menu, :root[data-theme='dark'] .dn-xref-menu,
+:root[data-theme='dark'] .dn-bubble, :root[data-theme='dark'] .dn-callout-picker, :root[data-theme='dark'] .row-menu { background: var(--card); border-color: var(--line); color: var(--text); }
+:root[data-theme='dark'] .dn-slash-item.on, :root[data-theme='dark'] .dn-slash-item:hover { background: var(--hover); }
+
+/* 글 (text.css) */
+:root[data-theme='dark'] .dn-text { color: var(--text); }
+:root[data-theme='dark'] .dn-text code, :root[data-theme='dark'] .dn-text pre { background: #2e2e2e; color: #ff9c8f; }
+:root[data-theme='dark'] .dn-text pre code { color: #e6e6e3; }
+:root[data-theme='dark'] .dn-text mark, :root[data-theme='dark'] .replace-ctx mark { background: #5b4c12; color: #fff4c2; }
+:root[data-theme='dark'] .dn-text a { color: #8ea2ff; }
+:root[data-theme='dark'] .dn-text a.dn-xref { color: #a9b7ff; }
+:root[data-theme='dark'] .dn-text a.dn-note-link { color: #a9b7ff; background: rgba(124, 147, 255, .16); }
+:root[data-theme='dark'] .dn-text blockquote { border-color: #555; color: var(--muted); }
+:root[data-theme='dark'] [data-type='callout'][data-color='yellow'] { background: #3a3320; }
+:root[data-theme='dark'] [data-type='callout'][data-color='blue'] { background: #1f3340; }
+:root[data-theme='dark'] [data-type='callout'][data-color='green'] { background: #22362a; }
+:root[data-theme='dark'] [data-type='callout'][data-color='red'] { background: #40252a; }
+:root[data-theme='dark'] [data-type='callout'][data-color='purple'] { background: #33293f; }
+:root[data-theme='dark'] [data-type='callout'][data-color='gray'] { background: #2e2e2e; }
+
+/* 표 · 그래프 */
+:root[data-theme='dark'] .dn-table th { background: var(--soft); color: var(--text); }
+:root[data-theme='dark'] .dn-table th, :root[data-theme='dark'] .dn-table td { border-color: var(--line); }
+:root[data-theme='dark'] .dn-chart { --dn-chart-grid: #303030; --dn-chart-base: #4a4a4a; --dn-chart-tick: #8d8c88; --dn-chart-label: #cfceca; }
+:root[data-theme='dark'] .dn-chart-title, :root[data-theme='dark'] .dn-table-title { color: var(--text); }
+:root[data-theme='dark'] .dn-image img { background: #2a2a2a; }
+
+/* 대화상자 · 창 */
+:root[data-theme='dark'] .dialog, :root[data-theme='dark'] .settings, :root[data-theme='dark'] .search-box { background: var(--card); color: var(--text); box-shadow: 0 16px 48px rgba(0, 0, 0, .6); }
+:root[data-theme='dark'] .overlay-backdrop, :root[data-theme='dark'] .dialog-backdrop { background: rgba(0, 0, 0, .5); }
+:root[data-theme='dark'] input, :root[data-theme='dark'] select, :root[data-theme='dark'] textarea { color: var(--text); }
+:root[data-theme='dark'] select { background-color: var(--card); }
+:root[data-theme='dark'] .btn { color: var(--text); }
+/* 밝은 파랑 바탕에 흰 글자는 2.8:1 — 주 버튼만 진한 파랑 (5.4:1) */
+:root[data-theme='dark'] .btn.primary { color: #fff; background: var(--accent-fill); border-color: var(--accent-fill); }
+:root[data-theme='dark'] .btn.primary:hover { background: color-mix(in srgb, var(--accent-fill) 88%, #fff); }
+:root[data-theme='dark'] .tpl-box { fill: #2a2a2a; stroke: #444; }
+:root[data-theme='dark'] .read-pill { background: rgba(37, 37, 37, .92); }
+:root[data-theme='dark'] .dn-block.dn-ai { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+
+/* 코드 구문 강조 (FR-026) */
+:root[data-theme='dark'] { --dn-tok-kw: #d39bf0; --dn-tok-lit: #79b8ff; --dn-tok-type: #f0b072; --dn-tok-str: #9ad09a; --dn-tok-num: #f0b072; --dn-tok-com: #8b949e; --dn-tok-fn: #a5b4fc; --dn-tok-tag: #ff9b9b; --dn-tok-attr: #f0b072; --dn-tok-key: #ff9b9b; }
+
+/* 블록 글자 색 (오른쪽 클릭 › 글자) */
+:root[data-theme='dark'] { --dn-tc-gray: #9b9b9b; --dn-tc-brown: #ba856f; --dn-tc-orange: #c77d48; --dn-tc-yellow: #ca9849; --dn-tc-green: #529e72; --dn-tc-blue: #5e87c9; --dn-tc-purple: #9d68d3; --dn-tc-pink: #d15796; --dn-tc-red: #df5452; }

@@ -1,0 +1,42 @@
+{
+  "id": "01-relation-rate-hike",
+  "category": "relation",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-01", "S-40", "S-45", "S-46"], "pattern": "chain" },
+  "aliases": {
+    "기준금리 인상": ["금리 인상"],
+    "기업 매출 둔화": ["매출 둔화"],
+    "경기 침체 위험": ["경기 침체"]
+  },
+  "mustNodes": [
+    "기준금리 인상",
+    "대출 금리 상승",
+    "가계 소비 감소",
+    "기업 매출 둔화",
+    "부동산 가격 하락",
+    "원화 강세",
+    "수입 물가 하락",
+    "물가 안정"
+  ],
+  "mustEdges": [
+    { "from": "기준금리 인상", "to": "대출 금리 상승", "relation": ["causes", "leads-to"] },
+    { "from": "대출 금리 상승", "to": "가계 소비 감소", "relation": ["causes", "leads-to"] },
+    { "from": "가계 소비 감소", "to": "기업 매출 둔화", "relation": ["causes", "leads-to"] },
+    { "from": "기준금리 인상", "to": "부동산 가격 하락", "relation": ["causes", "leads-to"] },
+    { "from": "부동산 가격 하락", "to": "가계 소비 감소", "relation": ["causes", "leads-to"] },
+    { "from": "기준금리 인상", "to": "원화 강세", "relation": ["causes", "leads-to"] },
+    { "from": "원화 강세", "to": "수입 물가 하락", "relation": ["causes", "leads-to"] },
+    { "from": "수입 물가 하락", "to": "물가 안정", "relation": ["causes", "leads-to", "supports"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": true,
+    "numbers": [0.5],
+    "nodeTitles": ["좋은 질문입니다", "더 궁금한 점"],
+    "substrings": ["Interest rate", "interest rate"]
+  },
+  "notes": "순수 인과 체인. 수치는 0.25%p 하나뿐이라 차트를 만들면 안 된다. 제목은 굵게 표시된 원문 구절 그대로여야 하고 영어로 번역하면 안 된다."
+}

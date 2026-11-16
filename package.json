@@ -1,0 +1,32 @@
+{
+  "name": "damiannote",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "pnpm -F @dn/web dev",
+    "build": "pnpm -F @dn/web build",
+    "test": "vitest run",
+    "check": "node scripts/check-arch.mjs",
+    "verify": "node scripts/check-arch.mjs && corepack pnpm typecheck && corepack pnpm test",
+    "hooks:install": "git config core.hooksPath .githooks",
+    "test:watch": "vitest",
+    "e2e": "node e2e/smoke.mjs",
+    "typecheck": "tsc -p packages/engine-core && tsc -p packages/engine-core/test && tsc -p packages/text-pm && tsc -p packages/engine-dom && tsc -p packages/storage-idb && tsc -p packages/search && tsc -p packages/sync && tsc -p packages/ai-pipeline && tsc -p packages/ai-pipeline/test && tsc -p apps/web",
+    "e2e:p1": "node e2e/p1.mjs",
+    "e2e:ai": "node e2e/ai.mjs",
+    "e2e:p3": "node e2e/p3.mjs",
+    "e2e:p6": "node e2e/p6.mjs",
+    "docs:check": "node e2e/docs-check.mjs",
+    "bench": "node --expose-gc --import ./bench/register.mjs bench/run.ts",
+    "test:coverage": "vitest run --coverage.enabled --coverage.provider=v8 --coverage.include=packages/engine-core/src/** --coverage.reporter=text-summary --coverage.reporter=text packages/engine-core"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "3.2.7",
+    "axe-core": "4",
+    "fast-check": "^3.23.2",
+    "playwright-core": "1.49.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}

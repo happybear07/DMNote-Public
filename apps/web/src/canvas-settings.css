@@ -1,0 +1,76 @@
+/* 캔버스 바탕색 (캔버스 설정 — 노트마다, engine-dom paper.ts applyPaperColor): 캔버스 칸 안의 색 토큰만 바꾼다.
+   상자 바탕이 비어 있어(알파 10/31) 바탕색 · 무늬가 그대로 비친다. 앱 화면(사이드바 · 막대)은 테마 그대로.
+   밝은 종이는 어두운 테마가 바꾼 색(블록 · 글자 · 관계)을 initial로 지워 코드의 밝은 기본값으로 돌린다 */
+.dn-canvas[data-paper='white'], .dn-canvas[data-paper='oxford'] {
+  color-scheme: light;
+  --bg: #ffffff; --card: #ffffff; --soft: #f7f7f5; --hover: #f1f1ef; --line: #e9e9e7;
+  --text: #37352f; --muted: #6b6b68; --faint: #878682; --accent: #3d5fe0; --accent-soft: #edf1fe;
+  --dn-grid: #dcdad5; --dn-arrow: #9b9a97; --dn-ink-k: initial; --dn-ink-w: #37352f;
+  --dn-rel-purple: initial; --dn-rel-orange: initial; --dn-rel-green: initial; --dn-rel-blue: initial; --dn-rel-red: initial; --dn-rel-brown: initial;
+  --dn-block-gray: initial; --dn-block-brown: initial; --dn-block-orange: initial; --dn-block-yellow: initial; --dn-block-green: initial;
+  --dn-block-blue: initial; --dn-block-purple: initial; --dn-block-pink: initial; --dn-block-red: initial;
+  --dn-tc-gray: initial; --dn-tc-brown: initial; --dn-tc-orange: initial; --dn-tc-yellow: initial; --dn-tc-green: initial;
+  --dn-tc-blue: initial; --dn-tc-purple: initial; --dn-tc-pink: initial; --dn-tc-red: initial;
+}
+/* 옥스퍼드: 옅은 노란 종이 · 따뜻한 무늬 */
+.dn-canvas[data-paper='oxford'] { --bg: #fdf8e4; --card: #fdf8e4; --soft: #f7efd4; --hover: #f3e9cb; --line: #e2d6b2; --muted: #6e6656; --dn-grid: #e4d8ae; }
+.dn-canvas[data-paper='dark'] {
+  color-scheme: dark;
+  --bg: #252525; --card: #252525; --soft: #2c2c2c; --hover: #2f2f2f; --line: #383838;
+  --text: #e6e6e3; --muted: #b3b2ae; --faint: #7f7e7a; --accent: #7c93ff; --accent-soft: #2a3150;
+  --dn-grid: #343434; --dn-arrow: #8a8985; --dn-ink-k: #e6e6e3; --dn-ink-w: initial;
+  --dn-rel-purple: #a487f0; --dn-rel-orange: #e8914f; --dn-rel-green: #6cb487; --dn-rel-blue: #7c93ff; --dn-rel-red: #f07575; --dn-rel-brown: #c39580;
+  --dn-block-gray: #2f2f2f; --dn-block-brown: #3a2f2c; --dn-block-orange: #46301f; --dn-block-yellow: #423a1f;
+  --dn-block-green: #243a2b; --dn-block-blue: #1f3440; --dn-block-purple: #342a40; --dn-block-pink: #402a35; --dn-block-red: #432726;
+  --dn-tc-gray: #9b9b9b; --dn-tc-brown: #ba856f; --dn-tc-orange: #c77d48; --dn-tc-yellow: #ca9849; --dn-tc-green: #529e72;
+  --dn-tc-blue: #5e87c9; --dn-tc-purple: #9d68d3; --dn-tc-pink: #d15796; --dn-tc-red: #df5452;
+}
+/* 토큰으로 못 바꾼 글자색(text.css는 밝은 테마 고정색 · 어두운 테마는 --text) · 제목 상자 바탕(올렸을 때 · 고칠 때) */
+.dn-canvas[data-paper='white'] .dn-text, .dn-canvas[data-paper='oxford'] .dn-text { color: #4a4944; }
+.dn-canvas[data-paper='dark'] .dn-text { color: var(--text); }
+.dn-canvas[data-paper='dark'] .dn-text a { color: #8ea2ff; }
+.dn-canvas[data-paper='white'] .dn-block.dn-box-title:hover, .dn-canvas[data-paper='white'] .dn-block.dn-box-title.dn-editing { background: rgba(255, 255, 255, .85); }
+.dn-canvas[data-paper='oxford'] .dn-block.dn-box-title:hover, .dn-canvas[data-paper='oxford'] .dn-block.dn-box-title.dn-editing { background: rgba(253, 248, 228, .9); }
+.dn-canvas[data-paper='dark'] .dn-block.dn-box-title:hover, .dn-canvas[data-paper='dark'] .dn-block.dn-box-title.dn-editing { background: rgba(37, 37, 37, .9); }
+
+/* 캔버스 설정 창 (위 막대 ⋯ › 캔버스 설정) */
+.canvas-settings {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: var(--z-float); width: 296px; padding: 12px 14px 14px;
+  background: var(--card); border-radius: 12px; box-shadow: var(--sh-2); font-size: var(--fs-2); color: var(--text);
+}
+.canvas-settings h3 { margin: 0 0 10px; font-size: var(--fs-3); font-weight: var(--fw-3); }
+.canvas-settings .cs-title { margin: 12px 0 6px; font-size: var(--fs-1); color: var(--muted); }
+.canvas-settings .cs-title:first-of-type { margin-top: 0; }
+.cs-choices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.cs-choices button {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px; border: 1px solid transparent; border-radius: 8px;
+  background: none; color: var(--muted); font: inherit; font-size: var(--fs-1); cursor: pointer;
+}
+.cs-choices button:hover:not(:disabled) { background: var(--hover); }
+.cs-choices button.on { background: var(--accent-soft); color: var(--accent); } /* 고른 칸 = 옅은 바탕 + 강조 글 하나 (DS-F3) */
+.cs-choices button:disabled { opacity: .4; cursor: default; }
+.cs-chip { width: 40px; height: 28px; border-radius: 6px; border: 1px solid rgba(0, 0, 0, .14); background-size: 8px 8px; }
+.cs-chip.c-theme { background: linear-gradient(135deg, #ffffff 50%, #252525 50%); }
+.cs-chip.c-white { background-color: #ffffff; background-image: radial-gradient(#cfcdc7 1px, transparent 1.2px); }
+.cs-chip.c-oxford { background-color: #fdf8e4; background-image: radial-gradient(#d9cc9f 1px, transparent 1.2px); }
+.cs-chip.c-dark { background-color: #252525; background-image: radial-gradient(#4a4a4a 1px, transparent 1.2px); border-color: #444; }
+.cs-choices svg { width: 22px; height: 22px; }
+.cs-gaps { display: flex; gap: 4px; }
+.cs-gaps button { flex: 1; height: 28px; border: 0; border-radius: 6px; background: var(--soft); color: var(--text); font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; }
+.cs-gaps button:hover:not(:disabled) { background: var(--hover); }
+.cs-gaps button.on { color: var(--accent); background: var(--accent-soft); }
+.cs-gaps button:disabled { opacity: .4; cursor: default; }
+.cs-note { margin: 10px 0 0; font-size: var(--fs-1); line-height: 1.5; color: var(--muted); }
+/* 노트 설정 (NoteMenu.tsx): 빈 곳 · 종이 오른쪽 클릭 — 누른 자리에, 넣기 · 용지 · 이 쪽 방향 · 바탕 · 노트 정보 */
+.canvas-settings.note-menu { position: fixed; right: auto; max-height: calc(100vh - 16px); overflow-y: auto; outline: none; }
+.note-menu .cs-title:first-of-type { margin-top: 12px; }
+.cs-choices.three { grid-template-columns: repeat(3, 1fr); }
+.cs-choices.two { grid-template-columns: repeat(2, 1fr); }
+.nm-row { width: 100%; height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 8px; border: 0; border-radius: 6px; background: none; font: inherit; color: var(--text); text-align: left; cursor: pointer; }
+.nm-row:hover, .nm-row:focus-visible { background: var(--hover); }
+.nm-row kbd { margin-left: auto; font: inherit; font-size: var(--fs-1); color: var(--muted); }
+.nm-info { margin-top: 12px; }
+.nm-row.danger { color: var(--danger); }
+/* A4로 고정 (11/03): 예전 끝없는 캔버스 노트면 아래 막대 'A4로' 단추를 눈에 띄게 (누르면 쪽에 맞춰 다시 놓기) */
+.zoom .sheet-btn:not(.on) { color: var(--card); background: var(--accent); }
+.cs-desc { margin: -2px 0 6px; font-size: var(--fs-1); line-height: 1.5; color: var(--muted); }

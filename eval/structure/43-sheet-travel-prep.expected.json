@@ -1,0 +1,106 @@
+{
+  "id": "43-sheet-travel-prep",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "오사카 3박 4일 여행 준비",
+    "cards": [
+      {
+        "title": "챙길 것",
+        "pieces": [
+          "checklist",
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "여권",
+          "110V 돼지코 어댑터",
+          "동전 지갑",
+          "상비약"
+        ]
+      },
+      {
+        "title": "교통",
+        "pieces": [
+          "text",
+          "flow"
+        ],
+        "keep": [
+          "라피트나 하루카",
+          "오사카 주유패스"
+        ]
+      },
+      {
+        "title": "예산",
+        "pieces": [
+          "table",
+          "text"
+        ],
+        "keep": [
+          "항공권",
+          "숙소",
+          "식비"
+        ],
+        "table": 0
+      },
+      {
+        "title": "주의할 점",
+        "pieces": [
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "현금만 받는 가게가 많으니"
+        ]
+      },
+      {
+        "title": "꼭 먹을 것",
+        "pieces": [
+          "chips",
+          "text"
+        ],
+        "keep": [
+          "타코야키",
+          "오코노미야키",
+          "쿠시카츠"
+        ]
+      }
+    ]
+  },
+  "aliases": {},
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [
+    {
+      "columns": [
+        "항목",
+        "금액"
+      ],
+      "rowLabels": [
+        "항공권",
+        "숙소",
+        "식비"
+      ],
+      "exactColumns": true
+    }
+  ],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [
+      110.5,
+      1100000
+    ],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "Markdown 표는 표 조각(table)으로, 노트형에서는 차트를 만들지 않는다(예산 합계 같은 계산 금지)."
+}

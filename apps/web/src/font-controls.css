@@ -1,0 +1,48 @@
+/* 글꼴 · 글자 크기 칸 (FontControls.tsx, 알파 10/31): 블록 메뉴 › 글자 모양 · 문서 서식 막대 */
+.fc-row { display: grid; grid-template-columns: 1fr auto; gap: 6px; padding: 2px 8px 6px; }
+/* 메뉴 안: 목록은 칸 아래 한 줄 전체로 펼친다 (판이 넘치면 스크롤되어 띄운 목록은 잘린다) */
+.fc-row .fc-pick:not(.float), .fc-row .fc-size:not(.float) { display: contents; }
+.fc-row .fc-btn { grid-row: 1; grid-column: 1; }
+.fc-row .fc-size-box { grid-row: 1; grid-column: 2; }
+.fc-row .fc-list { grid-row: 2; grid-column: 1 / -1; }
+
+.fc-btn, .fc-size-box {
+  display: inline-flex; align-items: center; gap: 4px; height: 28px; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--card); color: var(--text); font: inherit; font-size: var(--fs-2);
+}
+.fc-btn { justify-content: space-between; min-width: 0; padding: 0 8px; cursor: pointer; text-align: left; }
+.fc-btn > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fc-btn:hover, .fc-drop:hover { background: var(--hover); }
+.fc-btn[aria-expanded='true'], .fc-size-box:focus-within { border-color: var(--accent); }
+.fc-btn svg, .fc-drop svg { flex: none; color: var(--subtle); }
+.fc-size-box { padding: 0 0 0 6px; }
+.fc-size-box input { width: 36px; border: 0; padding: 0; background: none; color: inherit; font: inherit; text-align: right; font-variant-numeric: tabular-nums; }
+.fc-size-box input:focus { outline: none; }
+.fc-unit { color: var(--subtle); font-size: var(--fs-1); }
+.fc-drop { display: grid; place-items: center; width: 22px; height: 100%; border: 0; border-left: 1px solid var(--line); border-radius: 0 6px 6px 0; background: none; padding: 0; cursor: pointer; }
+.fc-btn:disabled, .fc-size-box:has(input:disabled) { opacity: .5; cursor: default; }
+
+.fc-list { display: flex; flex-direction: column; gap: 1px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+.fc-list button { display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 28px; padding: 0 8px; border: 0; border-radius: 6px; background: none; color: inherit; font: inherit; font-size: var(--fs-3); cursor: pointer; text-align: left; }
+.fc-list button:hover, .fc-list button:focus-visible { background: var(--hover); outline: none; }
+.fc-list button.on { color: var(--accent); background: var(--accent-soft); }
+.fc-list small { font-size: var(--fs-1); color: var(--subtle); }
+/* 크기 목록은 여러 칸으로 */
+.fc-sizes { display: grid; grid-template-columns: repeat(5, 1fr); }
+.fc-sizes button { justify-content: center; padding: 0 2px; font-variant-numeric: tabular-nums; flex-direction: column; gap: 0; height: 32px; line-height: 1.1; }
+
+/* 서식 막대: 칸 아래에 띄운다 */
+.fc-pick.float, .fc-size.float { position: relative; display: inline-flex; }
+.float > .fc-list { position: absolute; top: calc(100% + 4px); left: 0; z-index: var(--z-pop-top); min-width: 100%; box-shadow: var(--sh-2); }
+.fc-size.float > .fc-sizes { width: 220px; }
+.fc-pick.float .fc-btn { width: 112px; }
+/* 막대 단추 기본(.doc-ribbon button — 가운데 격자 · 30px)을 이 칸 모양으로 되돌린다 */
+.doc-ribbon .fc-btn { display: inline-flex; height: 28px; min-width: 0; padding: 0 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-size: var(--fs-2); }
+.doc-ribbon .fc-drop { display: grid; min-width: 0; width: 22px; height: 100%; padding: 0; border-radius: 0 6px 6px 0; }
+.doc-ribbon .fc-list button { display: flex; min-width: 0; height: 28px; color: var(--text); }
+.doc-ribbon .fc-sizes button { height: 32px; }
+.doc-ribbon .fc-list button.on { color: var(--accent); }
+
+/* 글꼴 단추 · 목록은 그 글꼴로 */
+.fc-btn.ff-serif, .fc-list .ff-serif { font-family: 'Noto Serif KR', 'Nanum Myeongjo', 'AppleMyungjo', Batang, serif; }
+.fc-btn.ff-mono, .fc-list .ff-mono { font-family: D2Coding, 'Cascadia Mono', Consolas, 'SF Mono', Menlo, monospace; }

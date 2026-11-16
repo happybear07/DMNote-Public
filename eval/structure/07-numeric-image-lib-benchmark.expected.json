@@ -1,0 +1,39 @@
+{
+  "id": "07-numeric-image-lib-benchmark",
+  "category": "numeric",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-56", "S-10", "S-08"], "pattern": "chart" },
+  "aliases": {
+    "canvas": ["canvas(node-canvas)", "node-canvas"]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [
+    {
+      "kind": ["bar"],
+      "unit": "ms",
+      "series": [
+        {
+          "name": "장당 평균 처리 시간",
+          "points": [
+            { "x": "sharp", "y": 38 },
+            { "x": "canvas", "y": 97 },
+            { "x": "squoosh", "y": 156 },
+            { "x": "jimp", "y": 412 }
+          ]
+        }
+      ]
+    }
+  ],
+  "tables": [],
+  "forbid": {
+    "charts": false,
+    "tables": false,
+    "numbers": [10.8, 175.75, 703],
+    "chartNumbers": [120, 190, 10, 4000, 3000, 1000, 800],
+    "nodeTitles": [],
+    "substrings": ["메모리 사용량 (MB)", "MB"]
+  },
+  "notes": "항목별 단일 측정값 → bar, 표 아님. squoosh의 '120~190ms' 범위와 '약 10배'를 차트 점으로 쓰면 실패. 메모리는 수치가 없으므로 메모리 차트를 만들면 안 된다. 평균(175.75)·합계(703) 계산 금지. 시리즈 이름은 '처리 시간'처럼 축약해도 된다(시리즈 이름은 채점하지 않음)."
+}

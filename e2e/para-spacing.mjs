@@ -1,0 +1,55 @@
+// 첫 줄 들여쓰기 · 내어쓰기 · 문단 앞뒤 간격 (워드): 서식 막대 '줄 · 문단 간격' 판 → 상자 필드, 화면 text-indent · margin, 실행 취소.
+// 사용: dev 서버 실행 후 `node e2e/para-spacing.mjs [스크린샷 폴더]`
+import { chromium } from 'playwright-core';
+
+const BASE = process.env.DN_URL ?? 'http://localhost:5173';
+const OUT = process.argv[2];
+const results = [];
+const check = (name, ok, detail = '') => { results.push({ name, ok }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`); };
+const browser = await chromium.launch({ channel: process.env.DN_CHANNEL ?? 'msedge', headless: true });
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.addInitScript(() => localStorage.setItem('dn:no-env-key', '1'));
+const page = await ctx.newPage();
+const errors = [];
+page.on('pageerror', (e) => errors.push(String(e)));
+page.on('console', (m) => { if (m.type() === 'error' && !/favicon/.test(m.text())) errors.push(m.text()); });
+const ws = (fn, arg) => page.evaluate(fn, arg);
+const wait = (ms) => page.waitForTimeout(ms);
+const blk = () => ws(() => { const b = [...window.__dn.view.engine.blocks()][0]; return { fi: b?.firstLine ?? 0, sb: b?.spaceBefore ?? 0, sa: b?.spaceAfter ?? 0 }; });
+const css = () => ws(() => { const p = document.querySelector('.dn-doc .dn-doc-item .dn-text p'); if (!p) return null; const s = getComputedStyle(p); return { ti: parseFloat(s.textIndent), pl: parseFloat(s.paddingLeft), mt: parseFloat(s.marginTop), mb: parseFloat(s.marginBottom), fs: parseFloat(s.fontSize) }; });
+const open = async () => { await page.locator('.doc-ribbon button[title="줄 · 문단 간격"]').click(); await wait(200); };
+
+await page.goto(BASE);
+await page.waitForSelector('.dn-block', { timeout: 15000 });
+await ws(() => window.__dn.newNote());
+await wait(300);
+await ws(() => window.__dn.setViewMode('doc'));
+await wait(400);
+await page.locator('.dn-doc-page').click({ position: { x: 300, y: 200 } });
+await wait(200);
+await page.keyboard.type('첫 줄을 들여 쓰는 한국어 문단입니다. 길게 써서 두 줄이 넘어가도록 계속 이어 씁니다. 길게 써서 두 줄이 넘어가도록 계속 이어 씁니다. 길게 써서 두 줄이 넘어가도록 계속 이어 씁니다.');
+await open();
+check('판에 첫 줄 · 문단 앞 · 뒤 간격', (await page.locator('.rb-pop-panel .rb-chip').count()) === 4 + 5 + 5);
+await page.locator('.rb-pop-panel .rb-chip', { hasText: '들여쓰기 2글자' }).click();
+await wait(150);
+await page.locator('.rb-pop-panel .rb-chip[aria-label="문단 앞 12"]').click();
+await wait(150);
+await page.locator('.rb-pop-panel .rb-chip[aria-label="문단 뒤 18"]').click();
+await wait(300);
+check('상자 필드: 첫 줄 2 · 앞 12 · 뒤 18', JSON.stringify(await blk()) === JSON.stringify({ fi: 2, sb: 12, sa: 18 }), JSON.stringify(await blk()));
+let c = await css();
+check('화면: text-indent 2글자 · margin 12 / 18', !!c && Math.abs(c.ti - 2 * c.fs) < 0.6 && c.mt === 12 && c.mb === 18, JSON.stringify(c));
+if (OUT) await page.screenshot({ path: `${OUT}/para-spacing.png` });
+await page.locator('.rb-pop-panel .rb-chip', { hasText: '내어쓰기 2글자' }).click();
+await wait(300);
+c = await css();
+check('내어쓰기: 왼쪽 2글자 띄우고 첫 줄은 앞으로', !!c && Math.abs(c.pl - 2 * c.fs) < 0.6 && Math.abs(c.ti + 2 * c.fs) < 0.6, JSON.stringify(c));
+await page.keyboard.press('Escape');
+await ws(() => window.__dn.view.engine.undo());
+await wait(300);
+check('실행 취소 → 들여쓰기 2글자로', (await blk()).fi === 2, JSON.stringify(await blk()));
+check('콘솔 오류 없음', errors.length === 0, errors.join(' | '));
+await browser.close();
+const bad = results.filter((x) => !x.ok).length;
+console.log(`\n${results.length - bad}/${results.length} passed`);
+process.exit(bad ? 1 : 0);

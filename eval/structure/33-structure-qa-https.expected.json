@@ -1,0 +1,75 @@
+{
+  "id": "33-structure-qa-https",
+  "category": "structure",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "structure": {
+    "primary": [
+      "S-24"
+    ],
+    "pattern": "chain"
+  },
+  "aliases": {
+    "HTTPS는 왜 필요한가요": [
+      "HTTPS는 왜 필요한가"
+    ],
+    "인증서는 무엇을 하나요": [
+      "인증서는 무엇을 하나"
+    ]
+  },
+  "mustNodes": [
+    "HTTPS는 왜 필요한가요",
+    "도청 방지",
+    "인증서는 무엇을 하나요",
+    "신원 확인"
+  ],
+  "mustEdges": [
+    {
+      "from": "도청 방지",
+      "to": "HTTPS는 왜 필요한가요",
+      "relation": [
+        "answers"
+      ],
+      "alternatives": [
+        {
+          "from": "HTTPS는 왜 필요한가요",
+          "to": "도청 방지",
+          "relation": [
+            "leads-to"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "신원 확인",
+      "to": "인증서는 무엇을 하나요",
+      "relation": [
+        "answers"
+      ],
+      "alternatives": [
+        {
+          "from": "인증서는 무엇을 하나요",
+          "to": "신원 확인",
+          "relation": [
+            "leads-to"
+          ]
+        }
+      ]
+    }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "질문-답(S-24): 질문(question)과 답이 쌍으로 answers. 두 쌍을 엇갈려 잇지 않는다."
+}

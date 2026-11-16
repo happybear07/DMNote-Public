@@ -1,0 +1,50 @@
+{
+  "id": "04-relation-ml-taxonomy",
+  "category": "relation",
+  "lang": "ko",
+  "kinds": ["relation", "chart", "table"],
+  "structure": { "primary": ["S-11"], "pattern": "tree" },
+  "aliases": {
+    "스팸 메일 필터": ["스팸 필터"],
+    "고객 세분화": ["쇼핑몰의 고객 세분화"]
+  },
+  "mustNodes": [
+    "인공지능",
+    "머신러닝",
+    "지도 학습",
+    "비지도 학습",
+    "강화 학습",
+    "분류",
+    "회귀",
+    "군집화",
+    "스팸 메일 필터",
+    "주택 가격 예측",
+    "고객 세분화",
+    "알파고",
+    "딥러닝"
+  ],
+  "mustEdges": [
+    { "from": "머신러닝", "to": "인공지능", "relation": ["part-of"] },
+    { "from": "지도 학습", "to": "머신러닝", "relation": ["part-of"] },
+    { "from": "비지도 학습", "to": "머신러닝", "relation": ["part-of"] },
+    { "from": "강화 학습", "to": "머신러닝", "relation": ["part-of"] },
+    { "from": "분류", "to": "지도 학습", "relation": ["part-of", "example-of"] },
+    { "from": "회귀", "to": "지도 학습", "relation": ["part-of", "example-of"] },
+    { "from": "군집화", "to": "비지도 학습", "relation": ["part-of", "example-of"] },
+    { "from": "스팸 메일 필터", "to": "분류", "relation": ["example-of"] },
+    { "from": "주택 가격 예측", "to": "회귀", "relation": ["example-of"] },
+    { "from": "고객 세분화", "to": "군집화", "relation": ["example-of"] },
+    { "from": "알파고", "to": "강화 학습", "relation": ["example-of"] },
+    { "from": "딥러닝", "to": "머신러닝", "relation": ["part-of"] }
+  ],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": ["Machine Learning", "Supervised Learning", "준지도 학습", "자기지도 학습"],
+    "substrings": ["준지도", "GPT"]
+  },
+  "notes": "계층(part-of)·예시(example-of) 구분 사례. '딥러닝이 네 번째 분류가 아니다'라는 원문을 따라 딥러닝은 머신러닝의 part-of여야 하며 지도/비지도/강화와 나란한 형제로 연결하면 엣지 정밀도에서 감점된다. 원문에 없는 '준지도 학습' 등을 추가하면 안 된다."
+}

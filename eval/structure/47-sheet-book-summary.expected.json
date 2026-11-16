@@ -1,0 +1,90 @@
+{
+  "id": "47-sheet-book-summary",
+  "category": "sheet",
+  "lang": "ko",
+  "kinds": [
+    "relation",
+    "chart",
+    "table"
+  ],
+  "mode": "sheet",
+  "sheet": {
+    "title": "『느린 아침의 기술』 요약",
+    "cards": [
+      {
+        "title": "한 줄 메시지",
+        "pieces": [
+          "quote",
+          "callout",
+          "text"
+        ],
+        "keep": [
+          "아침 한 시간이 하루 전체의 속도를 정한다"
+        ]
+      },
+      {
+        "title": "1장: 알람을 한 번만",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "알람은 한 번만 맞추고 바로 일어난다"
+        ]
+      },
+      {
+        "title": "2장: 화면보다 창문",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "창문을 열어 햇빛을 본다"
+        ]
+      },
+      {
+        "title": "3장: 작은 기록",
+        "pieces": [
+          "text"
+        ],
+        "keep": [
+          "세 줄 일기를 쓰면"
+        ]
+      },
+      {
+        "title": "실천 목록",
+        "pieces": [
+          "checklist",
+          "text"
+        ],
+        "keep": [
+          "알람 한 번만 맞추기",
+          "기상 후 10분은 휴대폰 금지",
+          "세 줄 일기"
+        ]
+      }
+    ]
+  },
+  "aliases": {
+    "1장: 알람을 한 번만": [
+      "알람을 한 번만"
+    ],
+    "2장: 화면보다 창문": [
+      "화면보다 창문"
+    ],
+    "3장: 작은 기록": [
+      "작은 기록"
+    ]
+  },
+  "mustNodes": [],
+  "mustEdges": [],
+  "charts": [],
+  "tables": [],
+  "forbid": {
+    "charts": true,
+    "tables": false,
+    "numbers": [],
+    "nodeTitles": [],
+    "substrings": []
+  },
+  "authoredBy": "claude-session 2026-10-18 — 평가 전용, 학습 데이터로 쓰지 않음 (OWN-MODEL)",
+  "notes": "책 요약(가상의 책): 장마다 카드, 원문 인용은 인용 조각. 장 번호는 떼어도 맞다(앱이 번호를 붙임). 맺음 문장은 closing."
+}

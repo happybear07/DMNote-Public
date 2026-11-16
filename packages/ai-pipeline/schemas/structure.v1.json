@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "structure.v1",
+  "type": "object",
+  "required": ["nodes", "edges", "charts", "tables"],
+  "additionalProperties": false,
+  "properties": {
+    "title": { "type": "string", "maxLength": 120 },
+    "nodes": {
+      "type": "array", "maxItems": 60,
+      "items": {
+        "type": "object",
+        "required": ["key", "title", "kind"],
+        "additionalProperties": false,
+        "properties": {
+          "key":   { "type": "string", "pattern": "^[a-z0-9_-]{1,32}$" },
+          "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+          "kind":  { "enum": ["concept", "step", "option", "claim", "evidence", "question", "conclusion"] },
+          "body":  { "type": "string", "maxLength": 2000, "description": "Markdown 부분집합: 목록 · 굵게 · 기울임 · 인라인 코드" },
+          "group": { "type": "string", "maxLength": 40 },
+          "source": { "$ref": "#/$defs/span" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array", "maxItems": 120,
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "relation"],
+        "additionalProperties": false,
+        "properties": {
+          "from": { "type": "string" },
+          "to":   { "type": "string" },
+          "relation": { "enum": ["causes", "leads-to", "part-of", "example-of", "contrasts", "supports", "depends-on", "next"] },
+          "label": { "type": "string", "maxLength": 24 }
+        }
+      }
+    },
+    "charts": {
+      "type": "array", "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["key", "kind", "series"],
+        "additionalProperties": false,
+        "properties": {
+          "key":   { "type": "string", "pattern": "^[a-z0-9_-]{1,32}$" },
+          "kind":  { "enum": ["bar", "line", "pie"] },
+          "title": { "type": "string", "maxLength": 80 },
+          "unit":  { "type": "string", "maxLength": 16 },
+          "series": {
+            "type": "array", "minItems": 1, "maxItems": 8,
+            "items": {
+              "type": "object",
+              "required": ["name", "points"],
+              "additionalProperties": false,
+              "properties": {
+                "name": { "type": "string", "maxLength": 40 },
+                "points": {
+                  "type": "array", "minItems": 1, "maxItems": 100,
+                  "items": {
+                    "type": "object", "required": ["x", "y"], "additionalProperties": false,
+                    "properties": { "x": { "type": ["string", "number"] }, "y": { "type": "number" } }
+                  }
+                }
+              }
+            }
+          },
+          "attachTo": { "type": "string", "description": "관련 노드 key — 차트 블록을 이 노드 옆에 배치" },
+          "source": { "$ref": "#/$defs/span" }
+        }
+      }
+    },
+    "tables": {
+      "type": "array", "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["key", "columns", "rows"],
+        "additionalProperties": false,
+        "properties": {
+          "key":     { "type": "string", "pattern": "^[a-z0-9_-]{1,32}$" },
+          "title":   { "type": "string", "maxLength": 80 },
+          "columns": { "type": "array", "minItems": 2, "maxItems": 12, "items": { "type": "string", "maxLength": 40 } },
+          "rows":    { "type": "array", "minItems": 1, "maxItems": 50,
+                       "items": { "type": "array", "items": { "type": "string", "maxLength": 300 } } },
+          "attachTo": { "type": "string" },
+          "source": { "$ref": "#/$defs/span" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "span": {
+      "type": "object", "required": ["quote"], "additionalProperties": false,
+      "properties": { "quote": { "type": "string", "maxLength": 200, "description": "원문에서 그대로 복사한 근거 구절" } }
+    }
+  }
+}
